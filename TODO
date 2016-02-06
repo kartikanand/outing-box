@@ -1,0 +1,10 @@
+use nginx with gunicorn to prevent DOS
+use CDN with Amazon S3
+use thumbnail module for thumbnail generation while storing media
+remove unused css using: https://github.com/geuis/helium-css
+css sprites: https://github.com/jorgebastida/glue
+https://github.com/dypsilon/frontend-dev-bookmarks
+lazy loading images: https://github.com/toddmotto/echo
+https://github.com/scottjehl/picturefill
+http://yaireo.github.io/fancyInput/
+### in distant future semantic ui framework

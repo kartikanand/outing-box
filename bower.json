@@ -1,0 +1,25 @@
+{
+  "name": "outing-box",
+  "description": "Main repository of Outing Box",
+  "main": "Gruntfile.js",
+  "authors": [
+    "Outing Box"
+  ],
+  "license": "None",
+  "moduleType": [
+    "globals"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootswatch": "https://github.com/thomaspark/bootswatch.git#^3.3.6+1",
+    "bootstrap-sass": "^3.3.6",
+  }
+}

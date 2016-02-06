@@ -1,0 +1,24 @@
+{% load staticfiles %}
+
+<section class="container">
+    <div class="page-header text-center">
+        <h3 class="center bold">Take a look at our collections</h3>
+    </div>
+
+    <div class="row text-center">
+        {% for box in boxes %}
+        <div class="col-sm-2 col-xs-4">
+            <div class="row text-center">
+                <div class="col-xs-12">
+                        <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-xs-12">
+                    <a href=""><h6>{{ box.title }}</h6></a>  
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

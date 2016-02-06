@@ -1,0 +1,24 @@
+<section class="container">
+    <div class="page-header text-center">
+        <h3 class="center bold">Our Suggestions!</h3>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-xs-4 col-sm-3 text-center">
+            <img src="{{ MEDIA_URL }}{{ featured.featured_1.featured_image }}" class="img-circle img-responsive  center-block">
+            <a href="{{ featured.featured_1.get_absolute_url }}">{{ featured.featured_1.title }}</a>
+        </div>
+        <div class="col-xs-4 col-sm-3 text-center">
+            <img src="{{ MEDIA_URL }}{{ featured.featured_2.featured_image }}" class="img-circle img-responsive  center-block">
+            <a href="{{ featured.featured_2.get_absolute_url }}">{{ featured.featured_2.title }}e</a>
+        </div>
+        <div class="col-xs-4 col-sm-3 text-center">
+            <img src="{{ MEDIA_URL }}{{ featured.featured_3.featured_image }}" class="img-circle img-responsive  center-block">
+            <a href="{{ featured.featured_3.get_absolute_url }}">{{ featured.featured_3.title }}</a>
+        </div>
+        <div class="hidden-xs col-sm-3 text-center">
+            <img src="{{ MEDIA_URL }}{{ featured.featured_4.featured_image }}" class="img-circle img-responsive  center-block">
+            <a href="{{ featured.featured_4.get_absolute_url }}">{{ featured.featured_4.title }}</a>
+        </div>
+    </div>
+</section>

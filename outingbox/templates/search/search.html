@@ -1,0 +1,25 @@
+{% extends "components/base.html" %}
+
+{% load staticfiles %}
+
+{% block content-main %}
+<section class="container">
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <div class="page-header">
+                <h5>Results for : <span class="bold underline">{{ query }}</span></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+       
+       {% include 'search/search-filter.html' %}
+
+       {% include 'search/search-results.html' with activities=activities %}
+       
+    </div>
+</section>
+
+<!-- SEARCH END -->
+{% endblock content-main %}

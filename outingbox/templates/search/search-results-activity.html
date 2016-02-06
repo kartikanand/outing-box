@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+{% for activity in activities  %}
+<div class="row activity">
+    <div class="col-xs-1 col-md-1 text-center">
+    {% include 'components/bookmark.html' with activity=activity %}
+    </div>
+    <div class="col-xs-5 col-md-2">
+        <img class="img-responsive" src="{{ MEDIA_URL }}{{ activity.featured_image }}">
+    </div>
+    <div class="col-xs-12 col-md-5">
+        <a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a>
+        <ul>
+            <li class="small">
+                <span class="fa fa-ticket fa-fw" aria-hidden="true"></span>&nbsp;{{ activity.category.all|slice:":2"|join:", " }}
+            </li>
+            <li class="small">
+                <span class="fa fa-phone fa-fw" aria-hidden="true"></span>&nbsp;{{ activity.contact_numbers|slice:":2"|join:", " }}
+            </li>
+            <li class="small">
+                <span class="fa fa-location-arrow fa-fw" aria-hidden="true"></span>&nbsp;{{ activity.address.sub_zone.all|first }}
+            </li>
+            <li class="small">
+                {% for metro_station in activity.address.metro_station.all|slice:":2" %}
+                <span class="fa fa-train fa-fw" aria-hidden="true"></span>&nbsp;{{ metro_station.title }}
+                {% endfor %}
+            </li>
+            <li class="small">
+                <ul class="item-cost">
+                {% for count in "12345"|make_list %}
+                    <li class="{% if activity.cost >= forloop.counter %}cost-active{% endif %}"><span class="fa fa-inr fa-fw"></span></li>
+                {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-2">
+    {% include 'components/rating.html' with activity=activity %}
+    </div>
+</div>
+{% endfor %}

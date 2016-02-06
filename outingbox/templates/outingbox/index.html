@@ -1,0 +1,26 @@
+{% extends "components/base.html" %}
+{% load staticfiles %}
+
+{% block navbar %}
+{% include 'components/nav-main.html' %}
+{% endblock navbar %}
+
+{% block hero %}
+{% include 'outingbox/hero.html' %}
+{% endblock hero %}
+
+{% block content-main %}
+
+<!-- BOXES START -->
+{% include 'outingbox/collections.html' with boxes=boxes %}
+<!-- BOXES END -->
+
+<!-- NEARBY START -->
+<!--{% include 'outingbox/nearby.html' %}-->
+<!-- NEARBY END -->
+
+<!-- FEATURED START -->
+{% include 'outingbox/featured.html' %}
+<!-- FEATURED END -->
+
+{% endblock content-main %}

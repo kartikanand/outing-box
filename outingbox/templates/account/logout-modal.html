@@ -1,0 +1,29 @@
+{% load socialaccount %}
+
+<div class="modal fade" id="logout-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-center">Are you sure you want to sign out?</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <div class="form-group text-center">
+                        <div class="col-xs-12">
+                            <button class="btn btn-warning text-center" type="submit">Sign Out</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p class="text-center">
+                    *Click anywhere else to dismiss
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

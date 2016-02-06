@@ -1,0 +1,9 @@
+<form class="bookmark-form" action="{% url 'bookmark' %}" method="post">
+    {% csrf_token %}
+    <input name="id" value="{{ activity.id }}" type="hidden">
+    {% if bookmarks and activity in bookmarks%}
+    <span class="fa fa-bookmark fa-fw bookmark" data-toggle="tooltip" data-placement="top" title="Remove Bookmark" aria-hidden="true"></span>
+    {% else %}
+    <span class="fa fa-bookmark-o fa-fw bookmark" data-toggle="tooltip" data-placement="top" title="Bookmark" aria-hidden="true"></span>
+    {% endif %}
+</form>

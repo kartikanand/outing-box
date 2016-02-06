@@ -1,0 +1,77 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="A search engine for outing">
+        <meta name="author" content="Outing Box">
+
+        <title>
+        {% block title %}Outing Box{% endblock title %}
+        </title>
+
+        <!-- BASE CSS START -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400,700,900">
+        <link rel="stylesheet" type="text/css" href="{% static 'outingbox/css/bundle.min.css' %}">
+        <!-- BASE CSS END -->
+
+        <!-- CUSTOM CSS START -->
+        {% block customcss %}
+        {% endblock customcss %}
+        <!-- CUSTOM CSS END -->
+
+        <!-- FAVICONS START -->
+        <!-- FAVICONS END -->
+
+        <!-- GOOGLE ANALYTICS START -->
+        <!-- GOOGLE ANALYTICS END -->
+    </head>
+    <body>
+        <!-- WRAPPER START -->
+        <div class="wrapper">
+            <!-- ALERTS START -->
+            {% block alerts %}
+            {% include 'components/alerts.html' %}
+            {% endblock alerts %}
+            <!-- ALERTS END   -->
+
+            <!-- NAVBAR START -->
+            {% block navbar %}
+            {% include 'components/nav-secondary.html' %}
+            {% endblock navbar %}
+            <!-- NAVBAR END -->
+
+            {% include 'account/login-modal.html' %}
+            {% include 'account/logout-modal.html' %}
+
+            <!-- HERO START -->
+            {% block hero %}
+            {% endblock hero %}
+            <!-- HERO END -->
+
+            {% block content-main %}
+            {% endblock content-main %}
+
+            <!-- FOOTER START -->
+            {% block footer %}
+            {% include 'components/footer.html' %}
+            {% endblock footer %}
+            <!-- FOOTER END -->
+        </div>
+        <!-- WRAPPER END -->
+
+        <!-- BASE JS START -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{% static 'outingbox/js/bundle.min.js' %}"></script>
+        <!-- BASE JS END -->
+
+        <!-- CUSTOM JS START -->
+        {% block customjs %}
+        {% endblock customjs %}
+        <!-- CUSTOM JS END -->
+    </body>
+</html>

@@ -1,0 +1,9 @@
+__pycache__/
+node_modules/
+bower_components/
+.sass-cache/
+migrations/
+.pyc
+.env
+staticfiles/
+media/

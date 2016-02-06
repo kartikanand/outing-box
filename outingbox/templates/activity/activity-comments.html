@@ -1,0 +1,35 @@
+{% load account %}
+
+<section class="container">
+    <div class="row text-center">
+        <div class="col-xs-12">
+            <h4 class="page-header">Reviews</h4>
+            {% if user.is_authenticated %}
+            <h6>Your rating{% include 'components/rating.html' with activity=activity %}</h6>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-xs-12 comment-wrapper">
+        {% for review in reviews  %}
+            <p>{{ review }}</p>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-xs-12">
+            {% if user.is_authenticated %}
+            <form action="{% url 'comment' %}" method="POST" id="comments-form">
+                {% csrf_token %}
+                <input name="id" value="{{ activity.id }}" type="hidden">
+                <textarea class="form-control" rows="3" name="review"></textarea>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% else %}
+                <button type="submit" class="btn btn-warning">Please login to comment!</button>
+            {% endif %}
+        </div>
+    </div>
+</section>

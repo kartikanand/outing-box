@@ -1,0 +1,28 @@
+{% load socialaccount %}
+
+<div class="modal fade" id="login-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-center">You can login using the below social accounts</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-xs-12">
+                        <a class="btn btn-default btn-lg" href="{% provider_login_url "google" %}?next={% firstof request.path '/' %}"><span class="fa fa-google"></span> Google</a>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-xs-12">
+                        <a class="btn btn-default btn-lg" href="{% provider_login_url "facebook" %}?next={% firstof request.path '/' %}"><span class="fa fa-facebook"></span> Facebook</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="text-center">
+                    *Click anywhere else to dismiss
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

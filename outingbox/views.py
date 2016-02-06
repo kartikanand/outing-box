@@ -17,6 +17,7 @@ def index_view(request):
     boxes = Box.objects.all()
     featured_set = FeaturedActivity.objects.all()
 
+    featured = []
     if featured_set.count() > 0:
         featured = featured_set[0]
 

@@ -10,7 +10,7 @@
     </div>
     <div class="col-xs-12 col-md-5">
         <a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a>
-        <ul>
+        <ul class="list-unstyled">
             <li class="small">
                 <span class="fa fa-ticket fa-fw" aria-hidden="true"></span>&nbsp;{{ activity.category.all|slice:":2"|join:", " }}
             </li>

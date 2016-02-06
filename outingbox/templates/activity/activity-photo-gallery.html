@@ -1,5 +1,3 @@
-{% load thumbnail %}
-
 <section class="container">
     <div class="row text-center">
         <div class="col-xs-12">
@@ -12,9 +10,7 @@
         <div class="col-xs-12 col-sm-10">
             <div class="row photo-gallery text-center">
                 {% for photo in photos  %}
-                {% thumbnail photo.image "300x200" crop="center" as im %}
-                    <div class="col-xs-12 col-sm-6 col-md-4"><img class="img-responsive center-block" data-lazy="{{ im.url }}"  width="{{ im.width }}" height="{{ im.height }}"></div>
-                {% endthumbnail %}
+                    <div class="col-xs-12 col-sm-6 col-md-4"><img class="img-responsive center-block" data-lazy="{{ photo.image }}"></div>
                 {% endfor %}
             </div>
         </div>

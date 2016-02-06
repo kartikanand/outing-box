@@ -21,5 +21,6 @@
   "dependencies": {
     "bootswatch": "https://github.com/thomaspark/bootswatch.git#^3.3.6+1",
     "bootstrap-sass": "^3.3.6",
+    "font-awesome": "fontawesome#^4.5.0"
   }
 }

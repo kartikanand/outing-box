@@ -5,8 +5,6 @@
 html,
 body {
     height: 100%;
-    font-family: 'Quicksand', sans-serif;
-    color: #000;
 }
 
 nav {
@@ -17,92 +15,45 @@ nav {
     min-height: 100%;
     position: relative;
     padding-bottom: 250px;
-    background-color: #f9f9f9;
 }
 
 .header {
     height: 250px;
     background-size: 100%;
+    
     h2 {
-        //color: white;
         margin-bottom: 50px;
-    }
-
-    input {
-        //color: white;
     }
 }
 
 ul {
-    list-style: none;
-    //text-align: left;
-    list-style-position: inside;
-    //padding-left: 0px !important;
-}
+    margin-top: 10px;
 
-/* #index {
-    background-image: url("/static/outingbox/img/index.jpg");
-    background-position: 0% 0%;
+    li {
+        margin-top: 2px;
+    }
 }
-
-#contact-us {
-    background-image: url("/static/outingbox/img/contact.jpg");
-}
-
-#about-us {
-    background-image: url("/static/outingbox/img/about.jpg");
-    background-position: 30% 50%;
-} */
 
 footer {
     width: 100%;
     position: absolute;
     left: 0;
     bottom: 0;
-    background-color: #333;
-    color: white;
     padding-top: 25px;
     padding-bottom: 25px;
 }
-
-/* .nav-elem {
-    li {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-} */
 
 section {
     padding-top: 20px;
     padding-bottom: 25px;
 }
 
-.divider {
-    margin-bottom: 50px;
-    width: 5%;
-    margin-left: auto;
-    margin-right: auto;
-    height: 2px;
-
-    background-color: #777;
-}
-
-.border {
-    height: 1px;
-    width: 100%;
-    background-color: #ccc;
-}
-
-/* .bold {
-    font-weight: 900;
-}
-
-.underline {
-    text-decoration: underline;
-}
- */
 .map {
     height: 300px;
+}
+
+.text-rating {
+    color: #FFDF88;
 }
 
 .item-cost {
@@ -112,8 +63,8 @@ section {
         padding-bottom: 1px;
         padding-left: 3px;
         padding-right: 3px;
-        background-color: #555;
-        color: #fff;
+        background-color: #fff;
+        color: #000;
         border-color: transparent;
         border-radius: 100%;
         font-size: smaller;
@@ -121,12 +72,7 @@ section {
 
     .cost-active {
         background-color: #519548;
-    }
-}
-
-.search-filter {
-    ul {
-        padding-left: 0px !important;
+        color: #fff;
     }
 }
 
@@ -135,6 +81,7 @@ section {
     padding-bottom: 5px;
 }
 
+// To left align price box on search results
 .search-results {
     ul {
         padding-left: 0px !important;
@@ -159,21 +106,8 @@ section {
     margin-bottom: 2px;
 }
 
-.more-button {
-    margin-top: 25px;
-}
-
 .bookmark:hover, .rating:hover {
     cursor: pointer
-}
-
-#owl-demo .item{
-  margin: 5px;
-}
-#owl-demo .item img{
-  display: block;
-  width: auto;
-  height: 100px;
 }
 
 .slick-track {

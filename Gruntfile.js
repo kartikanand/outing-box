@@ -7,9 +7,6 @@ module.exports = function (grunt) {
         devDir: '<%= appDir %>dev/',
         templatesDir: '<%= appDir %>templates/',
         browserify: {
-            options: {
-                global: true
-            },
             dist: {
                 files: {
                     '<%= devDir %>outingbox/js/bundle.js': '<%= devDir %>outingbox/js/script.js'
@@ -17,6 +14,10 @@ module.exports = function (grunt) {
             },
         },
         sass: {
+            options: {
+                precision: 8,
+                'unix-newlines': true
+            },
             dist: {
                 files: {
                     '<%= devDir %>outingbox/css/styles.css': '<%= devDir %>outingbox/sass/styles.scss'
@@ -27,7 +28,6 @@ module.exports = function (grunt) {
             dist: {
                 src: [
                     '<%= devDir %>vendor/css/font-awesome.min.css',
-                    '<%= devDir %>vendor/css/bootstrap-theme.min.css',
                     '<%= devDir %>vendor/css/slick.css',
                     '<%= devDir %>vendor/css/slick-theme.css',
                     '<%= devDir %>vendor/css/fontawesome-stars.css',

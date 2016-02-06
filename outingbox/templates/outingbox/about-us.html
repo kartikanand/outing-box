@@ -1,4 +1,4 @@
-{% extends "outingbox/base.html" %}
+{% extends "components/base.html" %}
 
 {% load staticfiles %}
 
@@ -9,10 +9,8 @@
 {% block content-main %}
 <!-- ABOUT US START -->
 <section class="container">
-    <div class="row center">
-        <div class="col s12">
-            <h5 class="underline bold">Outing Box</h5>
-        </div>
+    <div class="page-header">
+            <h5>Outing Box</h5>
     </div>
     <div class="row">
         <div class="col s12">
@@ -37,4 +35,5 @@
     </div>
 </section>
 <!-- ABOUT US END -->
+
 {% endblock content-main %}

@@ -1,12 +1,22 @@
 var makeRequestToServer = require('./utils').makeRequestToServer;
 var notify = require('./notify').notify;
 
+var getIsRatingReadOnly = function () {
+    var canedit_input = $('input.can-edit');
+    if (canedit_input.length > 0)
+    {
+        return false;
+    }
+
+    return true;
+};
+
 // for ratings
 module.exports.ratingInitData = {
     theme: 'fontawesome-stars',
     showSelectedRating: false,
     hoverState: false,
-    readonly: true,
+    readonly: getIsRatingReadOnly(),
     onSelect:function(value, text, event) {
         // Return if manually setting the rating
         if (typeof(event) == undefined) {

@@ -35,7 +35,7 @@
         </ul>
     </div>
     <div class="col-md-2">
-    {% include 'components/rating.html' with activity=activity %}
+    {% include 'components/rating.html' with activity=activity read_only=1 user_rating=0 %}
     </div>
 </div>
 {% endfor %}

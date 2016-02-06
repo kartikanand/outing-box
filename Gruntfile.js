@@ -27,7 +27,7 @@ module.exports = function (grunt) {
         concat: {
             dist: {
                 src: [
-                    '<%= devDir %>vendor/css/font-awesome.min.css',
+                    '<%= devDir %>font-awesome/css/font-awesome.min.css',
                     '<%= devDir %>vendor/css/slick.css',
                     '<%= devDir %>vendor/css/slick-theme.css',
                     '<%= devDir %>vendor/css/fontawesome-stars.css',

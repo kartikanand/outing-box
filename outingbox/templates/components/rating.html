@@ -1,12 +1,24 @@
+{% if canedit %}
 <form class="rating-form form-inline" action="{% url 'rate' %}" method="post">
     {% csrf_token %}
     <input name="id" value="{{ activity.id }}" type="hidden">
+    <input class="can-edit" hidden>
     <select class="rating" name="rating" data-old-rating="{{ activity.rating|floatformat:0 }}">
         <option value=""></option>
-        <option value="1" {% if activity.rating|floatformat:0 == "1" %}selected{% endif %}>1</option>
-        <option value="2" {% if activity.rating|floatformat:0 == "2" %}selected{% endif %}>2</option>
-        <option value="3" {% if activity.rating|floatformat:0 == "3" %}selected{% endif %}>3</option>
-        <option value="4" {% if activity.rating|floatformat:0 == "4" %}selected{% endif %}>4</option>
-        <option value="5" {% if activity.rating|floatformat:0 == "5" %}selected{% endif %}>5</option>
+        <option value="1" {% if userrating == 1 %}selected{% endif %}>1</option>
+        <option value="2" {% if userrating == 2 %}selected{% endif %}>2</option>
+        <option value="3" {% if userrating == 3 %}selected{% endif %}>3</option>
+        <option value="4" {% if userrating == 4 %}selected{% endif %}>4</option>
+        <option value="5" {% if userrating == 5 %}selected{% endif %}>5</option>
     </select>
 </form>
+{% else %}
+<select class="rating" name="rating" data-old-rating="{{ activity.rating|floatformat:0 }}">
+    <option value=""></option>
+    <option value="1" {% if activity.rating|floatformat:0 == "1" %}selected{% endif %}>1</option>
+    <option value="2" {% if activity.rating|floatformat:0 == "2" %}selected{% endif %}>2</option>
+    <option value="3" {% if activity.rating|floatformat:0 == "3" %}selected{% endif %}>3</option>
+    <option value="4" {% if activity.rating|floatformat:0 == "4" %}selected{% endif %}>4</option>
+    <option value="5" {% if activity.rating|floatformat:0 == "5" %}selected{% endif %}>5</option>
+</select>
+{% endif %}

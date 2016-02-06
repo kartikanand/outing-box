@@ -44,7 +44,7 @@ def activity_view(request, id=None, title=None):
     activity = get_object_or_404(Activity, pk=id)
 
     user_bookmarks = None
-    user_rating = None
+    user_rating = 0
     if request.user.is_authenticated():
         try:
             user_bookmark_inst = UserBookmark.objects.get(user=request.user)
@@ -64,7 +64,8 @@ def activity_view(request, id=None, title=None):
         'activity': activity, 
         'bookmarks': user_bookmarks, 
         'photos': activity.photos.all(),
-        'reviews': reviews
+        'reviews': reviews,
+        'user_rating': user_rating
     }
 
     return render(request, 'activity/activity.html', context)

@@ -33,6 +33,12 @@ ul {
     li {
         margin-top: 2px;
     }
+
+    &.list-unstyled {
+        li {
+            margin-top: 7px;
+        }
+    }
 }
 
 footer {
@@ -60,13 +66,13 @@ section {
 .item-cost {
     li {
         display: inline-block;
-        padding-top: 1px;
-        padding-bottom: 1px;
+        padding-top: 2px;
+        padding-bottom: 2px;
         padding-left: 3px;
         padding-right: 3px;
         background-color: #fff;
         color: #000;
-        border-color: transparent;
+        border: 1px solid #000;
         border-radius: 100%;
         font-size: smaller;
     }

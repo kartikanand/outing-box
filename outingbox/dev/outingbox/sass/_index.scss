@@ -27,13 +27,16 @@ body {
 }
 
 ul {
+    margin-top: 0px;
+
     li {
         margin-top: 2px;
     }
 
     &.list-unstyled {
         li {
-            margin-top: 7px;
+            margin-top: 0px;
+            margin-bottom: 7px;
         }
     }
 }

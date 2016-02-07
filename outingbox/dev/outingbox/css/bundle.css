@@ -7776,10 +7776,13 @@ body {
     margin-top: 10px;
     margin-bottom: 50px; }
 
-ul li {
-  margin-top: 2px; }
-ul.list-unstyled li {
-  margin-top: 7px; }
+ul {
+  margin-top: 0px; }
+  ul li {
+    margin-top: 2px; }
+  ul.list-unstyled li {
+    margin-top: 0px;
+    margin-bottom: 7px; }
 
 footer {
   width: 100%;

@@ -11,7 +11,7 @@
         <div class="col-xs-12 col-sm-10">
             <div class="row photo-gallery text-center">
                 {% for photo in photos  %}
-                    <div class="col-xs-12 col-sm-6 col-md-4"><img class="img-responsive center-block" data-lazy="{{ photo.image }}"></div>
+                    <div class="col-xs-12 col-sm-6 col-md-4"><img class="img-responsive center-block" data-lazy="{{ MEDIA_URL }}{{ photo.image }}"></div>
                 {% endfor %}
             </div>
             <button class="arrow-right"><span class="fa fa-fw fa-arrow-right"></span></button>

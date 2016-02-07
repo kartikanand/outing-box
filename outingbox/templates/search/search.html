@@ -14,9 +14,14 @@
 
     <div class="row">
        
-       {% include 'search/search-filter.html' %}
-
-       {% include 'search/search-results.html' with activities=activities %}
+        {% if activities %}
+            {% include 'search/search-filter.html' %}
+            {% include 'search/search-results.html' with activities=activities %}
+        {% else %}
+            <div class="col-xs-12">
+                <h3 class="text-danger text-center">Sorry! No results found!</h3>
+            </div>
+        {% endif %}
        
     </div>
 </section>

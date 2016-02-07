@@ -222,6 +222,7 @@ class Activity(BaseTitleMixin, AbstractBaseURLModel):
     )
 
     featured_image = models.ImageField(upload_to='photos/activity/featured/', default='photos/activity/featured/featured.png')
+    search_image = models.ImageField(upload_to='photos/activity/search-featured/', default='photos/activity/featured/featured.png')
 
     def get_absolute_url(self):
         return self.get_url('activity')

@@ -15,7 +15,7 @@
         {% if reviews %}
         {% for review in reviews  %}
             <div class="comment-wrapper">
-                <h5>{{ review.user.username }} on {{ review.pub_date|date }}</h5>
+                <h5 class="text-muted">{{ review.user.username }} on {{ review.pub_date|date }}</h5>
                 <p>{{ review.review }}</p>
             </div>
         {% endfor %}

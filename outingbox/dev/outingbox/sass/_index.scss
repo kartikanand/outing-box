@@ -5,11 +5,6 @@
 html,
 body {
     height: 100%;
-    font-family: 'Quicksand', sans-serif;
-}
-
-nav {
-    margin-bottom: 0px !important;
 }
 
 .wrapper {
@@ -19,10 +14,14 @@ nav {
 }
 
 .header {
-    height: 250px;
+    height: 400px;
     background-size: 100%;
-    
-    h2 {
+    background-image: url("/media/img/header.jpg");
+    background-position: 30% 50%;
+    color: #fff;
+
+    h3 {
+        margin-top: -25px;
         margin-bottom: 50px;
     }
 }
@@ -106,7 +105,13 @@ section {
 }
 
 .activity {
-    margin-bottom: 75px !important;
+    &:first-child {
+        margin-top: 25px !important;
+    }
+
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 25px !important;
+    padding-top: 25px !important;
 }
 
 .row {

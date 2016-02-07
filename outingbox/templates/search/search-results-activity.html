@@ -2,29 +2,33 @@
 
 {% for activity in activities  %}
 <div class="row activity">
-    <div class="col-xs-1 col-md-1 text-center">
-    {% include 'components/bookmark.html' with activity=activity %}
+    <div class="col-xs-12 col-sm-4">
+        <img class="img-responsive center-block" src="{{ MEDIA_URL }}{{ activity.featured_image }}">
     </div>
-    <div class="col-xs-5 col-md-2">
-        <img class="img-responsive" src="{{ MEDIA_URL }}{{ activity.featured_image }}">
+    <div class="col-xs-12 col-sm-push-4 col-sm-4 text-center">
+    {% include 'components/rating.html' with activity=activity read_only=1 user_rating=0 %}
     </div>
-    <div class="col-xs-12 col-md-5">
-        <a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a>
+    <div class="col-xs-12 col-sm-pull-4 col-sm-4">
         <ul class="list-unstyled">
-            <li class="small">
-                <span class="fa fa-ticket fa-fw" aria-hidden="true"></span>&nbsp;{{ activity.category.all|slice:":2"|join:", " }}
+            <li>
+                <a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a>
             </li>
             <li class="small">
-                <span class="fa fa-phone fa-fw" aria-hidden="true"></span>&nbsp;{{ activity.contact_numbers|slice:":2"|join:", " }}
+                <span class="fa fa-ticket fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ activity.category.all|slice:":3"|join:", " }}&nbsp;&nbsp;...
             </li>
+            {% for number in activity.contact_numbers|slice:":2" %}
             <li class="small">
-                <span class="fa fa-location-arrow fa-fw" aria-hidden="true"></span>&nbsp;{{ activity.address.sub_zone.all|first }}
+                <span class="fa fa-phone fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ number }}
             </li>
+            {% endfor %}
             <li class="small">
-                {% for metro_station in activity.address.metro_station.all|slice:":2" %}
-                <span class="fa fa-train fa-fw" aria-hidden="true"></span>&nbsp;{{ metro_station.title }}
-                {% endfor %}
+                <span class="fa fa-location-arrow fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ activity.address.sub_zone.all|first }}
             </li>
+            {% for metro_station in activity.address.metro_station.all|slice:":2" %}
+            <li class="small">
+                <span class="fa fa-train fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ metro_station.title }}
+            </li>
+            {% endfor %}
             <li class="small">
                 <ul class="item-cost">
                 {% for count in "12345"|make_list %}
@@ -33,9 +37,6 @@
                 </ul>
             </li>
         </ul>
-    </div>
-    <div class="col-md-2">
-    {% include 'components/rating.html' with activity=activity read_only=1 user_rating=0 %}
     </div>
 </div>
 {% endfor %}

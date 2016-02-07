@@ -19,8 +19,18 @@ module.exports.commentFormHandler = function (ev) {
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
-        var newComment = $('<h5>'+data.username+' on '+data.date+'</h5>'+'<p>'+data.review+'</p>');
-        $('.comment-wrapper').prepend(newComment);
+        var newCommentHeader = $('<h5 class="text-muted"></h5>');
+
+        // Set .text() to save from XSS
+        newCommentHeader.text(data.username+' on '+data.date);
+        
+        var newComment = $('<p></p>');
+
+        // Set .text() to save from XSS
+        newComment.text(data.review);
+        
+        $('.comment-wrapper').prepend(newCommentHeader);
+        newCommentHeader.after(newComment);
     })
     .catch(function (err) {
         console.log(err);

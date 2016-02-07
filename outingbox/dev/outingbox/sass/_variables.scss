@@ -27,12 +27,12 @@ $brand-danger:          #F04124 !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #fff !default;
+$body-bg:               #f9f9f9 !default;
 //** Global text color on `<body>`.
-$text-color:            $gray-darker !default;
+$text-color:            #000 !default;
 
 //** Global textual link color.
-$link-color:            $brand-primary !default;
+$link-color:            darker($brand-primary) !default;
 //** Link hover color set via `darken()` function.
 $link-hover-color:      $link-color !default;
 //** Link hover decoration.
@@ -44,12 +44,9 @@ $link-hover-decoration: underline !default;
 //## Font, line-height, and color for body text, headings, and more.
 
 $font-family-sans-serif:  "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
-//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-size-base:          15px !default;
+$font-size-base:          13px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
 $font-size-small:         12px !default; // ~12px
 
@@ -67,7 +64,7 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    $font-family-base !default;
-$headings-font-weight:    300 !default;
+$headings-font-weight:    400 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;
 
@@ -137,7 +134,6 @@ $table-bg-active:               $table-bg-hover !default;
 
 //** Border color for table and cell borders.
 $table-border-color:            #ddd !default;
-
 
 //== Buttons
 //
@@ -244,9 +240,9 @@ $dropdown-divider-bg:            rgba(0,0,0,.2) !default;
 //** Dropdown link text color.
 $dropdown-link-color:            #555 !default;
 //** Hover color for dropdown links.
-$dropdown-link-hover-color:      darken($gray-dark, 5%) !default;
+$dropdown-link-hover-color:      #555 !default;
 //** Hover background for dropdown links.
-$dropdown-link-hover-bg:         #eee !default;
+$dropdown-link-hover-bg:         #aaa !default;
 
 //** Active dropdown menu item text color.
 $dropdown-link-active-color:     $component-active-color !default;
@@ -358,23 +354,23 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    45px !default;
-$navbar-margin-bottom:             $line-height-computed !default;
+$navbar-height:                    50px !default;
+$navbar-margin-bottom:             0 !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
 $navbar-collapse-max-height:       340px !default;
 
-$navbar-default-color:             #fff !default;
-$navbar-default-bg:                $gray-dark !default;
+$navbar-default-color:             #000 !default;
+$navbar-default-bg:                #fff !default;
 $navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
 
 // Navbar links
-$navbar-default-link-color:                #fff !default;
-$navbar-default-link-hover-color:          #fff !default;
-$navbar-default-link-hover-bg:             #272727 !default;
-$navbar-default-link-active-color:         #fff !default;
-$navbar-default-link-active-bg:            #272727 !default;
+$navbar-default-link-color:                #000 !default;
+$navbar-default-link-hover-color:          lighter($navbar-default-link-color) !default;
+$navbar-default-link-hover-bg:             #gray-lighter !default;
+$navbar-default-link-active-color:         #000 !default;
+$navbar-default-link-active-bg:            #gray-lighter !default;
 $navbar-default-link-disabled-color:       #ccc !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 

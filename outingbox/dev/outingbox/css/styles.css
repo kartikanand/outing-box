@@ -6108,7 +6108,8 @@ section {
   padding-bottom: 25px; }
 
 .map {
-  height: 300px; }
+  height: 300px;
+  margin-bottom: 10px; }
 
 .text-rating {
   color: #FFDF88; }

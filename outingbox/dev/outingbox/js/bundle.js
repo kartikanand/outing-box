@@ -10292,14 +10292,21 @@ module.exports.bookmarkEventHandler = function (ev) {
 
 },{"./notify":21,"./utils":25}],18:[function(require,module,exports){
 var makeRequestToServer = require('./utils').makeRequestToServer;
+var notify = require('./notify').notify;
 
 // Comment form submit handler
 module.exports.commentFormHandler = function (ev) {
     ev.preventDefault();
 
     var commentsForm = $(this);
-
     var review = commentsForm.find('textarea').val();
+
+    // Max review length : 512 characters
+    if (review.length > 5) {
+        notify("Too long");
+        return false;
+    }
+
 
     var url = commentsForm.attr('action');
 
@@ -10315,7 +10322,7 @@ module.exports.commentFormHandler = function (ev) {
     });
 };
 
-},{"./utils":25}],19:[function(require,module,exports){
+},{"./notify":21,"./utils":25}],19:[function(require,module,exports){
 module.exports.filterInitData = {
     plugins: ['remove_button'],
     hideSelected: true

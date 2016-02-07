@@ -125,6 +125,12 @@ class Box(BaseTitleMixin, AbstractBaseURLModel):
         verbose_name_plural = "Boxes"
 
 class ParentCategory(BaseTitleMixin, AbstractBaseModel):
+    box = models.ManyToManyField(
+        Box,
+        help_text="Select Box from List",
+        blank=True
+    )
+
     class Meta:
         verbose_name = "Parent Category"
         verbose_name_plural = "Parent Categories"
@@ -133,11 +139,6 @@ class Category(BaseTitleMixin, AbstractBaseModel):
     parent_category = models.ForeignKey(
         ParentCategory,
         help_text='Select Parent Category from List or create a new one'
-    )
-
-    box = models.ManyToManyField(
-        Box,
-        help_text="Select Box from List"
     )
 
     objects = CategoryManager()

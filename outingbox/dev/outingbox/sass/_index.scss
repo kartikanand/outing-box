@@ -60,6 +60,16 @@ section {
     margin-bottom: 10px;
 }
 
+@media(max-width:480px) {
+    .map {
+        height: 150px;
+    }
+
+    .header {
+        height: 300px;
+    }
+}
+
 .text-rating {
     color: #FFDF88;
 }
@@ -104,6 +114,10 @@ section {
 .activity {
     &:first-child {
         margin-top: 25px !important;
+    }
+
+    img {
+        margin-bottom: 10px;
     }
 
     border-bottom: 1px solid #ccc;

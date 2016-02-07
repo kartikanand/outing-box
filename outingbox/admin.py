@@ -10,10 +10,15 @@ class ActivityAdmin(admin.ModelAdmin):
         ImageGalleryInlineAdmin,
     ]
 
+    filter_horizontal = ['category']
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    filter_horizontal = ['sub_zone', 'metro_station']
+
 admin.site.register(Zone)
 admin.site.register(SubZone)
 admin.site.register(MetroStation)
-admin.site.register(Address)
 admin.site.register(ParentCategory)
 admin.site.register(Category)
 admin.site.register(Box)

@@ -28,7 +28,7 @@
     <div class="container">
         {% if user.is_authenticated %}
         <div class="row">
-            <div class="col-xs-5">
+            <div class="col-xs-12 col-sm-5">
                 <form class="form-horizontal" id="comments-form" action="{% url 'comment' %}" method="POST" >
                     {% csrf_token %}
                     <input name="id" value="{{ activity.id }}" type="hidden">

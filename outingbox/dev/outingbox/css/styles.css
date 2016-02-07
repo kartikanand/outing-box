@@ -6116,6 +6116,7 @@ section {
     height: 150px; }
 
   .header {
+    background-size: 150%;
     height: 300px; } }
 .text-rating {
   color: #FFDF88; }

@@ -39,8 +39,10 @@ def contact_us_view(request):
 def about_us_view(request):
     return render(request, 'outingbox/about-us.html')
 
-def box_view(request):
-    return render(request, 'outingbox/about-us.html')
+def box_view(request, id=None, title=None):
+    box = get_object_or_404(Box, pk=id)
+
+    return render(request, 'box/box.html', {'box': box})
 
 def activity_view(request, id=None, title=None):
     activity = get_object_or_404(Activity, pk=id)

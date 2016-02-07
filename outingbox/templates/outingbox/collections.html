@@ -15,7 +15,7 @@
             <div class="row text-center">
                 <div class="col-xs-12">
                         <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
-                        <a href="#"><h6>{{ box.title }}</h6></a>
+                        <a href="{{ box.get_absolute_url }}"><h6>{{ box.title }}</h6></a>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="row text-center">
                 <div class="col-xs-12">
                         <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
-                        <a href="#"><h6>{{ box.title }}</h6></a>
+                        <a href="{{ box.get_absolute_url }}"><h6>{{ box.title }}</h6></a>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="row text-center">
                 <div class="col-xs-12">
                         <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
-                        <a href="#"><h6>{{ box.title }}</h6></a>
+                        <a href="{{ box.get_absolute_url }}"><h6>{{ box.title }}</h6></a>
                 </div>
             </div>
         </div>

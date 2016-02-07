@@ -20,8 +20,8 @@ body {
     background-position: 30% 50%;
     color: #fff;
 
-    h3 {
-        margin-top: -25px;
+    h2 {
+        margin-top: 10px;
         margin-bottom: 50px;
     }
 }
@@ -63,6 +63,8 @@ section {
 }
 
 .item-cost {
+    padding-left: 0px !important;
+
     li {
         display: inline-block;
         padding-top: 2px;
@@ -85,13 +87,6 @@ section {
 .search-result {
     padding-top: 5px;
     padding-bottom: 5px;
-}
-
-// To left align price box on search results
-.search-results {
-    ul {
-        padding-left: 0px !important;
-    }
 }
 
 .dropdown-button {

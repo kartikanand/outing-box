@@ -2,12 +2,12 @@
     <section class="container">
         <div class="row text-center">
             <div class="col-xs-12">
-                <h3>Search for cool things to do around you!</h3>
+                <h2>Search for cool things to do around you!</h2>
             </div>
         </div>
         <div class="row text-center">
-            <div class="col-xs-12">
-                <form class="form-inline" action="{% url 'search' %}">
+            <div class="col-xs-offset-3 col-xs-6">
+                <form class="form-horizontal" action="{% url 'search' %}">
                     <div class="form-group">
                         <label class="sr-only" for="search-input">Search</label>
                         <input class="form-control" id="search-input" name="query" type="text" placeholder="Bowling, Pool, etc.">

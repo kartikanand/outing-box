@@ -30,15 +30,13 @@
         <div class="col-xs-12">
             <h4 class="page-header">{{ activity.title }}</h4>
             <h6>{% include 'components/rating.html' with activity=activity %}</h6>
+            
         </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-2 col-sm-1 text-center">
-        {% include 'components/bookmark.html' %}
-        </div>
-        <div class="col-xs-10 col-sm-4">
-            <div class="map" id="map"></div>
+        <div class="col-xs-offset-2 col-xs-8">
+            <div class="map text-center" id="map"></div>
             <ul class="small list-unstyled">
                 <li><span class="fa fa-location-arrow fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ activity.address.address_line1 }}, {{ activity.address.address_line2 }}</li>
                 {% for metro_station in activity.address.metro_station.all|slice:":2" %}
@@ -46,13 +44,18 @@
                 {% endfor %}
             </ul>
         </div>
+    </div>
 
+    <div class="row">
         <div class="col-xs-12 col-sm-7">
+            <div class="page-header">
+                <h4>About !</h4>
+            </div>
             {{ activity.description }}
             <div class="page-header">
                 <h4>Things to do here !</h4>
             </div>
-            <ul class="small">
+            <ul class="small list-unstyled">
                 {% for category in activity.category.all %}
                     <li>{{ category.title }}</li>
                 {% endfor %}

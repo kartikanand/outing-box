@@ -7772,8 +7772,8 @@ body {
   background-image: url("/media/img/header.jpg");
   background-position: 30% 50%;
   color: #fff; }
-  .header h3 {
-    margin-top: -25px;
+  .header h2 {
+    margin-top: 10px;
     margin-bottom: 50px; }
 
 ul {
@@ -7801,27 +7801,26 @@ section {
 .text-rating {
   color: #FFDF88; }
 
-.item-cost li {
-  display: inline-block;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 3px;
-  padding-right: 3px;
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #000;
-  border-radius: 100%;
-  font-size: smaller; }
-.item-cost .cost-active {
-  background-color: #519548;
-  color: #fff; }
+.item-cost {
+  padding-left: 0px !important; }
+  .item-cost li {
+    display: inline-block;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 100%;
+    font-size: smaller; }
+  .item-cost .cost-active {
+    background-color: #519548;
+    color: #fff; }
 
 .search-result {
   padding-top: 5px;
   padding-bottom: 5px; }
-
-.search-results ul {
-  padding-left: 0px !important; }
 
 .dropdown-button {
   width: 100px; }

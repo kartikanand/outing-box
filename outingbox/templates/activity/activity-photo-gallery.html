@@ -6,6 +6,7 @@
     </div>
 
     <div class="row" style="display: flex; align-items:center;">
+        {% if photos %}
         <div class="col-sm-1 hidden-xs"><button class="arrow-left"><span class="fa fa-fw fa-arrow-left"></span></button></div>
         <div class="col-xs-12 col-sm-10">
             <div class="row photo-gallery text-center">
@@ -15,5 +16,10 @@
             </div>
             <button class="arrow-right"><span class="fa fa-fw fa-arrow-right"></span></button>
         </div>
+        {% else %}
+        <div class="col-xs-12">
+        <h3 class="text-warning text-center">Boo! No photos to show right now :(</h3>
+        </div>
+        {% endif %}
     </div>
 </section>

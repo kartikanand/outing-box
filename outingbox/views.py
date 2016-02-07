@@ -1,5 +1,6 @@
 from functools import reduce
 import operator
+import datetime
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
@@ -59,7 +60,7 @@ def activity_view(request, id=None, title=None):
         except UserRating.DoesNotExist:
             pass
 
-    reviews = [review_inst.review for review_inst in UserReview.objects.filter(activity=activity)]
+    reviews = [review_inst for review_inst in UserReview.objects.filter(activity=activity)]
 
     context = {
         'activity': activity, 
@@ -207,8 +208,15 @@ def comment_activity(request):
     user_review_inst.pub_date = timezone.now()
     user_review_inst.save()
 
-    return JsonResponse({'msg': 'ok', 'status': '0'})
+    date_format = "%b. %d, %Y"
 
+    return JsonResponse({
+        'msg': 'ok', 
+        'status': '0', 
+        'review': user_review_inst.review, 
+        'username': user_review_inst.user.username, 
+        'date': user_review_inst.pub_date.strftime(date_format)
+    })
 
 order_dict = {
     'raa': 'rating',    # Rating ascending

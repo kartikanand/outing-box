@@ -5,16 +5,15 @@ require('slick-carousel');
 require('jquery-bar-rating');
 require('selectize');
 
-var getCurrentLocation = require('./location').getCurrentLocation;
+//var getCurrentLocation = require('./location').getCurrentLocation;
 var bookmarkEventHandler = require('./bookmark').bookmarkEventHandler;
-var ratingInitData = require('./rating').ratingInitData;
+var getRatingInitData = require('./rating').getRatingInitData;
 var commentFormHandler = require('./comment').commentFormHandler;
 var photoGalleryInitData = require('./photo-gallery').photoGalleryInitData;
 var filterInitData = require('./filter').filterInitData;
 
 // initialize all the things
 $(function () {
-
     // Add event handler to bookmark span element if it exists
     // will only exist on activity and search page
     var bookmarkSpan = $('span.bookmark');
@@ -22,11 +21,16 @@ $(function () {
         bookmarkSpan.click(bookmarkEventHandler);
     }
 
-    // Initialize ratings
+    // Initialize read-only ratings
     // will only exist on activity and search page
-    var ratingsClass = $('.rating');
-    if (ratingsClass.length > 0) {
-        ratingsClass.barrating(ratingInitData);
+    var readOnlyRatingsClass = $('.readonly-rating');
+    if (readOnlyRatingsClass.length > 0) {
+        readOnlyRatingsClass.barrating(getRatingInitData(true));
+    }
+
+    var editRatingClass = $('.rating-form .rating');
+    if (editRatingClass.length > 0) {
+        editRatingClass.barrating(getRatingInitData(false));
     }
 
     // Add form submit handler to comments form
@@ -43,12 +47,14 @@ $(function () {
         $('.photo-gallery').slick(photoGalleryInitData);
     }
 
-    if ($('#category_auto_filter').length > 0) {
-        $('#category_auto_filter').selectize(filterInitData);
+    var categoryAutoFilter = $('#category_auto_filter');
+    if (categoryAutoFilter.length > 0) {
+        categoryAutoFilter.selectize(filterInitData);
     }
 
-    if($('#location_auto_filter').length > 0) {
-        $('#location_auto_filter').selectize(filterInitData);
+    var locationAutoFilter = $('#location_auto_filter');
+    if(locationAutoFilter.length > 0) {
+        locationAutoFilter.selectize(filterInitData);
     }
 
 /*    getCurrentLocation()

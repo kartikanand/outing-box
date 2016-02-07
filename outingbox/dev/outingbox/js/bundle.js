@@ -10290,7 +10290,7 @@ module.exports.bookmarkEventHandler = function (ev) {
     });
 };
 
-},{"./notify":21,"./utils":25}],18:[function(require,module,exports){
+},{"./notify":20,"./utils":24}],18:[function(require,module,exports){
 var makeRequestToServer = require('./utils').makeRequestToServer;
 var notify = require('./notify').notify;
 
@@ -10302,71 +10302,31 @@ module.exports.commentFormHandler = function (ev) {
     var review = commentsForm.find('textarea').val();
 
     // Max review length : 512 characters
-    if (review.length > 5) {
+    if (review.length > 512) {
         notify("Too long");
         return false;
     }
 
-
     var url = commentsForm.attr('action');
-
     var data = commentsForm.serializeArray();
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
-        var newComment = '<p>'+review+'</p>';
-      + $('.comment-wrapper').append(newComment);
+        var newComment = $('<h5>'+data.username+' on '+data.date+'</h5>'+'<p>'+data.review+'</p>');
+        $('.comment-wrapper').prepend(newComment);
     })
     .catch(function (err) {
         console.log(err);
     });
 };
 
-},{"./notify":21,"./utils":25}],19:[function(require,module,exports){
+},{"./notify":20,"./utils":24}],19:[function(require,module,exports){
 module.exports.filterInitData = {
     plugins: ['remove_button'],
     hideSelected: true
 };
 
 },{}],20:[function(require,module,exports){
-var q = require('q');
-
-// Function to get current location from html5 geolocation API
-// Returns a promise object
-// Saves the current location to session storage
-module.exports.getCurrentLocation = function () {
-    // Check if current location is saved in sessionStorage
-    var currentLocation =  sessionStorage.currentLocation;
-    if(currentLocation) {
-        return q.resolve(JSON.parse(currentLocation));
-    }
-
-    var defer = q.defer();
-    // check if browser supports html5 location api
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            currentLocation = {
-                'lat': position.coords.latitude,
-                'lon': position.coords.longitude
-            };
-
-            // save to sessionStorage for future calls
-            sessionStorage.currentLocation = JSON.stringify(currentLocation);
-
-            defer.resolve(currentLocation);
-        }, function () {
-            // user rejected getting current location
-            defer.reject(new Error('permission error'));
-        });
-    } else {
-        // browser doesn't support html5 location api
-        defer.reject(new Error('location error'));
-    }
-
-    return defer.promise;
-};
-
-},{"q":4}],21:[function(require,module,exports){
 // browserify-shim entry has been added for the following plugin to not require nom jQuery, rather rely on script tag entry for jQuery
 require('sweetalert');
 
@@ -10380,7 +10340,7 @@ module.exports.notify = function (msg) {
     });
 };
 
-},{"sweetalert":16}],22:[function(require,module,exports){
+},{"sweetalert":16}],21:[function(require,module,exports){
 module.exports.photoGalleryInitData = {
     lazyLoad: 'ondemand',
     dots: true,
@@ -10416,69 +10376,66 @@ module.exports.photoGalleryInitData = {
     ]
 };
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var makeRequestToServer = require('./utils').makeRequestToServer;
 var notify = require('./notify').notify;
 
-var getIsRatingReadOnly = function () {
-    var canedit_input = $('input.can-edit');
-    if (canedit_input.length > 0)
-    {
-        return false;
-    }
-
-    return true;
-};
-
-// for ratings
-module.exports.ratingInitData = {
+var readOnlyData = {
     theme: 'fontawesome-stars',
     showSelectedRating: false,
     hoverState: false,
-    readonly: getIsRatingReadOnly(),
-    onSelect:function(value, text, event) {
-        // Return if manually setting the rating
-        if (typeof(event) == undefined) {
-            return;
-        }
+    readonly: true
+};
 
-        console.log(this);
+var editRatingData = Object.create(readOnlyData);
+editRatingData.readonly = false;
+editRatingData.onSelect = function(value, text, event) {
+    // Return if manually setting the rating
+    if (typeof(event) == undefined) {
+        return;
+    }
 
-        var self = $(event.target);
+    var self = $(event.target);
 
-        var form = self.parents(".rating-form");
-        var data = form.serializeArray();
+    var form = self.parents(".rating-form");
+    var data = form.serializeArray();
 
-        var old_rating = self.parent().prev().data('old-rating');
-        console.log(old_rating);
+    var old_rating = self.parent().prev().data('old-rating');
+    console.log(old_rating);
 
-        var url = form.attr('action');
+    var url = form.attr('action');
 
-        if (value) {
-            data.push({
-                'name': 'new_rating',
-                'value': value
-            });
-        } else {
-            data.push({
-                'name': 'delete',
-                'value': 1
-            });
-        }
-
-        makeRequestToServer(url, 'POST', data, 'json')
-        .then(function (data) {
-            console.log(data);
-        })
-        .catch(function (err) {
-            console.log(err);
+    if (value) {
+        data.push({
+            'name': 'new_rating',
+            'value': value
         });
-    },
-    onClear:function(value, text) {
+    } else {
+        data.push({
+            'name': 'delete',
+            'value': 1
+        });
+    }
+
+    makeRequestToServer(url, 'POST', data, 'json')
+    .then(function (data) {
+        console.log(data);
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+};
+
+// for ratings
+module.exports.getRatingInitData = function (isReadOnly) {
+    if (isReadOnly) {
+        return readOnlyData;
+    } else {
+        return editRatingData;
     }
 };
 
-},{"./notify":21,"./utils":25}],24:[function(require,module,exports){
+},{"./notify":20,"./utils":24}],23:[function(require,module,exports){
 (function (global){
 var $ = (typeof window !== "undefined" ? window['jQuery'] : typeof global !== "undefined" ? global['jQuery'] : null);
 
@@ -10487,16 +10444,15 @@ require('slick-carousel');
 require('jquery-bar-rating');
 require('selectize');
 
-var getCurrentLocation = require('./location').getCurrentLocation;
+//var getCurrentLocation = require('./location').getCurrentLocation;
 var bookmarkEventHandler = require('./bookmark').bookmarkEventHandler;
-var ratingInitData = require('./rating').ratingInitData;
+var getRatingInitData = require('./rating').getRatingInitData;
 var commentFormHandler = require('./comment').commentFormHandler;
 var photoGalleryInitData = require('./photo-gallery').photoGalleryInitData;
 var filterInitData = require('./filter').filterInitData;
 
 // initialize all the things
 $(function () {
-
     // Add event handler to bookmark span element if it exists
     // will only exist on activity and search page
     var bookmarkSpan = $('span.bookmark');
@@ -10504,11 +10460,16 @@ $(function () {
         bookmarkSpan.click(bookmarkEventHandler);
     }
 
-    // Initialize ratings
+    // Initialize read-only ratings
     // will only exist on activity and search page
-    var ratingsClass = $('.rating');
-    if (ratingsClass.length > 0) {
-        ratingsClass.barrating(ratingInitData);
+    var readOnlyRatingsClass = $('.readonly-rating');
+    if (readOnlyRatingsClass.length > 0) {
+        readOnlyRatingsClass.barrating(getRatingInitData(true));
+    }
+
+    var editRatingClass = $('.rating-form .rating');
+    if (editRatingClass.length > 0) {
+        editRatingClass.barrating(getRatingInitData(false));
     }
 
     // Add form submit handler to comments form
@@ -10525,12 +10486,14 @@ $(function () {
         $('.photo-gallery').slick(photoGalleryInitData);
     }
 
-    if ($('#category_auto_filter').length > 0) {
-        $('#category_auto_filter').selectize(filterInitData);
+    var categoryAutoFilter = $('#category_auto_filter');
+    if (categoryAutoFilter.length > 0) {
+        categoryAutoFilter.selectize(filterInitData);
     }
 
-    if($('#location_auto_filter').length > 0) {
-        $('#location_auto_filter').selectize(filterInitData);
+    var locationAutoFilter = $('#location_auto_filter');
+    if(locationAutoFilter.length > 0) {
+        locationAutoFilter.selectize(filterInitData);
     }
 
 /*    getCurrentLocation()
@@ -10540,7 +10503,7 @@ $(function () {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./bookmark":17,"./comment":18,"./filter":19,"./location":20,"./photo-gallery":22,"./rating":23,"jquery-bar-rating":1,"selectize":5,"slick-carousel":7}],25:[function(require,module,exports){
+},{"./bookmark":17,"./comment":18,"./filter":19,"./photo-gallery":21,"./rating":22,"jquery-bar-rating":1,"selectize":5,"slick-carousel":7}],24:[function(require,module,exports){
 var q = require('q');
 
 // Utility function that returns a promise to make a request to the server with passed arguments.
@@ -10559,4 +10522,4 @@ module.exports.makeRequestToServer = function (url, method, data, dataType) {
     );
 };
 
-},{"q":4}]},{},[24]);
+},{"q":4}]},{},[23]);

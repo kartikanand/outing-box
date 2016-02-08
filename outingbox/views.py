@@ -184,6 +184,15 @@ def comment_activity(request):
         res.status_code = 400
         return res
 
+    review = request.POST.get("review", None)
+    if review is None:
+        res = JsonResponse({'msg': 'invalid comment', 'status': '1'})
+        return res
+
+    if len(review) > 512:
+        res = JsonResponse({'msg': 'comment too long', 'status': '1'})
+        return res
+
     activity_id = request.POST.get("id", None)
     if activity_id is None:
         res = JsonResponse({'msg': 'invalid id', 'status': '1'})
@@ -200,11 +209,6 @@ def comment_activity(request):
         old_review = user_review_inst.review
     except UserReview.DoesNotExist:
         user_review_inst = UserReview(user=request.user, activity=activity)
-
-    review = request.POST.get("review", None)
-    if review is None:
-        res = JsonResponse({'msg': 'invalid comment', 'status': '1'})
-        return res
 
     user_review_inst.review = review
     user_review_inst.pub_date = timezone.now()

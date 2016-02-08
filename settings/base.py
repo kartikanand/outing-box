@@ -25,14 +25,14 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'outingbox',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'location_field',
-    'watson',
-    'outingbox'
+    'watson'
 )
 
 MIDDLEWARE_CLASSES = (

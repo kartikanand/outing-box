@@ -4,17 +4,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="text-center">You can login using the below social accounts</h5>
+                <h4 class="text-center">You can login using the below social accounts</h4>
             </div>
             <div class="modal-body">
                 <div class="row text-center">
-                    <div class="col-xs-12">
-                        <a class="btn btn-default btn-lg" href="{% provider_login_url "google" %}?next={% firstof request.path '/' %}"><span class="fa fa-google"></span> Google</a>
+                    <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+                        <a class="btn btn-lg btn-block btn-social btn-google" href="{% provider_login_url "google" %}?next={% firstof request.path '/' %}"><span class="fa fa-google"></span> Sign in with Google</a>
                     </div>
                 </div>
                 <div class="row text-center">
-                    <div class="col-xs-12">
-                        <a class="btn btn-default btn-lg" href="{% provider_login_url "facebook" %}?next={% firstof request.path '/' %}"><span class="fa fa-facebook"></span> Facebook</a>
+                    <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+                        <a class="btn btn-lg btn-block btn-social btn-facebook" href="{% provider_login_url "facebook" %}?next={% firstof request.path '/' %}"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 <section class="container">
     <div class="page-header text-center">
-        <h3 class="center bold">Take a look at our collections</h3>
+        <h1 class="center bold">Take a look at our collections</h1>
     </div>
 
     {% comment %}
@@ -14,8 +14,10 @@
         <div class="col-xs-4">
             <div class="row text-center">
                 <div class="col-xs-12">
-                        <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
-                        <a href="{{ box.get_absolute_url }}"><h6>{{ box.title }}</h6></a>
+                        <a href="{{ box.get_absolute_url }}">
+                            <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
+                            <h6>{{ box.title }}</h6>
+                        </a>
                 </div>
             </div>
         </div>
@@ -26,8 +28,10 @@
         <div class="col-xs-4">
             <div class="row text-center">
                 <div class="col-xs-12">
-                        <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
-                        <a href="{{ box.get_absolute_url }}"><h6>{{ box.title }}</h6></a>
+                        <a href="{{ box.get_absolute_url }}">
+                            <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
+                            <h6>{{ box.title }}</h6>
+                        </a>
                 </div>
             </div>
         </div>
@@ -39,8 +43,10 @@
         <div class="col-sm-2">
             <div class="row text-center">
                 <div class="col-xs-12">
-                        <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
-                        <a href="{{ box.get_absolute_url }}"><h6>{{ box.title }}</h6></a>
+                        <a href="{{ box.get_absolute_url }}">
+                            <img src="{{ MEDIA_URL }}{{ box.featured_image }}">
+                            <h6>{{ box.title }}</h6>
+                        </a>
                 </div>
             </div>
         </div>

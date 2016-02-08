@@ -7,17 +7,29 @@ body {
     height: 100%;
 }
 
+.navbar-brand {
+    font-family: 'BlackJack';
+}
+
 .wrapper {
     min-height: 100%;
     position: relative;
     padding-bottom: 250px;
 }
 
+h1, h2 {
+    font-family: 'Cavier';
+}
+
+.btn-social-icon {
+    border-radius: 100%;
+}
+
 .header {
     height: 400px;
     background-size: 100%;
     background-image: url("/media/img/header.jpg");
-    background-position: 30% 50%;
+    background-position: 50% 5%;
     color: #fff;
 
     h2 {
@@ -51,7 +63,6 @@ footer {
 }
 
 section {
-    padding-top: 20px;
     padding-bottom: 25px;
 }
 
@@ -60,7 +71,7 @@ section {
     margin-bottom: 10px;
 }
 
-@media(max-width:480px) {
+@media(max-width:780px) {
     .map {
         height: 150px;
     }
@@ -68,6 +79,12 @@ section {
     .header {
         background-size: 150%;
         height: 300px;
+    }
+
+    .activity {
+        &:first-child {
+            padding-top: 25px;
+        }
     }
 }
 
@@ -113,17 +130,21 @@ section {
 }
 
 .activity {
-    &:first-child {
-        margin-top: 25px !important;
-    }
-
     img {
         margin-bottom: 10px;
     }
 
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 25px !important;
-    padding-top: 25px !important;
+    &:first-child {
+        padding-top: 0px;
+    }
+
+    h5 {
+        margin-top: 0px;
+    }
+
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 40px;
+    padding-top: 25px;
 }
 
 .row {

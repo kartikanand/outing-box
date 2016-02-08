@@ -1,10 +1,3 @@
-{% extends 'components/nav-base.html' %}
-
-{% block nav_form %}
-<form class="navbar-form navbar-left" action="{% url 'search' %}" role="search">
-    <div class="form-group">
-        <input type="text" class="form-control input-lg" placeholder="Bowling, Pool, etc." name="query">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-{% endblock nav_form %}
+<nav class="navbar navbar-inverse">
+    {% include 'components/nav-base.html' %}
+</nav>

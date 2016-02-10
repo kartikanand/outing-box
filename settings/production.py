@@ -11,6 +11,7 @@ from .base import *
 
 THUMBNAIL_DEBUG = False
 DEBUG = False
+TEMPLATE_DEBUG = False
 
 # Database
 DATABASES = {

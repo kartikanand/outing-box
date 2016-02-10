@@ -13,6 +13,14 @@
     </div>
 
     <div class="collapse navbar-collapse" id="nav-menu">
+        {% if nav_form %}
+        <form class="navbar-form navbar-left" action="{% url 'search' %}" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control input-lg" placeholder="Bowling, Pool, etc." name="query">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% endif %}
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'index' %}">Home</a></li>
             {% if user.is_authenticated %}
@@ -30,12 +38,9 @@
             {% else %}
             <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
             {% endif %}
-            <li><a href="{% url 'about' %}">About Us</a></li>
             <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
         </ul>
-
-        {% block nav_form %}
-        {% endblock nav_form %}
 
     </div>
 </div>

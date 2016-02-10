@@ -42,7 +42,41 @@ def about_us_view(request):
 def box_view(request, id=None, title=None):
     box = get_object_or_404(Box, pk=id)
 
-    return render(request, 'box/box.html', {'box': box})
+    page = request.GET.get('page', 1)
+
+    parent_categories = box.parentcategory_set.all()
+
+    activity_set = set()
+    for parent_category in parent_categories:
+        for category in parent_category.category_set.all():
+            activity_set.update(category.activity_set.all())
+
+    activities = list(activity_set)
+    results_paginator = Paginator(activities, 6)
+    try:
+        results_page = results_paginator.page(page)
+    except PageNotAnInteger:
+        results_page = results_paginator.page(1)
+    except:
+        results_page = results_paginator.page(results_paginator.num_pages)
+
+    activities = results_page
+
+    url_prev_page_number = None
+    url_next_page_number = None
+
+    if activities.has_previous():
+        url_prev_page_number = add_page_to_request_url(request, 'box', {'page': activities.previous_page_number()}, kwargs={'id':id, 'title':box.title})
+
+    if activities.has_next():
+        url_next_page_number = add_page_to_request_url(request, 'box', {'page': activities.next_page_number()}, kwargs={'id':id, 'title':box.title})
+
+    return render(request, 'box/box.html', {
+        'box': box, 
+        'activities': activities,
+        'url_next_page_number': url_next_page_number,
+        'url_prev_page_number': url_prev_page_number
+    })
 
 def activity_view(request, id=None, title=None):
     activity = get_object_or_404(Activity, pk=id)
@@ -232,11 +266,18 @@ order_dict = {
 }
 
 # Ensure _new_params to be a dictionary
-def add_param_to_request_url(request, _new_params):
+def add_page_to_request_url(request, view_name, _new_params, kwargs=None):
     _dict = request.GET.copy()
-    _dict.update(_new_params)
 
-    return reverse('search')+'?'+_dict.urlencode()
+    # Django query dict update method appends instead of replacing the value if a key is present in both dicts
+    # Therefore remove page from original dict
+    try:
+        _dict.pop('page')
+    except KeyError:
+        pass
+
+    _dict.update(_new_params)
+    return reverse(view_name, kwargs=kwargs)+'?'+_dict.urlencode()
 
 def get_filter_url(request, order_by):
     _dict = request.GET.copy()
@@ -292,10 +333,10 @@ def search_view(request):
     url_next_page_number = None
 
     if activities.has_previous():
-        url_prev_page_number = add_param_to_request_url(request, {'page': activities.previous_page_number()})
+        url_prev_page_number = add_page_to_request_url(request, 'search', {'page': activities.previous_page_number()})
 
     if activities.has_next():
-        url_next_page_number = add_param_to_request_url(request, {'page': activities.next_page_number()})
+        url_next_page_number = add_page_to_request_url(request, 'search', {'page': activities.next_page_number()})
 
     bookmarks = None
     if request.user.is_authenticated():

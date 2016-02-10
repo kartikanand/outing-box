@@ -2,8 +2,10 @@
 
 {% for activity in activities  %}
 <div class="row activity">
-    <div class="col-xs-12 col-sm-2">
-        <img class="img-responsive center-block" src="{{ MEDIA_URL }}{{ activity.search_image }}">
+    <div class="col-xs-12 col-sm-2 col-md-5">
+        <a href="{{ activity.get_absolute_url }}">
+            <img class="img-responsive center-block" src="{{ MEDIA_URL }}{{ activity.featured_image }}">
+        </a>
     </div>
     <div class="col-xs-12 col-sm-push-5 col-sm-5 col-md-push-3 col-md-3 text-center">
     {% include 'components/rating.html' with activity=activity read_only=1 user_rating=0 %}

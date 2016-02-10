@@ -3691,7 +3691,7 @@ tbody.collapse.in {
 .navbar {
   position: relative;
   min-height: 45px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
   border: 1px solid transparent; }
   .navbar:before, .navbar:after {
     content: " ";
@@ -6787,19 +6787,24 @@ body {
   position: relative;
   padding-bottom: 250px; }
 
+.navbar-form button {
+  height: 34px; }
+
 h1, h2 {
   font-family: 'Cavier'; }
 
 .btn-social-icon {
-  border-radius: 100%; }
+  border-radius: 10%; }
 
 .header {
   height: 300px;
-  background: #1e5799;
+  background-color: #1e5799;
   color: #fff; }
-  .header h2 {
-    margin-top: 10px;
+  .header h1 {
+    margin-top: 50px;
     margin-bottom: 50px; }
+  .header h2 {
+    margin-top: 25px; }
 
 ul {
   margin-top: 0px; }
@@ -6828,12 +6833,15 @@ section {
   .map {
     height: 150px; }
 
-  .header {
-    background-size: 150%;
-    height: 300px; }
-
   .activity:first-child {
-    padding-top: 25px; } }
+    padding-top: 25px; }
+
+  .search-results {
+    margin-top: 50px;
+    border-left: none; }
+
+  .box-hero {
+    height: 200px; } }
 .text-rating {
   color: #FFDF88; }
 
@@ -6854,12 +6862,12 @@ section {
     background-color: #519548;
     color: #fff; }
 
+.search-results {
+  border-left: 1px solid #ddd; }
+
 .search-result {
   padding-top: 5px;
   padding-bottom: 5px; }
-
-.dropdown-button {
-  width: 100px; }
 
 .dropdown-content li {
   padding: 0px !important; }
@@ -6883,5 +6891,29 @@ section {
 
 .slick-track {
   overflow: hidden !important; }
+
+#entertainment {
+  background-color: #d35400; }
+
+#science-art-and-history {
+  background-color: #36393B; }
+
+#nature {
+  background-color: #27ae60; }
+
+#health-and-wellness {
+  background-color: #D14334; }
+
+#games-and-sports {
+  background-color: #16a085; }
+
+#hobbies {
+  background-color: #8e44ad; }
+
+.box-details {
+  margin-top: 50px; }
+
+.pager {
+  margin-top: 50px; }
 
 /*# sourceMappingURL=styles.css.map */

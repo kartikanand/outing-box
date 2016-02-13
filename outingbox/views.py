@@ -1,6 +1,6 @@
-from functools import reduce
 import operator
 import datetime
+from functools import reduce
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
@@ -11,7 +11,9 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+
 from watson import search
+
 from .models import Box, Activity, Category, SubZone, UserBookmark, UserRating, FeaturedActivity, UserReview
 
 def index_view(request):
@@ -78,6 +80,40 @@ def box_view(request, id=None, title=None):
         'url_prev_page_number': url_prev_page_number
     })
 
+@login_required
+def profile_bookmarks_view(request):
+    try:
+        user_bookmark_inst = UserBookmark.objects.get(user=request.user)
+        bookmarks = user_bookmark_inst.bookmarks.all()
+    except UserBookmark.DoesNotExist:
+        bookmarks = []
+
+    page = request.GET.get('page', 1)
+    results_paginator = Paginator(bookmarks, 6)
+    try:
+        results_page = results_paginator.page(page)
+    except PageNotAnInteger:
+        results_page = results_paginator.page(1)
+    except:
+        results_page = results_paginator.page(results_paginator.num_pages)
+
+    bookmarks = results_page
+
+    url_prev_page_number = None
+    url_next_page_number = None
+
+    if bookmarks.has_previous():
+        url_prev_page_number = add_page_to_request_url(request, 'profile_bookmarks', {'page': bookmarks.previous_page_number()})
+
+    if bookmarks.has_next():
+        url_next_page_number = add_page_to_request_url(request, 'profile_bookmarks', {'page': bookmarks.next_page_number()})
+
+    return render(request, 'account/bookmarks.html', {
+        'bookmarks': bookmarks,
+        'url_next_page_number': url_next_page_number,
+        'url_prev_page_number': url_prev_page_number
+    })
+
 def activity_view(request, id=None, title=None):
     activity = get_object_or_404(Activity, pk=id)
 
@@ -110,7 +146,15 @@ def activity_view(request, id=None, title=None):
 
 @login_required
 def profile_view(request):
-    return render(request, 'account/profile.html', {});
+    try:
+        user_bookmark_inst = UserBookmark.objects.get(user=request.user)
+        bookmarks = user_bookmark_inst.bookmarks.all()[:3]
+    except UserBookmark.DoesNotExist:
+        bookmarks = []
+
+    return render(request, 'account/profile.html', {
+        'bookmarks': bookmarks
+    });
 
 @csrf_protect
 @require_POST

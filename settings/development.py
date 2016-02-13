@@ -9,7 +9,6 @@ settings for development environments
 import dj_database_url
 from .base import *
 
-THUMBNAIL_DEBUG = True
 DEBUG = True
 
 # Database
@@ -35,6 +34,5 @@ CACHES = {
 }
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 SESSION_CACHE_ALIAS = 'cache_session'

@@ -17,7 +17,7 @@ class BaseTitleMixin():
 class AbstractBaseModel(models.Model):
     title = models.CharField(
         max_length=128,
-        help_text="<b>This field cannot be blank</b>. Enter title. Max length: 128."
+        help_text="<b>This field cannot be blank</b>. Enter title. (For Address title, enter Activity title itself)Max length: 128."
     )
 
     class Meta:

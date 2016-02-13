@@ -5667,10 +5667,10 @@ tbody.collapse.in {
     color: #000; }
     .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
       color: lighter(#000);
-      background-color: #gray-lighter; }
+      background-color: #eeeeee; }
   .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     color: #000;
-    background-color: #gray-lighter; }
+    background-color: #eeeeee; }
   .navbar-default .navbar-nav > .disabled > a, .navbar-default .navbar-nav > .disabled > a:hover, .navbar-default .navbar-nav > .disabled > a:focus {
     color: #ccc;
     background-color: transparent; }
@@ -5684,17 +5684,17 @@ tbody.collapse.in {
   .navbar-default .navbar-form {
     border-color: #eeeeee; }
   .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-    background-color: #gray-lighter;
+    background-color: #eeeeee;
     color: #000; }
   @media (max-width: 767px) {
     .navbar-default .navbar-nav .open .dropdown-menu > li > a {
       color: #000; }
       .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
         color: lighter(#000);
-        background-color: #gray-lighter; }
+        background-color: #eeeeee; }
     .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
       color: #000;
-      background-color: #gray-lighter; }
+      background-color: #eeeeee; }
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
       color: #ccc;
       background-color: transparent; } }
@@ -7545,7 +7545,7 @@ button.close {
     .navbar-default .dropdown-menu > li > a:hover,
     .navbar-default .dropdown-menu > .active > a,
     .navbar-default .dropdown-menu > .active > a:hover {
-      background-color: #gray-lighter; }
+      background-color: #eeeeee; }
   .navbar-inverse .dropdown-menu {
     background-color: #1C2130; }
     .navbar-inverse .dropdown-menu > li > a,

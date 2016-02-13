@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^search/$', views.search_view, name='search'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/profile/$', views.profile_view, name='profile'),
+    url(r'^accounts/profile/bookmarks$', views.profile_bookmarks_view, name='profile_bookmarks'),
     url(r'^accounts/bookmark/$', views.bookmark_activity, name='bookmark'),
     url(r'^accounts/rate/$', views.rate_activity, name='rate'),
     url(r'^accounts/comment/$', views.comment_activity, name='comment'),

@@ -6,13 +6,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="description" content="A search engine for outing">
+        <meta name="description" content="A search engine for finding things to do around you">
         <meta name="author" content="Outing Box">
 
-        <title>
-        {% block title %}Outing Box{% endblock title %}
-        </title>
-                
+        <title>{% block title %}Outing Box{% endblock title %}</title>
+
         <link rel="stylesheet" type="text/css" href="{% static 'outingbox/css/bundle.min.css' %}">
         
         <!--[if lt IE 9]>
@@ -22,40 +20,27 @@
 
         <!-- FAVICONS START -->
         <!-- FAVICONS END -->
+        {% if not debug %}{% include 'components/googleanalytics.html' %}{% endif %}
 
-        <!-- GOOGLE ANALYTICS START -->
-        <!-- GOOGLE ANALYTICS END -->
     </head>
     <body>
         <div class="wrapper">
-            {% block alerts %}
-            {% include 'components/alerts.html' %}
-            {% endblock alerts %}
-
-            {% block navbar %}
-            {% include 'components/nav-secondary.html' %}
-            {% endblock navbar %}
+            {% block navbar %}{% include 'components/nav-secondary.html' %}{% endblock navbar %}
 
             {% include 'account/login-modal.html' %}
             {% include 'account/logout-modal.html' %}
 
-            {% block hero %}
-            {% endblock hero %}
+            {% block hero %}{% endblock hero %}
 
-            {% block content %}
-            {% endblock content %}
+            {% block content %}{% endblock content %}
 
-            {% block footer %}
-            {% include 'components/footer.html' %}
-            {% endblock footer %}
+            {% block footer %}{% include 'components/footer.html' %}{% endblock footer %}
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="{% static 'outingbox/js/bundle.min.js' %}"></script>
 
-        {% block customjs %}
-        {% endblock customjs %}
-
+        {% block customjs %}{% endblock customjs %}
     </body>
 </html>

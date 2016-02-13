@@ -1,6 +1,51 @@
 {% extends "components/base.html" %}
 
 {% load staticfiles %}
+{% load account socialaccount %}
+
+{% block title %}Profile{% endblock %}
 
 {% block hero %}
+<div class="container">
+    <section class="jumbotron header box-hero" id="{{ id }}">
+        <div class="row text-center">
+            <div class="col-xs-12">
+                <h1>{{ request.user.username }}</h1>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock hero %}
+
+{% block content %}
+<section class="container">
+    <div class="page-header">
+        <h2>Your bookmarks</h2>
+    </div>
+
+    <div class="row text-center">
+        {% for activity in bookmarks %}
+        <div class="col-xs-12 col-sm-4 text-center">
+            <a href="{{ activity.get_absolute_url }}">
+                <img src="{{ MEDIA_URL }}{{ activity.featured_image }}" class="img-responsive center-block">
+                <h6>{{ activity.title }}</h6>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row text-center">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+            <a class="btn btn-block btn-primary" href="{% url 'profile_bookmarks' %}">View all bookmarks</a>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h2>More settings</h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-4">
+            <a href="{% url 'socialaccount_connections' %}" class="btn btn-block btn-success">Connect other social accounts</a>
+        </div>
+    </div>
+</section>
+{% endblock content %}

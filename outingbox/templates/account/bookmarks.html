@@ -1,0 +1,34 @@
+{% extends "components/base.html" %}
+{% load staticfiles %}
+
+{% block hero %}
+{% endblock hero %}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        {% for activity in bookmarks %}
+            <div class="col-xs-12 col-sm-6 col-md-4 text-center box-details">
+                <h4>{{ activity.title }}</h4>
+                <img src="{{ MEDIA_URL }}{{ activity.featured_image }}">
+            </div>
+            <div class="clearfix visible-xs"></div>
+            {% if forloop.counter0 == 1 %}
+                <div class="clearfix visible-sm"></div>
+            {% endif %}
+            {% if forloop.counter0 == 2 %}
+                <div class="clearfix visible-md"></div>
+            {% endif %}
+            {% if forloop.counter0 == 3 %}
+                <div class="clearfix visible-sm"></div>
+            {% endif %}
+            {% if forloop.counter0 == 5 %}
+                <div class="clearfix visible-sm"></div>
+                <div class="clearfix visible-md"></div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% include 'components/pager.html' with activities=bookmarks %}
+</section>
+{% endblock content %}

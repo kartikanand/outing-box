@@ -9,7 +9,6 @@ settings for production environments
 import dj_database_url
 from .base import *
 
-THUMBNAIL_DEBUG = False
 DEBUG = False
 TEMPLATE_DEBUG = False
 

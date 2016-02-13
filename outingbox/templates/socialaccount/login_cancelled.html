@@ -1,0 +1,17 @@
+{% extends "socialaccount/base.html" %}
+
+
+{% block title %}Login Cancelled{% endblock %}
+
+{% block content %}
+<section class="container">
+    <div class="page-header">
+        <h2>Login Cancelled</h2>
+    </div>
+
+    {% url 'account_login' as login_url %}
+
+    <p>You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href="" data-toggle="modal" data-target="#login-modal">login</a>
+    </p>
+</section>
+{% endblock %}

@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'outingbox',
+    'crispy_forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -91,7 +92,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR ,'media')
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# For debugging
+INTERNAL_IPS = ('127.0.0.1',)
+
 # Required by Django all-auth
 SITE_ID = 3
 ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
+#ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
+# Crispy forms template pack
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

@@ -17,6 +17,9 @@ DATABASES = {
     'default': dj_database_url.config()
 }
 
+# Django all auth
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',

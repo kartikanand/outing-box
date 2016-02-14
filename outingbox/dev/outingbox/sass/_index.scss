@@ -17,6 +17,13 @@ body {
     padding-bottom: 250px;
 }
 
+// From jQuery-Barrating plugin
+.br-readonly {
+    a {
+        cursor: default;
+    }
+}
+
 // Bootstrap not giving equal height to button and input;
 // Therefore, manually override the height
 .navbar-form {

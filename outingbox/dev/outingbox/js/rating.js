@@ -10,6 +10,8 @@ var readOnlyData = {
 
 var editRatingData = Object.create(readOnlyData);
 editRatingData.readonly = false;
+editRatingData.hoverState = true;
+
 editRatingData.onSelect = function(value, text, event) {
     // Return if manually setting the rating
     if (typeof(event) == undefined) {
@@ -40,7 +42,7 @@ editRatingData.onSelect = function(value, text, event) {
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
-        console.log(data);
+        notify('Thanks for rating! Please conside adding a review as well :)', 'success', 'Cool')
     })
     .catch(function (err) {
         console.log(err);

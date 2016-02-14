@@ -10280,7 +10280,7 @@ module.exports.bookmarkEventHandler = function (ev) {
     })
     .catch(function (err) {
         if (err.responseJSON.status == -1) {
-            notify("Please login to continue!");
+            notify("Please login to bookmark!");
         } else {
             throw err;
         }
@@ -10301,6 +10301,11 @@ module.exports.commentFormHandler = function (ev) {
     var commentsForm = $(this);
     var review = commentsForm.find('textarea').val();
 
+    if (!review.trim()) {
+        notify("Empty review not allowed!");
+        return false;        
+    }
+
     // Max review length : 512 characters
     if (review.length > 512) {
         notify("Too long");
@@ -10312,21 +10317,26 @@ module.exports.commentFormHandler = function (ev) {
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
-        var newCommentHeader = $('<h5 class="text-muted"></h5>');
+        if (data.status == 0) {
+            var newCommentHeader = $('<h5 class="text-muted"></h5>');
 
-        // Set .text() to save from XSS
-        newCommentHeader.text(data.username+' on '+data.date);
-        
-        var newComment = $('<p></p>');
+            // Set .text() to save from XSS
+            newCommentHeader.text(data.username+' on '+data.date);
+            
+            var newComment = $('<p></p>');
 
-        // Set .text() to save from XSS
-        newComment.text(data.review);
-        
-        $('.comment-wrapper').prepend(newCommentHeader);
-        newCommentHeader.after(newComment);
+            // Set .text() to save from XSS
+            newComment.text(data.review);
+            
+            $('.comment-wrapper').prepend(newCommentHeader);
+            newCommentHeader.after(newComment);
+        }
+        else {
+            throw new Error(data);
+        }
     })
     .catch(function (err) {
-        console.log(err);
+        notify("Oops! we messed up. Please try again later.");
     });
 };
 
@@ -10340,13 +10350,15 @@ module.exports.filterInitData = {
 // browserify-shim entry has been added for the following plugin to not require nom jQuery, rather rely on script tag entry for jQuery
 require('sweetalert');
 
-module.exports.notify = function (msg) {
+module.exports.notify = function (msg, type, title) {
+    type = type || "error";
+    title = title || "Error!"
     swal({
-        title: "Error!",
+        title: title,
         text: msg,
-        type: "error",
-        timer: 2000,
-        confirmButtonText: "Cool"
+        type: type,
+        timer: 3000,
+        confirmButtonText: "Ok"
     });
 };
 
@@ -10399,6 +10411,8 @@ var readOnlyData = {
 
 var editRatingData = Object.create(readOnlyData);
 editRatingData.readonly = false;
+editRatingData.hoverState = true;
+
 editRatingData.onSelect = function(value, text, event) {
     // Return if manually setting the rating
     if (typeof(event) == undefined) {
@@ -10429,7 +10443,7 @@ editRatingData.onSelect = function(value, text, event) {
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
-        console.log(data);
+        notify('Thanks for rating! Please conside adding a review as well :)', 'success', 'Cool!')
     })
     .catch(function (err) {
         console.log(err);

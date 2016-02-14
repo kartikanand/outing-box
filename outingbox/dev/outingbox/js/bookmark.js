@@ -34,7 +34,7 @@ module.exports.bookmarkEventHandler = function (ev) {
     })
     .catch(function (err) {
         if (err.responseJSON.status == -1) {
-            notify("Please login to continue!");
+            notify("Please login to bookmark!");
         } else {
             throw err;
         }

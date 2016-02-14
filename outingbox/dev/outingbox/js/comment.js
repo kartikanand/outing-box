@@ -8,6 +8,11 @@ module.exports.commentFormHandler = function (ev) {
     var commentsForm = $(this);
     var review = commentsForm.find('textarea').val();
 
+    if (!review.trim()) {
+        notify("Empty review not allowed!");
+        return false;        
+    }
+
     // Max review length : 512 characters
     if (review.length > 512) {
         notify("Too long");
@@ -19,20 +24,25 @@ module.exports.commentFormHandler = function (ev) {
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
-        var newCommentHeader = $('<h5 class="text-muted"></h5>');
+        if (data.status == 0) {
+            var newCommentHeader = $('<h5 class="text-muted"></h5>');
 
-        // Set .text() to save from XSS
-        newCommentHeader.text(data.username+' on '+data.date);
-        
-        var newComment = $('<p></p>');
+            // Set .text() to save from XSS
+            newCommentHeader.text(data.username+' on '+data.date);
+            
+            var newComment = $('<p></p>');
 
-        // Set .text() to save from XSS
-        newComment.text(data.review);
-        
-        $('.comment-wrapper').prepend(newCommentHeader);
-        newCommentHeader.after(newComment);
+            // Set .text() to save from XSS
+            newComment.text(data.review);
+            
+            $('.comment-wrapper').prepend(newCommentHeader);
+            newCommentHeader.after(newComment);
+        }
+        else {
+            throw new Error(data);
+        }
     })
     .catch(function (err) {
-        console.log(err);
+        notify("Oops! we messed up. Please try again later.");
     });
 };

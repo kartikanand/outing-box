@@ -267,8 +267,9 @@ def comment_activity(request):
         res = JsonResponse({'msg': 'invalid comment', 'status': '1'})
         return res
 
-    if len(review) > 512:
-        res = JsonResponse({'msg': 'comment too long', 'status': '1'})
+    review = review.strip()
+    if not review or len(review) > 512:
+        res = JsonResponse({'msg': 'comment too long/short', 'status': '1'})
         return res
 
     activity_id = request.POST.get("id", None)

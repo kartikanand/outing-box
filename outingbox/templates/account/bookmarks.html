@@ -9,8 +9,10 @@
     <div class="row">
         {% for activity in bookmarks %}
             <div class="col-xs-12 col-sm-6 col-md-4 text-center box-details">
-                <h4>{{ activity.title }}</h4>
-                <img src="{{ MEDIA_URL }}{{ activity.featured_image }}">
+                <a href="{{ activity.get_absolute_url }}">
+                    <h4>{{ activity.title }}</h4>
+                    <img src="{{ MEDIA_URL }}{{ activity.featured_image }}">
+                </a>
             </div>
             <div class="clearfix visible-xs"></div>
             {% if forloop.counter0 == 1 %}

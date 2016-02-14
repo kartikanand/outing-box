@@ -1,5 +1,12 @@
 var $ = require('jquery');
 
+// require bootstrap components
+require('./bootstrap/button');
+require('./bootstrap/collapse');
+require('./bootstrap/dropdown');
+require('./bootstrap/modal');
+require('./bootstrap/tooltip');
+
 // browserify-shim entry has been added for the following plugins to not require npm jQuery, rather rely on script tag entry for jQuery
 require('slick-carousel');
 require('jquery-bar-rating');
@@ -56,9 +63,4 @@ $(function () {
     if(locationAutoFilter.length > 0) {
         locationAutoFilter.selectize(filterInitData);
     }
-
-/*    getCurrentLocation()
-    .then(function (data) {
-    });*/
-
 });

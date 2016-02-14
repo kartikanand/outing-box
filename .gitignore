@@ -3,7 +3,7 @@ node_modules/
 bower_components/
 .sass-cache/
 migrations/
-.pyc
+*.pyc
 .env
 staticfiles/
 media/

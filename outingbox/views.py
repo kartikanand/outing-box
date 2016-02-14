@@ -331,8 +331,8 @@ def get_filter_url(request, order_by):
 
     return reverse('search')+'?'+_dict.urlencode()
 
-def filter_list_in_model(query_set, filter_lst):
-    Q_lst = [Q(id=id) for id in filter_lst]
+def filter_list_in_model(query_set, filter_lst, filter_column):
+    Q_lst = [Q(**{filter_column: id}) for id in filter_lst]
 
     return query_set.filter(reduce(operator.or_, Q_lst))
 
@@ -349,10 +349,10 @@ def search_view(request):
     activities = Activity.objects.all()
 
     if sub_zones_selected_list:
-        activities = filter_list_in_model(activities, map(int, sub_zones_selected_list))
+        activities = filter_list_in_model(activities, map(int, sub_zones_selected_list), 'address__sub_zone__id')
 
     if categories_selected_list:
-        activities = filter_list_in_model(activities, map(int, categories_selected_list))
+        activities = filter_list_in_model(activities, map(int, categories_selected_list), 'category__id')
 
     if query:
         activities = search.filter(activities, query)

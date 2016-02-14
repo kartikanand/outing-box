@@ -1687,15 +1687,6 @@ body.stop-scrolling {
   border-radius: 0;
 }
 
-@font-face {
-  font-family: 'BlackJack';
-  src: url("../fonts/black_jack.ttf"); }
-@font-face {
-  font-family: 'Cavier';
-  src: url("../fonts/CaviarDreams.ttf"); }
-@font-face {
-  font-family: 'Railway';
-  src: url("../fonts/Raleway-Regular.ttf"); }
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -1895,7 +1886,7 @@ html {
   -webkit-tap-highlight-color: transparent; }
 
 body {
-  font-family: "Railway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.4;
   color: #424242;
@@ -1979,7 +1970,7 @@ hr {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Railway";
+  font-family: "Raleway";
   font-weight: 400;
   line-height: 1.1;
   color: inherit; }
@@ -4701,7 +4692,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Railway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -5822,9 +5813,6 @@ html,
 body {
   height: 100%; }
 
-.navbar-brand {
-  font-family: 'BlackJack'; }
-
 .wrapper {
   min-height: 100%;
   position: relative;
@@ -5835,9 +5823,6 @@ body {
 
 .navbar-form button {
   height: 34px; }
-
-h1, h2 {
-  font-family: 'Cavier'; }
 
 .btn-social-icon {
   border-radius: 10%; }

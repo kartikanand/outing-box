@@ -43,7 +43,7 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Railway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-base:        $font-family-sans-serif !default;
 
 $font-size-base:          14px !default;
@@ -63,7 +63,7 @@ $line-height-base:        1.4 !default;
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //** By default, this inherits from the `<body>`.
-$headings-font-family:    'Railway' !default;
+$headings-font-family:    'Raleway' !default;
 $headings-font-weight:    400 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;

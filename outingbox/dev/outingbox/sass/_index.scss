@@ -107,6 +107,13 @@ section {
     .box-hero {
         height: 200px;
     }
+
+    .search-jumbotron {
+        margin-bottom: 0px;
+        .page-header {
+            margin-bottom: 0px;
+        }
+    }
 }
 
 .text-rating {

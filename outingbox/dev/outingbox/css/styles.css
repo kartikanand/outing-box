@@ -6844,7 +6844,12 @@ section {
     border-left: none; }
 
   .box-hero {
-    height: 200px; } }
+    height: 200px; }
+
+  .search-jumbotron {
+    margin-bottom: 0px; }
+    .search-jumbotron .page-header {
+      margin-bottom: 0px; } }
 .text-rating {
   color: #FFDF88; }
 

@@ -1,6 +1,6 @@
 var $ = require('jquery');
 
-// require bootstrap components
+// require bootstrap components; soft link provided in current folder
 require('./bootstrap/button');
 require('./bootstrap/collapse');
 require('./bootstrap/dropdown');

@@ -1,5 +1,4 @@
 import os
-
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.postgres.fields import ArrayField
@@ -7,7 +6,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from location_field.models.plain import PlainLocationField
 from utils.metro_stations import metro_stations_list
-
 from .managers import SubZoneManager, CategoryManager
 
 class BaseTitleMixin():
@@ -294,3 +292,15 @@ class ImageGallery(models.Model):
     class Meta:
         verbose_name = 'Gallery'
         verbose_name_plural = 'Galleries'
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=128)
+    message = models.TextField(max_length=1024)
+    email = models.EmailField()
+
+    def __str__(self):
+        return "{0} - {1}".format(self.name, self.email)
+
+    class Meta:
+        verbose_name = 'Feedback'
+        verbose_name_plural = 'Feedbacks'

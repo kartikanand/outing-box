@@ -1,20 +1,18 @@
 import operator
-import datetime
 from functools import reduce
-
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-
 from watson import search
-
 from .models import Box, Activity, Category, SubZone, UserBookmark, UserRating, FeaturedActivity, UserReview
+from .forms import FeedbackForm
+from .decorators import require_user_authenticated, require_activity
 
 def index_view(request):
     boxes = Box.objects.all()
@@ -26,26 +24,26 @@ def index_view(request):
 
     return render(request, 'outingbox/index.html', {'boxes': boxes, 'featured': featured})
 
-def get_nearby(request):
-    lat = None
-    lon = None
-    if request.method == 'GET':
-        lat = request.GET.get('lat', None)
-        lon = request.GET.get('lon', None)
-
-    return HttpResponse("OK")
-
 def contact_us_view(request):
-    return render(request, 'outingbox/contact-us.html')
+    if request.method == 'GET':
+        form = FeedbackForm()
+    else:
+        form = FeedbackForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('feedback-thanks'))
+
+    return render(request, 'outingbox/contact-us.html', {'form': form})
+
+def contact_us_thanks(request):
+    return render(request, 'outingbox/contact-us.html', {'thanks': True})
 
 def about_us_view(request):
     return render(request, 'outingbox/about-us.html')
 
 def box_view(request, id=None, title=None):
     box = get_object_or_404(Box, pk=id)
-
-    page = request.GET.get('page', 1)
-
     parent_categories = box.parentcategory_set.all()
 
     activity_set = set()
@@ -55,6 +53,7 @@ def box_view(request, id=None, title=None):
 
     activities = list(activity_set)
     results_paginator = Paginator(activities, 6)
+    page = request.GET.get('page', 1)
     try:
         results_page = results_paginator.page(page)
     except PageNotAnInteger:
@@ -158,30 +157,9 @@ def profile_view(request):
 
 @csrf_protect
 @require_POST
-def rate_activity(request):
-    if not request.is_ajax():
-        res = JsonResponse({'msg': 'not ajax request', 'status': '1'})
-        res.status_code = 400
-        return res
-
-    if not request.user.is_authenticated():
-        res = JsonResponse({'msg': 'not authenticated', 'status': '-1'})
-        res.status_code = 400
-        return res
-
-    activity_id = request.POST.get("id", None)
-    if activity_id is None:
-        res = JsonResponse({'msg': 'invalid id', 'status': '1'})
-        res.status_code = 400
-        return res
-
-    try:
-        activity = Activity.objects.get(pk=activity_id)
-    except Activity.DoesNotExist:
-        res = JsonResponse({'msg': 'activity doesnt exist', 'status': '1'})
-        res.status_code = 400
-        return res
-
+@require_user_authenticated
+@require_activity
+def rate_activity(request, activity):
     rating = int(request.POST.get("new_rating", 0))
     if (rating > 5) or (rating <= 0):
         res = JsonResponse({'msg': 'invalid rating', 'status': '1'})
@@ -217,28 +195,9 @@ def rate_activity(request):
 
 @csrf_protect
 @require_POST
-def bookmark_activity(request):
-    if not request.is_ajax():
-        res = JsonResponse({'msg': 'not ajax request', 'status': '1'})
-        res.status_code = 400
-        return res
-
-    if not request.user.is_authenticated():
-        res = JsonResponse({'msg': 'not authenticated', 'status': '-1'})
-        res.status_code = 400
-        return res
-
-    activity_id = request.POST.get("id", None)
-    if activity_id is None:
-        res = JsonResponse({'msg': 'invalid id', 'status': '1'})
-        return res
-
-    try:
-        activity = Activity.objects.get(pk=activity_id)
-    except Activity.DoesNotExist:
-        res = JsonResponse({'msg': 'activity doesnt exist', 'status': '1'})
-        return res
-
+@require_user_authenticated
+@require_activity
+def bookmark_activity(request, activity):
     user_bookmark_inst, created = UserBookmark.objects.get_or_create(user=request.user)
 
     delete_bookmark = request.POST.get('delete', None)
@@ -251,17 +210,9 @@ def bookmark_activity(request):
 
 @csrf_protect
 @require_POST
-def comment_activity(request):
-    if not request.is_ajax():
-        res = JsonResponse({'msg': 'not ajax request', 'status': '1'})
-        res.status_code = 400
-        return res
-
-    if not request.user.is_authenticated():
-        res = JsonResponse({'msg': 'not authenticated', 'status': '-1'})
-        res.status_code = 400
-        return res
-
+@require_user_authenticated
+@require_activity
+def comment_activity(request, activity):
     review = request.POST.get("review", None)
     if review is None:
         res = JsonResponse({'msg': 'invalid comment', 'status': '1'})
@@ -270,17 +221,6 @@ def comment_activity(request):
     review = review.strip()
     if not review or len(review) > 512:
         res = JsonResponse({'msg': 'comment too long/short', 'status': '1'})
-        return res
-
-    activity_id = request.POST.get("id", None)
-    if activity_id is None:
-        res = JsonResponse({'msg': 'invalid id', 'status': '1'})
-        return res
-
-    try:
-        activity = Activity.objects.get(pk=activity_id)
-    except Activity.DoesNotExist:
-        res = JsonResponse({'msg': 'activity doesnt exist', 'status': '1'})
         return res
 
     try:
@@ -294,7 +234,6 @@ def comment_activity(request):
     user_review_inst.save()
 
     date_format = "%b. %d, %Y"
-
     return JsonResponse({
         'msg': 'ok', 
         'status': '0', 
@@ -302,13 +241,6 @@ def comment_activity(request):
         'username': user_review_inst.user.username, 
         'date': user_review_inst.pub_date.strftime(date_format)
     })
-
-order_dict = {
-    'raa': 'rating',    # Rating ascending
-    'rad': '-rating',   # Rating descending
-    'pra': 'cost',     # Price ascending
-    'prd': '-cost'     # Price descending
-}
 
 # Ensure _new_params to be a dictionary
 def add_page_to_request_url(request, view_name, _new_params, kwargs=None):
@@ -324,7 +256,7 @@ def add_page_to_request_url(request, view_name, _new_params, kwargs=None):
     _dict.update(_new_params)
     return reverse(view_name, kwargs=kwargs)+'?'+_dict.urlencode()
 
-def get_filter_url(request, order_by):
+def get_search_filter_urls(request, order_by):
     _dict = request.GET.copy()
     _dict['page'] = 1
     _dict['ob'] = order_by
@@ -357,6 +289,12 @@ def search_view(request):
     if query:
         activities = search.filter(activities, query)
 
+    order_dict = {
+        'raa': 'rating',    # Rating ascending
+        'rad': '-rating',   # Rating descending
+        'pra': 'cost',     # Price ascending
+        'prd': '-cost'     # Price descending
+    }
     if order_by:
         activities = activities.order_by(order_dict[order_by])
 
@@ -370,9 +308,9 @@ def search_view(request):
 
     activities = results_page
 
-    order_by_relevance_url = get_filter_url(request, '')
-    order_by_rating_url = get_filter_url(request, 'rad')
-    order_by_price_url = get_filter_url(request, 'pra')
+    order_by_relevance_url = get_search_filter_urls(request, '')
+    order_by_rating_url = get_search_filter_urls(request, 'rad')
+    order_by_price_url = get_search_filter_urls(request, 'pra')
 
     url_prev_page_number = None
     url_next_page_number = None

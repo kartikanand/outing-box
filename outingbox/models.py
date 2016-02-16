@@ -18,6 +18,7 @@ class AbstractBaseModel(models.Model):
         help_text="<b>This field cannot be blank</b>. Enter title. (For Address title, enter Activity title itself)Max length: 128."
     )
 
+
     class Meta:
         abstract = True
 
@@ -76,7 +77,8 @@ class Address(BaseTitleMixin, AbstractBaseModel):
 
     address_line2 = models.CharField(
         max_length=128,
-        help_text="<b>This field cannot be blank</b>. Max length: 128"
+        help_text="<b>This field cannot be blank</b>. Max length: 128",
+        blank=True
     )
 
     sub_zone = models.ManyToManyField(
@@ -103,14 +105,19 @@ class Address(BaseTitleMixin, AbstractBaseModel):
 
     map_address = models.CharField(
         max_length=255,
-        help_text='<b>This is only a helper field</b>. Enter address here, and we will populate latitude and longitude into map automatically'
+        help_text='<b>This is only a helper field</b>. Enter address here, and we will populate latitude and longitude into map automatically',
+        blank=True
     )
 
-    location = PlainLocationField(based_fields=[map_address], zoom=15)
+    location = PlainLocationField(based_fields=[map_address], zoom=15, blank=True, null=True)
 
     class Meta:
         verbose_name = "Address"
         verbose_name_plural = "Addresses"
+
+class Place(models.Model):
+    address = models.CharField(max_length=255)
+    location = PlainLocationField(based_fields=[address], zoom=15)
 
 class Box(BaseTitleMixin, AbstractBaseURLModel):
     featured_image = models.ImageField(upload_to='photos/box/', default='photos/activity/featured/featured.png')

@@ -1,7 +1,9 @@
+from functools import wraps
 from django.http import JsonResponse
 from .models import Activity
 
 def require_user_authenticated(fn):
+    @wraps(fn)
     def wrapper(request):
         if not request.user.is_authenticated():
             res = JsonResponse({'msg': 'not authenticated', 'status': '-1'})
@@ -13,6 +15,7 @@ def require_user_authenticated(fn):
     return wrapper
 
 def require_activity(fn):
+    @wraps(fn)
     def wrapper(request):
         activity_id = request.POST.get("id", None)
         if activity_id is None:

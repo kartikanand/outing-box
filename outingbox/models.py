@@ -260,10 +260,11 @@ class UserRating(models.Model):
         verbose_name_plural = 'User Ratings'
 
 class UserReview(models.Model):
-    user = models.ForeignKey(User)
-    activity = models.ForeignKey(Activity)
-    pub_date = models.DateTimeField()
-    review = models.TextField()
+    user = models.ForeignKey(User, editable=False)
+    activity = models.ForeignKey(Activity, editable=False)
+    pub_date = models.DateTimeField(editable=False)
+    review = models.TextField(editable=False)
+    is_published = models.BooleanField(default=False)
 
     def __str__(self):
         return "{0} : {1} : {2}".format(self.user.username, self.activity.title, self.pub_date)

@@ -13,6 +13,7 @@ from watson import search
 from .models import Box, Activity, Category, SubZone, UserBookmark, UserRating, FeaturedActivity, UserReview
 from .forms import FeedbackForm
 from .decorators import require_user_authenticated, require_activity
+from .utils import get_paginated_list
 
 def index_view(request):
     boxes = Box.objects.all()
@@ -46,29 +47,22 @@ def box_view(request, id=None, title=None):
     box = get_object_or_404(Box, pk=id)
     parent_categories = box.parentcategory_set.all()
 
+    # Create a set in order to have only distinct activities
+    # This is required because multiple boxes can have the same activity
     activity_set = set()
     for parent_category in parent_categories:
         for category in parent_category.category_set.all():
             activity_set.update(category.activity_set.all())
 
-    activities = list(activity_set)
-    results_paginator = Paginator(activities, 6)
+    # Default to page 1
     page = request.GET.get('page', 1)
-    try:
-        results_page = results_paginator.page(page)
-    except PageNotAnInteger:
-        results_page = results_paginator.page(1)
-    except:
-        results_page = results_paginator.page(results_paginator.num_pages)
-
-    activities = results_page
+    activities = get_paginated_list(list(activity_set), 6, page)
 
     url_prev_page_number = None
-    url_next_page_number = None
-
     if activities.has_previous():
         url_prev_page_number = add_page_to_request_url(request, 'box', {'page': activities.previous_page_number()}, kwargs={'id':id, 'title':box.title})
-
+    
+    url_next_page_number = None
     if activities.has_next():
         url_next_page_number = add_page_to_request_url(request, 'box', {'page': activities.next_page_number()}, kwargs={'id':id, 'title':box.title})
 
@@ -88,22 +82,13 @@ def profile_bookmarks_view(request):
         bookmarks = []
 
     page = request.GET.get('page', 1)
-    results_paginator = Paginator(bookmarks, 6)
-    try:
-        results_page = results_paginator.page(page)
-    except PageNotAnInteger:
-        results_page = results_paginator.page(1)
-    except:
-        results_page = results_paginator.page(results_paginator.num_pages)
-
-    bookmarks = results_page
+    bookmarks = get_paginated_list(bookmarks, 6, page)
 
     url_prev_page_number = None
-    url_next_page_number = None
-
     if bookmarks.has_previous():
         url_prev_page_number = add_page_to_request_url(request, 'profile_bookmarks', {'page': bookmarks.previous_page_number()})
-
+    
+    url_next_page_number = None
     if bookmarks.has_next():
         url_next_page_number = add_page_to_request_url(request, 'profile_bookmarks', {'page': bookmarks.next_page_number()})
 
@@ -118,6 +103,7 @@ def activity_view(request, id=None, title=None):
 
     user_bookmarks = None
     user_rating = 0
+    user_review_inst = None
     if request.user.is_authenticated():
         try:
             user_bookmark_inst = UserBookmark.objects.get(user=request.user)
@@ -131,6 +117,12 @@ def activity_view(request, id=None, title=None):
         except UserRating.DoesNotExist:
             pass
 
+        try:
+            user_review_inst = UserReview.objects.get(user=request.user, activity=activity)
+            user_review = user_review_inst.review
+        except UserReview.DoesNotExist:
+            pass
+
     reviews = [review_inst for review_inst in UserReview.objects.filter(activity=activity)]
 
     context = {
@@ -138,7 +130,8 @@ def activity_view(request, id=None, title=None):
         'bookmarks': user_bookmarks, 
         'photos': activity.photos.all(),
         'reviews': reviews,
-        'user_rating': user_rating
+        'user_rating': user_rating,
+        'user_review': user_review_inst
     }
 
     return render(request, 'activity/activity.html', context)
@@ -213,33 +206,24 @@ def bookmark_activity(request, activity):
 @require_user_authenticated
 @require_activity
 def comment_activity(request, activity):
-    review = request.POST.get("review", None)
-    if review is None:
-        res = JsonResponse({'msg': 'invalid comment', 'status': '1'})
-        return res
-
-    review = review.strip()
+    review = request.POST.get("review", '')
     if not review or len(review) > 512:
         res = JsonResponse({'msg': 'comment too long/short', 'status': '1'})
         return res
 
     try:
         user_review_inst = UserReview.objects.get(user=request.user, activity=activity)
-        old_review = user_review_inst.review
     except UserReview.DoesNotExist:
         user_review_inst = UserReview(user=request.user, activity=activity)
 
     user_review_inst.review = review
     user_review_inst.pub_date = timezone.now()
+    user_review_inst.is_published = False
     user_review_inst.save()
 
-    date_format = "%b. %d, %Y"
     return JsonResponse({
-        'msg': 'ok', 
-        'status': '0', 
-        'review': user_review_inst.review, 
-        'username': user_review_inst.user.username, 
-        'date': user_review_inst.pub_date.strftime(date_format)
+        'msg': 'ok',
+        'status': '0'
     })
 
 # Ensure _new_params to be a dictionary
@@ -290,8 +274,8 @@ def search_view(request):
         activities = search.filter(activities, query)
 
     order_dict = {
-        'raa': 'rating',    # Rating ascending
-        'rad': '-rating',   # Rating descending
+        'raa': 'rating',   # Rating ascending
+        'rad': '-rating',  # Rating descending
         'pra': 'cost',     # Price ascending
         'prd': '-cost'     # Price descending
     }
@@ -303,7 +287,7 @@ def search_view(request):
         results_page = results_paginator.page(page)
     except PageNotAnInteger:
         results_page = results_paginator.page(1)
-    except:
+    except EmptyPage:
         results_page = results_paginator.page(results_paginator.num_pages)
 
     activities = results_page

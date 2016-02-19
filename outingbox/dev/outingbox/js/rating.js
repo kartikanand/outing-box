@@ -27,13 +27,14 @@ editRatingData.onSelect = function(value, text, event) {
     console.log(old_rating);
 
     var url = form.attr('action');
-
+    var delete_rating = false;
     if (value) {
         data.push({
             'name': 'new_rating',
             'value': value
         });
     } else {
+        delete_rating = true;
         data.push({
             'name': 'delete',
             'value': 1
@@ -42,10 +43,17 @@ editRatingData.onSelect = function(value, text, event) {
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
-        notify('Thanks for rating! Please conside adding a review as well :)', 'success', 'Cool')
+        if (data.status == 0) {
+            if (delete_rating)
+                notify('Thanks for rating! Please conside adding a review as well :)', 'success', 'Cool')
+
+        } else {
+            throw new Error();
+        }
     })
     .catch(function (err) {
         console.log(err);
+        notify('Oops! We messed up. Please try again!');
     });
 };
 

@@ -153,7 +153,23 @@ def profile_view(request):
 @require_user_authenticated
 @require_activity
 def rate_activity(request, activity):
-    rating = int(request.POST.get("new_rating", 0))
+    delete_rating = request.POST.get('delete', None)
+    if delete_rating:
+        try:
+            user_rating_inst = UserRating.objects.get(user=request.user, activity=activity)
+            old_rating = user_rating_inst.rating
+
+            activity.rating = (activity.rating*activity.votes - old_rating)/(activity.votes-1)
+            activity.votes = activity.votes - 1
+            activity.save()
+
+            user_rating_inst.delete()
+        except UserRating.DoesNotExist
+            pass
+        
+        return JsonResponse({'msg': 'ok', 'status': '0'})
+
+    rating = int(request.POST.get('new_rating', 0))
     if (rating > 5) or (rating <= 0):
         res = JsonResponse({'msg': 'invalid rating', 'status': '1'})
         res.status_code = 400
@@ -171,7 +187,6 @@ def rate_activity(request, activity):
         user_rating_inst.save()
 
         activity.rating = (activity.rating*activity.votes+rating)/(activity.votes+1)
-        new_rating = activity.rating
         activity.votes = activity.votes + 1
         activity.save()
     elif old_rating != rating:
@@ -179,12 +194,9 @@ def rate_activity(request, activity):
         user_rating_inst.save()
 
         activity.rating = (activity.rating*activity.votes - old_rating + rating)/(activity.votes)
-        new_rating = activity.rating
         activity.save()
-    else:
-        new_rating = old_rating
 
-    return JsonResponse({'msg': 'ok', 'status': '0', 'new_rating': 'new_rating'})
+    return JsonResponse({'msg': 'ok', 'status': '0'})
 
 @csrf_protect
 @require_POST

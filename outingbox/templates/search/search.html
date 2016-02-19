@@ -9,18 +9,20 @@
             <h3 class="text-center">Results for : <span class="bold underline">{{ query }}</span></h3>
         </div>
     </div>
-
     <div class="row">
-       
         {% if activities %}
-            {% include 'search/search-filter.html' %}
-            {% include 'search/search-results.html' with activities=activities %}
+            <div class="col-xs-12 col-md-3 search-filter">
+                {% include 'search/search-filter.html' %}
+            </div>
+            <div class="col-xs-12 col-md-9 search-results">
+                {% include 'search/search-results.html' %}
+                {% include 'components/pager.html' %}
+            </div>
         {% else %}
             <div class="col-xs-12">
                 <h3 class="text-danger text-center">Sorry! No results found!</h3>
             </div>
         {% endif %}
-       
     </div>
 </section>
 {% endblock content %}

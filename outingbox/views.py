@@ -256,8 +256,8 @@ def search_view(request):
     query = request.GET.get('query', '')
     page  = request.GET.get('page', 1)
     order_by = request.GET.get('ob', '')
-    sub_zones_selected_list = request.GET.getlist('sz', '')
-    categories_selected_list = request.GET.getlist('c', '')
+    sub_zones_selected_list = request.GET.getlist('sz', [])
+    categories_selected_list = request.GET.getlist('c', [])
 
     sub_zone_list = SubZone.objects.all_name_value_list()
     category_list = Category.objects.all_name_value_list()
@@ -265,10 +265,12 @@ def search_view(request):
     activities = Activity.objects.all()
 
     if sub_zones_selected_list:
-        activities = filter_list_in_model(activities, map(int, sub_zones_selected_list), 'address__sub_zone__id')
+        sub_zones_selected_list = list(map(int, sub_zones_selected_list))
+        activities = filter_list_in_model(activities, sub_zones_selected_list, 'address__sub_zone__id')
 
     if categories_selected_list:
-        activities = filter_list_in_model(activities, map(int, categories_selected_list), 'category__id')
+        categories_selected_list = list(map(int, categories_selected_list))
+        activities = filter_list_in_model(activities, categories_selected_list, 'category__id')
 
     if query:
         activities = search.filter(activities, query)

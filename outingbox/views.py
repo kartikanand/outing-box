@@ -164,7 +164,7 @@ def rate_activity(request, activity):
             activity.save()
 
             user_rating_inst.delete()
-        except UserRating.DoesNotExist
+        except UserRating.DoesNotExist:
             pass
         
         return JsonResponse({'msg': 'ok', 'status': '0'})

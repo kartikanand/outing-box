@@ -29,7 +29,6 @@
         <div class="col-xs-12">
             <h4 class="page-header">{{ activity.title }}</h4>
             <h6>{% include 'components/rating.html' with activity=activity %}</h6>
-            
         </div>
     </div>
 
@@ -54,7 +53,7 @@
             <div class="page-header">
                 <h4>Things to do here !</h4>
             </div>
-            <ul class="small list-unstyled">
+            <ul class="small">
                 {% for category in activity.category.all %}
                     <li>{{ category.title }}</li>
                 {% endfor %}

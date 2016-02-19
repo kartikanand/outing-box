@@ -11791,8 +11791,10 @@ editRatingData.onSelect = function(value, text, event) {
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
         if (data.status == 0) {
-            if (delete_rating)
+            if (!delete_rating)
                 notify('Thanks for rating! Please conside adding a review as well :)', 'success', 'Cool')
+            else
+                notify('Rating deleted', 'success', 'Cool')
 
         } else {
             throw new Error();

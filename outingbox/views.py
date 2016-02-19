@@ -159,10 +159,13 @@ def rate_activity(request, activity):
             user_rating_inst = UserRating.objects.get(user=request.user, activity=activity)
             old_rating = user_rating_inst.rating
 
-            activity.rating = (activity.rating*activity.votes - old_rating)/(activity.votes-1)
+            if activity.votes == 1:
+                activity.rating = 0
+            else:
+                activity.rating = (activity.rating*activity.votes - old_rating)/(activity.votes-1)
+
             activity.votes = activity.votes - 1
             activity.save()
-
             user_rating_inst.delete()
         except UserRating.DoesNotExist:
             pass

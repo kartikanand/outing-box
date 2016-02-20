@@ -84,7 +84,7 @@ section {
     margin-bottom: 10px;
 }
 
-@media(max-width:780px) {
+@media(max-width:992px) {
     .map {
         height: 150px;
     }
@@ -108,6 +108,15 @@ section {
         margin-bottom: 0px;
         .page-header {
             margin-bottom: 0px;
+        }
+    }
+}
+
+.activity-details {
+    .page-header:first-child {
+        margin-top: 0px;
+        h4 {
+            margin-top: 0px;
         }
     }
 }

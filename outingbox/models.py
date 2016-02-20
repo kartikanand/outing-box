@@ -93,6 +93,7 @@ class Address(BaseTitleMixin, AbstractBaseModel):
     pin_code = models.IntegerField(
         default=0, 
         blank=True,
+        null=True,
         help_text="<i>This field may be blank</i>. Enter Pin Code in six digit format. For eg. 110001"
     )
 
@@ -263,7 +264,6 @@ class UserReview(models.Model):
         verbose_name = 'User Review'
         verbose_name_plural = 'User Reviews'
         
-
 class FeaturedActivity(models.Model):
     featured_1 = models.ForeignKey(Activity, related_name='featured_1')
     featured_2 = models.ForeignKey(Activity, related_name='featured_2')

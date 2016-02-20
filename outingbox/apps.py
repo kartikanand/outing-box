@@ -15,6 +15,5 @@ class OutingBoxMainConfig(AppConfig):
             'address__zone',
             'address__metro_station',
             'category',
-            'category__parent_category'
             )
         )

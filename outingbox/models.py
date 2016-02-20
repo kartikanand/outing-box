@@ -18,7 +18,6 @@ class AbstractBaseModel(models.Model):
         help_text="<b>This field cannot be blank</b>. Enter title. (For Address title, enter Activity title itself)Max length: 128."
     )
 
-
     class Meta:
         abstract = True
 
@@ -129,21 +128,12 @@ class Box(BaseTitleMixin, AbstractBaseURLModel):
         verbose_name = "Box"
         verbose_name_plural = "Boxes"
 
-class ParentCategory(BaseTitleMixin, AbstractBaseModel):
+class Category(BaseTitleMixin, AbstractBaseModel):
     box = models.ManyToManyField(
         Box,
         help_text="Select Box from List",
-        blank=True
-    )
-
-    class Meta:
-        verbose_name = "Parent Category"
-        verbose_name_plural = "Parent Categories"
-
-class Category(BaseTitleMixin, AbstractBaseModel):
-    parent_category = models.ForeignKey(
-        ParentCategory,
-        help_text='Select Parent Category from List or create a new one'
+        blank=True,
+        default=None
     )
 
     objects = CategoryManager()

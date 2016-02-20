@@ -46,10 +46,14 @@
             </ul>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-7">
-            <div class="page-header">
-                <h4>About !</h4>
-            </div>
-            {{ activity.description }}
+            {% if activity.description %}
+                <div class="page-header">
+                    <h4>About !</h4>
+                </div>
+                <p>
+                    {{ activity.description }}
+                </p>
+            {% endif %}
             <div class="page-header">
                 <h4>Things to do here !</h4>
             </div>

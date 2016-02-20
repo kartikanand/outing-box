@@ -20,6 +20,10 @@ body {
     }
 }
 
+a > h6 {
+    margin-bottom: 25px;
+}
+
 // Bootstrap not giving equal height to button and input;
 // Therefore, manually override the height
 .navbar-form {

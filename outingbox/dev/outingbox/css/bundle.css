@@ -5821,6 +5821,9 @@ body {
 .br-readonly a {
   cursor: default; }
 
+a > h6 {
+  margin-bottom: 25px; }
+
 .navbar-form button {
   height: 34px; }
 

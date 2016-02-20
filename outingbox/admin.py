@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Zone, SubZone, MetroStation, Address, ParentCategory, Category, Activity, Box, UserRating, FeaturedActivity, ImageGallery, Feedback, UserReview
+from .models import Zone, SubZone, MetroStation, Address, Category, Activity, Box, UserRating, FeaturedActivity, ImageGallery, Feedback, UserReview
 
 class ImageGalleryInlineAdmin(admin.TabularInline):
     model = ImageGallery
@@ -25,7 +25,6 @@ class UserReviewAdmin(admin.ModelAdmin):
 admin.site.register(Zone)
 admin.site.register(SubZone)
 admin.site.register(MetroStation)
-admin.site.register(ParentCategory)
 admin.site.register(Category)
 admin.site.register(Box)
 admin.site.register(UserRating)

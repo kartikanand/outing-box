@@ -45,14 +45,13 @@ def about_us_view(request):
 
 def box_view(request, id=None, title=None):
     box = get_object_or_404(Box, pk=id)
-    parent_categories = box.parentcategory_set.all()
+    categories = box.category_set.all()
 
     # Create a set in order to have only distinct activities
     # This is required because multiple boxes can have the same activity
     activity_set = set()
-    for parent_category in parent_categories:
-        for category in parent_category.category_set.all():
-            activity_set.update(category.activity_set.all())
+    for category in categories:
+        activity_set.update(category.activity_set.all())
 
     # Default to page 1
     page = request.GET.get('page', 1)

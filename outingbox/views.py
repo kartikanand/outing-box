@@ -1,5 +1,3 @@
-import operator
-from functools import reduce
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
@@ -261,11 +259,6 @@ def get_search_filter_urls(request, order_by):
 
     return reverse('search')+'?'+_dict.urlencode()
 
-def filter_list_in_model(query_set, filter_lst, filter_column):
-    Q_lst = [Q(**{filter_column: id}) for id in filter_lst]
-
-    return query_set.filter(reduce(operator.or_, Q_lst))
-
 def search_view(request):
     query = request.GET.get('query', '')
     page  = request.GET.get('page', 1)
@@ -279,12 +272,10 @@ def search_view(request):
     activities = Activity.objects.all()
 
     if sub_zones_selected_list:
-        sub_zones_selected_list = list(map(int, sub_zones_selected_list))
-        activities = filter_list_in_model(activities, sub_zones_selected_list, 'address__sub_zone__id')
+        activities = Activity.objects.filter(address__sub_zone__in=sub_zones_selected_list)
 
     if categories_selected_list:
-        categories_selected_list = list(map(int, categories_selected_list))
-        activities = filter_list_in_model(activities, categories_selected_list, 'category__id')
+        activities = Activity.objects.filter(category__in=categories_selected_list)
 
     if query:
         activities = search.filter(activities, query)
@@ -328,6 +319,10 @@ def search_view(request):
             bookmarks = user_bookmark_inst.bookmarks.all()
         except UserBookmark.DoesNotExist:
             pass
+
+
+    sub_zones_selected_list = list(map(int, sub_zones_selected_list))
+    categories_selected_list = list(map(int, categories_selected_list))
 
     context = {
         'activities': activities,

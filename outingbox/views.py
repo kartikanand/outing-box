@@ -243,12 +243,15 @@ def comment_activity(request, activity):
 
     user_review_inst.review = review
     user_review_inst.pub_date = timezone.now()
-    user_review_inst.is_published = False
+    user_review_inst.is_published = True
     user_review_inst.save()
 
+    date_format = '%b. %d, %Y'
     return JsonResponse({
         'msg': 'ok',
-        'status': '0'
+        'status': '0',
+        'date': user_review_inst.pub_date.strftime(date_format),
+        'username': request.user.username
     })
 
 # Ensure _new_params to be a dictionary

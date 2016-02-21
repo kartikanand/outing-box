@@ -48,6 +48,8 @@ module.exports.commentFormHandler = function (ev) {
         }
     }
 
+    var user_review = $("#user-review");
+
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
         if (data.status == 0) {
@@ -55,11 +57,39 @@ module.exports.commentFormHandler = function (ev) {
                 notify('Review Deleted!', 'success', 'Cool');
                 $("#edit-review-modal form textarea").val('');
                 $("#review-button").text('Add a review!');
-                addDeleteButtonToForm(commentsForm);
+
+                if (user_review.length > 0) {
+                    user_review.remove();
+                }
             } else {
                 $("#edit-review-modal form textarea").val(review);
                 $("#review-button").text('Edit my review!');
-                notify("Thanks! Your comments have been submitted for review. They'll be added within 24 hours!", "success", "Thanks!");
+                notify("Thanks for the review!", "success", "Thanks!");
+
+                var commentHeaderText = data.username+" on "+data.date;
+                var commentHeader = $("<h5 class='text-muted'></h5>");
+                commentHeader.text(commentHeaderText);
+                
+                var commentBodyText = review;
+                var commentBody = $("<p></p>");
+                commentBody.text(commentBodyText);
+
+                if (user_review.length > 0) {
+                    user_review.empty();
+                } else {
+                    user_review = $("<div id='user-review'></div>");
+                    $('#comments-wrapper').append(user_review);
+                }
+                
+                user_review.append(commentHeader);
+                user_review.append(commentBody);
+
+                var firstReviewHeader = $("#comments-wrapper h3");
+                if(firstReviewHeader.length > 0) {
+                    firstReviewHeader.remove();
+                }
+
+                addDeleteButtonToForm(commentsForm);
             }
         }
         else {

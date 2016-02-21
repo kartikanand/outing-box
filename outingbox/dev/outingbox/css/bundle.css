@@ -5848,13 +5848,16 @@ ul {
     margin-top: 0px;
     margin-bottom: 7px; }
 
+.zero-margin-bottom {
+  margin-bottom: 0px; }
+
 footer {
   width: 100%;
   position: absolute;
   left: 0;
   bottom: 0;
   padding-top: 25px;
-  padding-bottom: 25px; }
+  padding-bottom: 5px; }
 
 section {
   padding-bottom: 25px; }
@@ -5881,11 +5884,14 @@ section {
     margin-bottom: 0px; }
     .search-jumbotron .page-header {
       margin-bottom: 0px; } }
-.activity-details .page-header:first-child {
-  margin-top: 0px; }
-  .activity-details .page-header:first-child h4 {
+@media (max-width: 780px) {
+  #search-button {
+    margin-bottom: 10px; } }
+@media (min-width: 780px) {
+  .activity-details .page-header:first-child {
     margin-top: 0px; }
-
+    .activity-details .page-header:first-child h4 {
+      margin-top: 0px; } }
 .text-rating {
   color: #FFDF88; }
 

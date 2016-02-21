@@ -11675,6 +11675,8 @@ module.exports.commentFormHandler = function (ev) {
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
         if (data.status == 0) {
+            $("#edit-review-modal form textarea").val(review);
+            $("#review-button").text('Edit my review!');
             notify("Thanks! Your comments have been submitted for review. They'll be added within 24 hours!", "success", "Thanks!")
         }
         else {
@@ -11683,6 +11685,9 @@ module.exports.commentFormHandler = function (ev) {
     })
     .catch(function (err) {
         notify("Oops! we messed up. Please try again later.");
+    })
+    .finally(function () {
+        $('#edit-review-modal').modal('hide');
     });
 };
 

@@ -272,10 +272,10 @@ def search_view(request):
     activities = Activity.objects.all()
 
     if sub_zones_selected_list:
-        activities = Activity.objects.filter(address__sub_zone__in=sub_zones_selected_list)
+        activities = activities.filter(address__sub_zone__in=sub_zones_selected_list)
 
     if categories_selected_list:
-        activities = Activity.objects.filter(category__in=categories_selected_list)
+        activities = activities.filter(category__in=categories_selected_list)
 
     if query:
         activities = search.filter(activities, query)

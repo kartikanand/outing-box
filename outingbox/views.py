@@ -218,7 +218,20 @@ def bookmark_activity(request, activity):
 @require_user_authenticated
 @require_activity
 def comment_activity(request, activity):
-    review = request.POST.get("review", '')
+    delete_review = request.POST.get('delete', None)
+    if delete_review:
+        try:
+            user_review_inst = UserReview.objects.get(user=request.user, activity=activity)
+            user_review_inst.delete()
+        except UserReview.DoesNotExist:
+            pass
+
+        return JsonResponse({
+            'msg': 'ok',
+            'status': '0'
+        })
+
+    review = request.POST.get('review', '')
     if not review or len(review) > 512:
         res = JsonResponse({'msg': 'comment too long/short', 'status': '1'})
         return res

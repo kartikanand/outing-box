@@ -22,7 +22,6 @@
         <!-- FAVICONS START -->
         <!-- FAVICONS END -->
         {% if not debug %}{% include 'components/googleanalytics.html' %}{% endif %}
-
     </head>
     <body>
         <div class="wrapper">
@@ -32,7 +31,6 @@
             {% include 'account/logout-modal.html' %}
 
             {% block hero %}{% endblock hero %}
-
             {% block content %}{% endblock content %}
 
             {% block footer %}{% include 'components/footer.html' %}{% endblock footer %}

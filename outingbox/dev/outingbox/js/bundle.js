@@ -11651,39 +11651,74 @@ module.exports.bookmarkEventHandler = function (ev) {
 var makeRequestToServer = require('./utils').makeRequestToServer;
 var notify = require('./notify').notify;
 
+var addDeleteButtonToForm = function (commentsForm) {
+    var deleteButton = commentsForm.find('#review-delete');
+    if (deleteButton.length == 0) {
+        deleteButton = $('<button type="submit" name="submit" value="delete" class="btn btn-danger" id="review-delete">Delete</button>');
+
+        commentsForm.find('#review-button-group').append(deleteButton);
+
+        initCommentForm(commentsForm);
+    }
+};
+
+module.exports.initCommentForm = initCommentForm = function (commentsForm) {
+    commentsForm.find("button").each(function () {
+        $(this).bind("click keypress", function () {
+            commentsForm.data("buttonId", this.id);
+        });
+    });
+};
+
 // Comment form submit handler
 module.exports.commentFormHandler = function (ev) {
     ev.preventDefault();
-
     var commentsForm = $(this);
-    var review = commentsForm.find('textarea').val();
-
-    if (!review.trim()) {
-        notify("Empty review not allowed!");
-        return false;        
-    }
-
-    // Max review length : 512 characters
-    if (review.length > 512) {
-        notify("Too long");
-        return false;
-    }
-
-    var url = commentsForm.attr('action');
     var data = commentsForm.serializeArray();
+    var url = commentsForm.attr('action');
+    var delete_review = false;
+
+    if (commentsForm.data("buttonId") == "review-delete") {
+        delete_review = true;
+        data.push({
+            'name': 'delete',
+            'value': 1
+        });
+    } else {
+        var review = commentsForm.find('textarea').val();
+        if (!review.trim()) {
+            notify("Empty review not allowed!");
+            return false;        
+        }
+
+        // Max review length : 512 characters
+        if (review.length > 512) {
+            notify("Too long");
+            return false;
+        }
+    }
 
     makeRequestToServer(url, 'POST', data, 'json')
     .then(function (data) {
         if (data.status == 0) {
-            $("#edit-review-modal form textarea").val(review);
-            $("#review-button").text('Edit my review!');
-            notify("Thanks! Your comments have been submitted for review. They'll be added within 24 hours!", "success", "Thanks!")
+            if(delete_review) {
+                notify('Review Deleted!', 'success', 'Cool');
+                $("#edit-review-modal form textarea").val('');
+                $("#review-button").text('Add a review!');
+                addDeleteButtonToForm(commentsForm);
+            } else {
+                $("#edit-review-modal form textarea").val(review);
+                $("#review-button").text('Edit my review!');
+                notify("Thanks! Your comments have been submitted for review. They'll be added within 24 hours!", "success", "Thanks!");
+            }
         }
         else {
+            console.log(data);
             throw new Error(data);
         }
     })
     .catch(function (err) {
+        console.log(err);
         notify("Oops! we messed up. Please try again later.");
     })
     .finally(function () {
@@ -11797,9 +11832,9 @@ editRatingData.onSelect = function(value, text, event) {
     .then(function (data) {
         if (data.status == 0) {
             if (!delete_rating)
-                notify('Thanks for rating! Please consider adding a review as well :)', 'success', 'Cool')
+                notify('Thanks for rating! Please consider adding a review as well :)', 'success', 'Cool');
             else
-                notify('Rating deleted', 'success', 'Cool')
+                notify('Rating deleted', 'success', 'Cool');
         } else {
             throw new Error();
         }
@@ -11839,6 +11874,7 @@ require('selectize');
 var bookmarkEventHandler = require('./bookmark').bookmarkEventHandler;
 var getRatingInitData = require('./rating').getRatingInitData;
 var commentFormHandler = require('./comment').commentFormHandler;
+var initCommentForm = require('./comment').initCommentForm;
 var photoGalleryInitData = require('./photo-gallery').photoGalleryInitData;
 var filterInitData = require('./filter').filterInitData;
 
@@ -11866,6 +11902,7 @@ $(function () {
     // Add form submit handler to comments form
     var commentsForm = $('#comments-form');
     if (commentsForm.length > 0) {
+        initCommentForm(commentsForm);
         commentsForm.submit(commentFormHandler);
     }
 

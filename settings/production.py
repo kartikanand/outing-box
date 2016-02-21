@@ -41,7 +41,6 @@ CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 60*60
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 SESSION_CACHE_ALIAS = 'cache_session'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

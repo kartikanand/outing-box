@@ -45,9 +45,9 @@ editRatingData.onSelect = function(value, text, event) {
     .then(function (data) {
         if (data.status == 0) {
             if (!delete_rating)
-                notify('Thanks for rating! Please consider adding a review as well :)', 'success', 'Cool')
+                notify('Thanks for rating! Please consider adding a review as well :)', 'success', 'Cool');
             else
-                notify('Rating deleted', 'success', 'Cool')
+                notify('Rating deleted', 'success', 'Cool');
         } else {
             throw new Error();
         }

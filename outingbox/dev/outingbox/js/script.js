@@ -16,6 +16,7 @@ require('selectize');
 var bookmarkEventHandler = require('./bookmark').bookmarkEventHandler;
 var getRatingInitData = require('./rating').getRatingInitData;
 var commentFormHandler = require('./comment').commentFormHandler;
+var initCommentForm = require('./comment').initCommentForm;
 var photoGalleryInitData = require('./photo-gallery').photoGalleryInitData;
 var filterInitData = require('./filter').filterInitData;
 
@@ -43,6 +44,7 @@ $(function () {
     // Add form submit handler to comments form
     var commentsForm = $('#comments-form');
     if (commentsForm.length > 0) {
+        initCommentForm(commentsForm);
         commentsForm.submit(commentFormHandler);
     }
 

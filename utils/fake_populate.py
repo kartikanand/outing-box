@@ -8,6 +8,23 @@ import random
 import django
 django.setup()
 
+def add_metro_station_colors():
+    from outingbox.models import MetroStation, MetroLineColor
+    import json
+
+    color_json = {}
+    with open('out') as f:
+        color_json = json.load(f)
+
+    for metro_station in MetroStation.objects.all():
+        line_color = color_json[metro_station.title] 
+        mcolor = MetroLineColor.objects.filter(title__icontains=line_color)
+        if mcolor.count() > 0:
+            metro_station.color = mcolor[0]
+            metro_station.save()
+        else:
+            print("Not found for {0}", metro_station.title)
+
 def add_metro_stations():
     from outingbox.models import MetroStation
 
@@ -97,6 +114,8 @@ def add_fake_activity(num_activity, fake):
 def main():
     from faker import Faker
     fake = Faker()
+
+    add_metro_station_colors()
 
     #add_metro_stations()
 

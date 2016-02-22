@@ -24,9 +24,11 @@
             <li class="small">
                 <span class="fa fa-location-arrow fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ activity.address.sub_zone.all|first }}
             </li>
-            <li class="small">
-                <span class="fa fa-train fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ activity.address.metro_station.all|first }}
-            </li>
+            {% for metro_station in activity.address.metro_station.all %}
+                <li class="small">
+                    <span class="fa fa-train fa-fw" aria-hidden="true" style="color: {{ metro_station.color }}"></span>&nbsp;&nbsp;{{ metro_station }}
+                </li>
+            {% endfor %}
             <li class="small">
                 <ul class="item-cost">
                 {% for count in "12345"|make_list %}

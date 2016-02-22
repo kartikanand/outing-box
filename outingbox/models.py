@@ -57,12 +57,21 @@ class SubZone(BaseTitleMixin, AbstractBaseModel):
         verbose_name = "Sub-Zone"
         verbose_name_plural = "Sub-Zones"
 
+class MetroLineColor(BaseTitleMixin, AbstractBaseModel):
+    color = models.CharField(max_length=7, default="#000")
+
+    class Meta:
+        verbose_name = "Metro line color"
+        verbose_name_plural = "Metro line colors"        
+
 class MetroStation(BaseTitleMixin, models.Model):
     title = models.CharField(
         max_length=128,
         choices=metro_stations_list,
         help_text="<b>This field cannot be blank</b>. Max length: 128."
     )
+
+    color = models.ForeignKey(MetroLineColor, null=True)
 
     class Meta:
         verbose_name = "Metro Station"

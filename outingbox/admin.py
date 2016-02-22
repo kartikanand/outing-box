@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Zone, SubZone, MetroStation, Address, Category, Activity, Box, UserRating, FeaturedActivity, ImageGallery, Feedback, UserReview
+from .models import Zone, SubZone, MetroStation, Address, Category, Activity, Box, UserRating, FeaturedActivity, ImageGallery, Feedback, UserReview, MetroLineColor
 
 class ImageGalleryInlineAdmin(admin.TabularInline):
     model = ImageGallery
@@ -32,3 +32,4 @@ admin.site.register(Box)
 admin.site.register(UserRating)
 admin.site.register(Feedback)
 admin.site.register(FeaturedActivity)
+admin.site.register(MetroLineColor)

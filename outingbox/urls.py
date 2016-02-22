@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^contact/thanks/$', views.contact_us_thanks, name='feedback-thanks'),
     url(r'^about$', views.about_us_view, name='about'),
     url(r'^search/$', views.search_view, name='search'),
+    url(r'^captcha/', include('captcha.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/profile/$', views.profile_view, name='profile'),
     url(r'^accounts/profile/bookmarks$', views.profile_bookmarks_view, name='profile_bookmarks'),

@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'outingbox',
+    'captcha',
     'crispy_forms',
     'allauth',
     'allauth.account',
@@ -103,3 +104,10 @@ ACCOUNT_EMAIL_VERIFICATION = None
 
 # Crispy forms template pack
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Django simple Captcha settings
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_LETTER_ROTATION = (-10, 10)
+CAPTCHA_FONT_SIZE = 32
+CAPTCHA_FOREGROUND_COLOR = "#333"
+CAPTCHA_NOISE_FUNCTIONS = ['captcha.helpers.noise_dots']

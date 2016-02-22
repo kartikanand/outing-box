@@ -41,7 +41,7 @@
             <ul class="small list-unstyled">
                 <li><span class="fa fa-location-arrow fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ activity.address.address_line1 }}, {{ activity.address.address_line2 }}</li>
                 {% for metro_station in activity.address.metro_station.all|slice:":2" %}
-                <li><span class="fa fa-train fa-fw" aria-hidden="true" style="color: {{ metro_station.color }}"></span>&nbsp;&nbsp;{{ metro_station.title }}</li>
+                <li><span class="fa fa-train fa-fw" aria-hidden="true" style="color: {{ metro_station.color.color }}"></span>&nbsp;&nbsp;{{ metro_station.title }}</li>
                 {% endfor %}
             </ul>
         </div>

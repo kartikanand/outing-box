@@ -10,6 +10,8 @@ class ActivityAdmin(admin.ModelAdmin):
         ImageGalleryInlineAdmin,
     ]
 
+    list_display = ('__str__', 'get_address', 'get_subzones', 'get_categories')
+
     filter_horizontal = ['category']
 
 @admin.register(Address)

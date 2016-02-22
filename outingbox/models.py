@@ -220,6 +220,24 @@ class Activity(BaseTitleMixin, AbstractBaseURLModel):
     featured_image = models.ImageField(upload_to='photos/activity/featured/', default='photos/activity/featured/featured.png')
     search_image = models.ImageField(upload_to='photos/activity/search-featured/', default='photos/activity/featured/featured.png')
 
+    def get_subzones(self):
+        return ', '.join([sub_zone.title for sub_zone in self.address.sub_zone.all()])
+    get_subzones.short_description = 'Sub Zones'
+
+    def get_categories(self):
+        return ', '.join([category.title for category in self.category.all()])
+    get_categories.short_description = 'Categories'
+
+    def get_address(self):
+        address = self.address.address_line1
+        
+        address_line2 = self.address.address_line2
+        if address_line2:
+            address = address + " " + address_line2
+
+        return address
+    get_address.short_description = 'Address'
+
     def get_absolute_url(self):
         return self.get_url('activity')
 

@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.postgres.fields import ArrayField
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.http import QueryDict
 from location_field.models.plain import PlainLocationField
 from utils.metro_stations import metro_stations_list
 from .managers import SubZoneManager, CategoryManager
@@ -145,6 +146,12 @@ class Category(BaseTitleMixin, AbstractBaseModel):
         blank=True,
         default=None
     )
+
+    def get_absolute_url(self):
+        q = QueryDict(mutable=True)
+        q.update({'c': self.id})
+
+        return "{}?{}".format(reverse('search'), q.urlencode())
 
     objects = CategoryManager()
 

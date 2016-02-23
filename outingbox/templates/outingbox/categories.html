@@ -1,0 +1,16 @@
+<section class="container">
+    <div class="page-header">
+        <h1 class="center bold">All categories</h1>
+    </div>
+
+    <div class="row">
+        {% for box in boxes %}
+            <ul class="col-xs-2 col-sm-4 col-md-2 list-unstyled">
+                <li><u class="text-primary">{{ box.title }}</u></li>
+                {% for category in box.category_set.all  %}
+                    <li class="small"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+</section>

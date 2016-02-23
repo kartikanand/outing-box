@@ -10,7 +10,7 @@ body {
 .wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 250px;
+    padding-bottom: 300px;
 }
 
 // From jQuery-Barrating plugin
@@ -32,12 +32,12 @@ a > h6 {
     }
 }
 
-.btn-social-icon {
-    border-radius: 10%;
+.banner {
+    background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url("/static/outingbox/img/banner.jpg");
 }
 
 .header {
-    background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url("/static/outingbox/img/banner.jpg");
+    background-color: #00A0B0;
     background-position: 50% 40%;
     background-size: cover;
     color: #fff;

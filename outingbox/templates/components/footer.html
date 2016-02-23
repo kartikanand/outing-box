@@ -1,29 +1,41 @@
-<footer class="small">
-    <div class="container text-center">
+{% load account %}
+{% load socialaccount %}
+
+<footer class="">
+    <div class="container small">
         <div class="row">
-            <div class="col-xs-4 col-xs-offset-4">
-                <div class="row">
-                    <div class="col-xs-4 text-center"><a href="https://twitter.com/Outing_Box" class="btn btn-xs btn-social-icon btn-twitter"><span class="fa fa-twitter fa-fw"></span></a></div>
-                    <div class="col-xs-4 text-center"><a href="https://www.facebook.com/outingbox/" class="btn btn-xs btn-social-icon btn-facebook"><span class="fa fa-facebook fa-fw"></span></a></div>
-                    <div class="col-xs-4 text-center"><a href="https://www.linkedin.com/company/outing-box" class="btn btn-xs btn-social-icon btn-linkedin"><span class="fa fa-linkedin fa-fw"></span></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-xs-12">
-                Made with &hearts; in दिल्ली
-            </div>
-        </div>
-        <div class="row text-center">
-            <ul class="col-xs-12 list-inline zero-margin-bottom">
+            <ul class="col-xs-8 col-sm-4 col-md-2 list-unstyled">
+                <li><u class="">We're social!</u></li>
+                <li><a class="btn btn-xs btn-block btn-social btn-twitter" href="https://twitter.com/Outing_Box"><span class="fa fa-twitter"></span>Follow us on Twitter</a></li>
+                <li><a class="btn btn-xs btn-block btn-social btn-facebook" href="https://www.facebook.com/outingbox/"><span class="fa fa-facebook"></span>Like us on Facebook</a></li>
+                <li><a class="btn btn-xs btn-block btn-social btn-linkedin" href="https://www.linkedin.com/company/outing-box"><span class="fa fa-linkedin"></span>Catch us on Linkedin</a></li>
+            </ul>
+
+            <ul class="col-xs-12 col-sm-offset-1 col-sm-4 col-offset-md-1 col-md-2 list-unstyled">
+                <li><u>Outing Box!</u></li>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">{% user_display user %}</a></li>
+                {% else %}
+                    <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'about' %}">About Us</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+
+            <ul class="col-xs-12 col-sm-offset-1 col-sm-4 col-offset-md-1 col-md-2 list-unstyled">
+                <li><u>Legal</u></li>
                 <li><a href="{% url 'index' %}">Privacy Policy</a></li>
-                <li>&sdot;</li>
                 <li><a href="{% url 'index' %}">Terms and Conditions</a></li>
-                <li>&sdot;</li>
                 <li><a href="{% url 'index' %}">Cookie Policy</a></li>
             </ul>
         </div>
         <div class="row text-center">
+            <div class="col-xs-12 text-warning">
+                Made with <span class="text-danger">&hearts;</span> in दिल्ली
+            </div>
+        </div>
+        <div class="row pull-left">
             <div class="col-xs-12">
                 Copyright &copy; Outing Box 2016. All Rights Reserved
             </div>

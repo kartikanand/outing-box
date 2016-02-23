@@ -10,7 +10,7 @@ body {
 .wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 500px;
+    padding-bottom: 300px;
 }
 
 // From jQuery-Barrating plugin
@@ -122,6 +122,10 @@ section {
 @media(max-width:780px) {
     #search-button {
         margin-bottom: 5px;
+    }
+
+    .wrapper {
+        padding-bottom: 500px;
     }
 }
 

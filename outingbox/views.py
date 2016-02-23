@@ -53,7 +53,7 @@ def box_view(request, id=None, title=None):
 
     # Default to page 1
     page = request.GET.get('page', 1)
-    activities = get_paginated_list(list(activity_set), 6, page)
+    activities = get_paginated_list(list(activity_set), 12, page)
 
     url_prev_page_number = None
     if activities.has_previous():
@@ -79,7 +79,7 @@ def profile_bookmarks_view(request):
         bookmarks = []
 
     page = request.GET.get('page', 1)
-    bookmarks = get_paginated_list(bookmarks, 6, page)
+    bookmarks = get_paginated_list(bookmarks, 12, page)
 
     url_prev_page_number = None
     if bookmarks.has_previous():

@@ -17,25 +17,19 @@
 <section class="container">
     <div class="row">
         {% for activity in bookmarks %}
-            <div class="col-xs-12 col-sm-6 col-md-4 text-center box-details">
+            <div class="col-xs-12 col-sm-4 col-md-3 text-center box-details">
                 <a href="{{ activity.get_absolute_url }}">
                     <h4>{{ activity.title }}</h4>
-                    <img src="{{ MEDIA_URL }}{{ activity.featured_image }}">
+                    <img class="img-responsive center-block" src="{{ MEDIA_URL }}{{ activity.featured_image }}">
                 </a>
             </div>
             <div class="clearfix visible-xs"></div>
-            {% if forloop.counter0 == 1 %}
-                <div class="clearfix visible-sm"></div>
-            {% endif %}
-            {% if forloop.counter0 == 2 %}
+            {% if forloop.counter0 == 3 or forloop.counter0 == 7 or forloop.counter0 == 11 %}
                 <div class="clearfix visible-md"></div>
+                <div class="clearfix visible-lg"></div>
             {% endif %}
-            {% if forloop.counter0 == 3 %}
+            {% if forloop.counter0 == 2 or forloop.counter0 == 5 or forloop.counter0 == 8 or forloop.counter0 == 11 %}
                 <div class="clearfix visible-sm"></div>
-            {% endif %}
-            {% if forloop.counter0 == 5 %}
-                <div class="clearfix visible-sm"></div>
-                <div class="clearfix visible-md"></div>
             {% endif %}
         {% endfor %}
     </div>

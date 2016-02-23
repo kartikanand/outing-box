@@ -2396,7 +2396,7 @@ tbody.collapse.in {
 .navbar {
   position: relative;
   min-height: 45px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   border: 1px solid transparent; }
   .navbar:before, .navbar:after {
     content: " ";
@@ -4142,13 +4142,15 @@ a > h6 {
   border-radius: 10%; }
 
 .header {
-  background-color: #1e5799;
+  background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url("/static/outingbox/img/banner.jpg");
+  background-position: 50% 40%;
+  background-size: cover;
   color: #fff; }
-  .header h1 {
-    margin-top: 50px;
-    margin-bottom: 50px; }
   .header h2 {
-    margin-top: 25px; }
+    margin-top: 45px;
+    margin-bottom: 35px; }
+  .header .jumbotron {
+    background: transparent; }
 
 ul {
   margin-top: 0px; }
@@ -4167,7 +4169,9 @@ footer {
   left: 0;
   bottom: 0;
   padding-top: 25px;
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+  background-color: #1C2130;
+  color: #fff; }
 
 section {
   padding-bottom: 25px; }
@@ -4201,7 +4205,11 @@ section {
   .activity-details .page-header:first-child {
     margin-top: 0px; }
     .activity-details .page-header:first-child h4 {
-      margin-top: 0px; } }
+      margin-top: 0px; }
+
+  .header {
+    padding-top: 50px;
+    padding-bottom: 50px; } }
 .text-rating {
   color: #FFDF88; }
 
@@ -4213,9 +4221,8 @@ section {
     padding-bottom: 2px;
     padding-left: 3px;
     padding-right: 3px;
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #000;
+    background-color: #555;
+    color: #fff;
     border-radius: 100%;
     font-size: smaller; }
   .item-cost .cost-active {

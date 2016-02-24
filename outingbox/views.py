@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, Http404
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
@@ -48,6 +48,11 @@ def about_us_view(request):
     return render(request, 'outingbox/about-us.html')
 
 def box_view(request, id=None, title=None):
+    try:
+        id = int(id)
+    except ValueError:
+        raise Http404("Box doesn't exist")
+
     box = get_object_or_404(Box, pk=id)
     categories = box.category_set.all()
 
@@ -102,6 +107,11 @@ def profile_bookmarks_view(request):
     })
 
 def activity_view(request, id=None, title=None):
+    try:
+        id = int(id)
+    except ValueError:
+        raise Http404("Activity doesn't exist")
+
     activity = get_object_or_404(Activity, pk=id)
 
     user_bookmarks = None
@@ -293,11 +303,27 @@ def search_view(request):
 
     activities = Activity.objects.all()
 
+    int_sub_zones_selected_list = []
     if sub_zones_selected_list:
-        activities = activities.filter(address__sub_zone__in=sub_zones_selected_list)
+        for sub_zone in sub_zones_selected_list:
+            try:
+                int_sub_zone = int(sub_zone)
+                int_sub_zones_selected_list.append(int_sub_zone)
+            except ValueError:
+                raise Http404("No results")
 
+        activities = activities.filter(address__sub_zone__in=int_sub_zones_selected_list)
+    
+    int_categories_selected_list = []
     if categories_selected_list:
-        activities = activities.filter(category__in=categories_selected_list)
+        for category in categories_selected_list:
+            try:
+                int_category = int(category)
+                int_categories_selected_list.append(int_category)
+            except ValueError:
+                raise Http404("No results")
+
+        activities = activities.filter(category__in=int_categories_selected_list)
 
     if query:
         activities = search.filter(activities, query)
@@ -342,10 +368,6 @@ def search_view(request):
         except UserBookmark.DoesNotExist:
             pass
 
-
-    sub_zones_selected_list = list(map(int, sub_zones_selected_list))
-    categories_selected_list = list(map(int, categories_selected_list))
-
     context = {
         'activities': activities,
         'order_by_relevance_url': order_by_relevance_url,
@@ -355,8 +377,8 @@ def search_view(request):
         'url_prev_page_number': url_prev_page_number,
         'sub_zone_list': sub_zone_list,
         'category_list': category_list,
-        'sub_zones_selected_list': sub_zones_selected_list,
-        'categories_selected_list': categories_selected_list,
+        'sub_zones_selected_list': int_sub_zones_selected_list,
+        'categories_selected_list': int_categories_selected_list,
         'query': query,
         'page': page,
         'bookmarks': bookmarks

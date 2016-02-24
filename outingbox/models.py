@@ -68,7 +68,6 @@ class MetroLineColor(BaseTitleMixin, AbstractBaseModel):
 class MetroStation(BaseTitleMixin, models.Model):
     title = models.CharField(
         max_length=128,
-        choices=metro_stations_list,
         help_text="<b>This field cannot be blank</b>. Max length: 128."
     )
 

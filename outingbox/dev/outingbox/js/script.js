@@ -6,6 +6,7 @@ require('./bootstrap/collapse');
 require('./bootstrap/dropdown');
 require('./bootstrap/modal');
 require('./bootstrap/tooltip');
+require('./jquery.unveil.js');
 
 // browserify-shim entry has been added for the following plugins to not require npm jQuery, rather rely on script tag entry for jQuery
 require('slick-carousel');
@@ -28,6 +29,8 @@ $(function () {
     if (bookmarkSpan.length > 0) {
         bookmarkSpan.click(bookmarkEventHandler);
     }
+
+    $(".unviel").unveil();
 
     // Initialize read-only ratings
     // will only exist on activity and search page

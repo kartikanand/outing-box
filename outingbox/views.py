@@ -13,6 +13,12 @@ from .forms import FeedbackForm
 from .decorators import require_user_authenticated, require_activity
 from .utils import get_paginated_list
 
+def handler404(request):
+    return render(request, 'outingbox/404.html', {})
+
+def handler500(request):
+    return render(request, 'outingbox/500.html', {})
+
 def index_view(request):
     boxes = Box.objects.all()
     featured_set = FeaturedActivity.objects.all()

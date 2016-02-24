@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404, handler500
 from . import views
 
 urlpatterns = [
@@ -21,3 +22,6 @@ urlpatterns = [
     url(r'^activity/(?P<id>[\w, -]+)/(?P<title>[\w, -]+)/$', views.activity_view, name='activity'),
     url(r'^box/(?P<id>[\w, -]+)/(?P<title>[\w, -]+)/$', views.box_view, name='box'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'outingbox.views.handler404'
+handler500 = 'outingbox.views.handler500'

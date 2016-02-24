@@ -157,6 +157,14 @@ section {
     .box-details {
         margin-top: 25px;
     }
+
+    li {
+        a {
+            line-height: 1.8;
+        }
+    }
+
+
 }
 
 @media(min-width:992px) {

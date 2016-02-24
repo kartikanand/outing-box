@@ -212,10 +212,10 @@ textarea {
   line-height: inherit; }
 
 a {
-  color: #00A0B0;
+  color: #3FB8AF;
   text-decoration: none; }
   a:hover, a:focus {
-    color: #00A0B0;
+    color: #3FB8AF;
     text-decoration: underline; }
   a:focus {
     outline: thin dotted;
@@ -1966,7 +1966,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
     background-color: #fff; }
 
 .btn-link {
-  color: #00A0B0;
+  color: #3FB8AF;
   font-weight: normal;
   border-radius: 0; }
   .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled], fieldset[disabled] .btn-link {
@@ -1976,7 +1976,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
   .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
     border-color: transparent; }
   .btn-link:hover, .btn-link:focus {
-    color: #00A0B0;
+    color: #3FB8AF;
     text-decoration: underline;
     background-color: transparent; }
   .btn-link[disabled]:hover, .btn-link[disabled]:focus, fieldset[disabled] .btn-link:hover, fieldset[disabled] .btn-link:focus {
@@ -2300,7 +2300,7 @@ tbody.collapse.in {
         cursor: not-allowed; }
   .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
     background-color: #eeeeee;
-    border-color: #00A0B0; }
+    border-color: #3FB8AF; }
   .nav .nav-divider {
     height: 1px;
     margin: 8.5px 0;

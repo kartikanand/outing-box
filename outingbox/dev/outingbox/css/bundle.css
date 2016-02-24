@@ -5833,10 +5833,9 @@ a > h6 {
 .header {
   background-color: #00A0B0;
   color: #fff;
-  margin-top: 25px; }
-  .header h1 {
-    margin-top: 25px;
-    margin-bottom: 25px; }
+  margin-top: 25px;
+  padding-top: 50px;
+  padding-bottom: 50px; }
   .header h2 {
     margin-top: 45px;
     margin-bottom: 35px; }
@@ -5897,9 +5896,6 @@ section {
     margin-top: 50px;
     border-left: none; }
 
-  .box-hero {
-    height: 200px; }
-
   .search-jumbotron {
     margin-bottom: 0px; }
     .search-jumbotron .page-header {
@@ -5915,14 +5911,14 @@ section {
     margin-top: 25px; }
 
   li a {
-    line-height: 1.8; } }
-@media (min-width: 992px) {
-  .activity {
-    margin-left: 25px; }
+    line-height: 1.8; }
 
   .header {
-    padding-top: 50px;
-    padding-bottom: 50px; } }
+    padding-top: 25px;
+    padding-bottom: 25px; } }
+@media (min-width: 992px) {
+  .activity {
+    margin-left: 25px; } }
 .text-rating {
   color: #FFDF88; }
 
@@ -5970,25 +5966,40 @@ section {
   overflow: hidden !important; }
 
 #entertainment {
-  background-color: #d35400; }
+  background-color: #d35400;
+  background-image: url("/static/outingbox/img/entertainment.jpg");
+  background-position: 50% 40%;
+  background-size: cover; }
 
 #science-art-and-history {
-  background-color: #36393B; }
+  background-color: #36393B;
+  background-image: url("/static/outingbox/img/art.jpg");
+  background-position: 50% 40%;
+  background-size: cover; }
 
 #nature {
   background-color: #27ae60;
   background-image: url("/static/outingbox/img/nature.jpg");
-  background-position: 50% 40%;
-  background-size: 100%; }
+  background-position: 50% 80%;
+  background-size: cover; }
 
 #health-and-wellness {
-  background-color: #D14334; }
+  background-color: #D14334;
+  background-image: url("/static/outingbox/img/health.jpg");
+  background-position: 50% 40%;
+  background-size: cover; }
 
 #games-and-sports {
-  background-color: #16a085; }
+  background-color: #16a085;
+  background-image: url("/static/outingbox/img/games.jpg");
+  background-position: 50% 40%;
+  background-size: cover; }
 
 #hobbies {
-  background-color: #8e44ad; }
+  background-color: #8e44ad;
+  background-image: url("/static/outingbox/img/hobbies.jpg");
+  background-position: 50% 40%;
+  background-size: cover; }
 
 .pager {
   margin-top: 50px; }

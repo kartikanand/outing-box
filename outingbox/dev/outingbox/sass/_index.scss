@@ -41,10 +41,8 @@ a > h6 {
     color: #fff;
     margin-top: 25px;
 
-    h1 {
-        margin-top: 25px;
-        margin-bottom: 25px;
-    }
+    padding-top: 50px;
+    padding-bottom: 50px;
 
     h2 {
         margin-top: 45px;
@@ -135,10 +133,6 @@ section {
         border-left: none;
     }
 
-    .box-hero {
-        height: 200px;
-    }
-
     .search-jumbotron {
         margin-bottom: 0px;
         .page-header {
@@ -164,19 +158,15 @@ section {
         }
     }
 
-
+    .header {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
 }
 
 @media(min-width:992px) {
-
-
     .activity {
         margin-left: 25px;
-    }
-
-    .header {
-        padding-top: 50px;
-        padding-bottom: 50px;
     }
 }
 
@@ -248,29 +238,44 @@ section {
 
 #entertainment {
     background-color: #d35400;
+    background-image: url("/static/outingbox/img/entertainment.jpg");
+    background-position: 50% 40%;
+    background-size: cover;
 }
 
 #science-art-and-history {
     background-color: #36393B;
+    background-image: url("/static/outingbox/img/art.jpg");
+    background-position: 50% 40%;
+    background-size: cover;
 }
 
 #nature {
     background-color: #27ae60;
     background-image: url("/static/outingbox/img/nature.jpg");
-    background-position: 50% 40%;
-    background-size: 100%;
+    background-position: 50% 80%;
+    background-size: cover;
 }
 
 #health-and-wellness {
     background-color: #D14334;
+    background-image: url("/static/outingbox/img/health.jpg");
+    background-position: 50% 40%;
+    background-size: cover;
 }
 
 #games-and-sports {
     background-color: #16a085;
+    background-image: url("/static/outingbox/img/games.jpg");
+    background-position: 50% 40%;
+    background-size: cover;
 }
 
 #hobbies {
     background-color: #8e44ad;
+    background-image: url("/static/outingbox/img/hobbies.jpg");
+    background-position: 50% 40%;
+    background-size: cover;
 }
 
 

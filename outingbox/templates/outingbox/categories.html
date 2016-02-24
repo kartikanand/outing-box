@@ -9,11 +9,11 @@
                 <u class="">{{ box.title }}</u>
             </div>
             <div class="clearfix visible-xs"></div>
-            <div class="col-xs-12 col-sm-8 col-md-10">
+            <ul class="col-xs-12 col-sm-8 col-md-10 list-unstyled">
                 {% for category in box.category_set.all  %}
-                    <span class="small"><a href="{{ category.get_absolute_url }}">{{ category.title }}&nbsp;</a></span>
+                    <li class="small"><a href="{{ category.get_absolute_url }}">{{ category.title }}&nbsp;</a></li>
                 {% endfor %}
-            </div>
+            </ul>
         </div>
     {% endfor %}
 </section>

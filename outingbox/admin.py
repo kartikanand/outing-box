@@ -16,6 +16,7 @@ class ActivityAdmin(admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'activity')
     filter_horizontal = ['sub_zone', 'metro_station']
 
 @admin.register(UserReview)

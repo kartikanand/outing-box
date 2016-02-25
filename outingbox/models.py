@@ -267,6 +267,7 @@ class Activity(BaseTitleMixin, AbstractBaseURLModel):
     class Meta:
         verbose_name = "Activity"
         verbose_name_plural = "Activities"
+        ordering = ['id']
 
 class UserBookmark(models.Model):
     user = models.OneToOneField(User)

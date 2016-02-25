@@ -1,4 +1,5 @@
 {% load account %}
+{% load staticfiles %}
 {% load socialaccount %}
 
 <div class="container">
@@ -9,7 +10,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="{% url 'index' %}" class="navbar-brand">Outing Box</a>
+        <a href="{% url 'index' %}" class="navbar-brand">
+            {% if nav_form %}
+                <img src="{% static 'outingbox/img/logo_white.png' %}">
+            {% else %}
+                <img src="{% static 'outingbox/img/logo_black.png' %}">
+            {% endif %}
+        </a>
     </div>
 
     <div class="collapse navbar-collapse" id="nav-menu">

@@ -126,20 +126,20 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'INFO.log')
+            'filename': os.path.join(BASE_DIR, 'django_error.log')
         },
     },
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'INFO',
+            'level': 'ERROR',
             'propagate': True,
         },
         'outingbox': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
         },
     },
 }

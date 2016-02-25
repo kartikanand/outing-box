@@ -5842,6 +5842,10 @@ a > h6 {
   .header .jumbotron {
     background: transparent; }
 
+.navbar-brand img {
+  height: 35px;
+  margin-top: -5px; }
+
 .banner {
   margin-top: 0px;
   background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("/static/outingbox/img/banner.jpg");

@@ -134,6 +134,7 @@ class Place(models.Model):
 
 class Box(BaseTitleMixin, AbstractBaseURLModel):
     featured_image = models.ImageField(upload_to='photos/box/', default='photos/activity/featured/featured.png')
+    cover_image = models.ImageField(upload_to='photos/box/', default='photos/activity/featured/featured.png')
 
     def get_absolute_url(self):
         return self.get_url('box')

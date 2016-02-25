@@ -1,6 +1,11 @@
 {% extends "components/base.html" %}
 {% load staticfiles %}
 
+{% block custommeta %}
+<meta property="og:image" content="">
+
+{% endblock %}
+
 {% block hero %}
 {% include 'box/hero.html' with id=box.url_name %}
 {% endblock hero %}

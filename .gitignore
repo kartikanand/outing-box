@@ -7,3 +7,5 @@ migrations/
 .env
 staticfiles/
 media/
+venv/
+gun.log

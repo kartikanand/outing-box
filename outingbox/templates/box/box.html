@@ -11,8 +11,8 @@
         {% for activity in activities %}
             <div class="col-xs-12 col-sm-4 col-md-3 text-center box-details">
                 <a href="{{ activity.get_absolute_url }}">
-                    <h4>{{ activity.title }}</h4>
                     <img class="img-responsive center-block unviel" data-src="{{ MEDIA_URL }}{{ activity.featured_image }}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+                    <h6>{{ activity.title }}</h6>
                 </a>
             </div>
             <div class="clearfix visible-xs"></div>

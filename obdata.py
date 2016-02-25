@@ -1,147 +1,27 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import sys, os
+sys.path.append('/home/kartik/projects/outing-box-project')
 
-# This file has been automatically generated.
-# Instead of changing it, create a file called import_helper.py
-# and put there a class called ImportHelper(object) in it.
-#
-# This class will be specially casted so that instead of extending object,
-# it will actually extend the class BasicImportHelper()
-#
-# That means you just have to overload the methods you want to
-# change, leaving the other ones inteact.
-#
-# Something that you might want to do is use transactions, for example.
-#
-# Also, don't forget to add the necessary Django imports.
-#
-# This file was generated with the following command:
-# ./manage.py dumpscript outingbox
-#
-# to restore it, run
-# manage.py runscript module_name.this_script_name
-#
-# example: if manage.py is at ./manage.py
-# and the script is at ./some_folder/some_script.py
-# you must make sure ./some_folder/__init__.py exists
-# and run  ./manage.py runscript some_folder.some_script
-import os, sys
-from django.db import transaction
+from django.conf import settings
 
-class BasicImportHelper(object):
+import random
 
-    def pre_import(self):
-        pass
+import django
+django.setup()
 
-    # You probably want to uncomment on of these two lines
-    # @transaction.atomic  # Django 1.6
-    # @transaction.commit_on_success  # Django <1.6
-    def run_import(self, import_data):
-        import_data()
-
-    def post_import(self):
-        pass
-
-    def locate_similar(self, current_object, search_data):
-        # You will probably want to call this method from save_or_locate()
-        # Example:
-        #   new_obj = self.locate_similar(the_obj, {"national_id": the_obj.national_id } )
-
-        the_obj = current_object.__class__.objects.get(**search_data)
-        return the_obj
-
-    def locate_object(self, original_class, original_pk_name, the_class, pk_name, pk_value, obj_content):
-        # You may change this function to do specific lookup for specific objects
-        #
-        # original_class class of the django orm's object that needs to be located
-        # original_pk_name the primary key of original_class
-        # the_class      parent class of original_class which contains obj_content
-        # pk_name        the primary key of original_class
-        # pk_value       value of the primary_key
-        # obj_content    content of the object which was not exported.
-        #
-        # You should use obj_content to locate the object on the target db
-        #
-        # An example where original_class and the_class are different is
-        # when original_class is Farmer and the_class is Person. The table
-        # may refer to a Farmer but you will actually need to locate Person
-        # in order to instantiate that Farmer
-        #
-        # Example:
-        #   if the_class == SurveyResultFormat or the_class == SurveyType or the_class == SurveyState:
-        #       pk_name="name"
-        #       pk_value=obj_content[pk_name]
-        #   if the_class == StaffGroup:
-        #       pk_value=8
-
-        search_data = { pk_name: pk_value }
-        the_obj = the_class.objects.get(**search_data)
-        #print(the_obj)
-        return the_obj
-
-
-    def save_or_locate(self, the_obj):
-        # Change this if you want to locate the object in the database
-        try:
-            the_obj.save()
-        except:
-            print("---------------")
-            print("Error saving the following object:")
-            print(the_obj.__class__)
-            print(" ")
-            print(the_obj.__dict__)
-            print(" ")
-            print(the_obj)
-            print(" ")
-            print("---------------")
-
-            raise
-        return the_obj
-
-
-importer = None
-try:
-    import import_helper
-    # We need this so ImportHelper can extend BasicImportHelper, although import_helper.py
-    # has no knowlodge of this class
-    importer = type("DynamicImportHelper", (import_helper.ImportHelper, BasicImportHelper ) , {} )()
-except ImportError as e:
-    # From Python 3.3 we can check e.name - string match is for backward compatibility.
-    if 'import_helper' in str(e):
-        importer = BasicImportHelper()
-    else:
-        raise
-
-import datetime
 from decimal import Decimal
-from django.contrib.contenttypes.models import ContentType
-
-try:
-    import dateutil.parser
-except ImportError:
-    print("Please install python-dateutil")
-    sys.exit(os.EX_USAGE)
-
-def run():
-    importer.pre_import()
-    importer.run_import(import_data)
-    importer.post_import()
 
 def import_data():
-    # Initial Imports
-    from django.contrib.auth.models import User
-
     # Processing model: Zone
 
     from outingbox.models import Zone
 
     outingbox_zone_1 = Zone()
     outingbox_zone_1.title = 'Delhi NCR'
-    outingbox_zone_1 = importer.save_or_locate(outingbox_zone_1)
+    outingbox_zone_1.save()
 
     outingbox_zone_2 = Zone()
     outingbox_zone_2.title = 'NCR'
-    outingbox_zone_2 = importer.save_or_locate(outingbox_zone_2)
+    outingbox_zone_2.save()
 
     # Processing model: SubZone
 
@@ -150,417 +30,417 @@ def import_data():
     outingbox_subzone_1 = SubZone()
     outingbox_subzone_1.title = 'Rajouri Garden'
     outingbox_subzone_1.zone = outingbox_zone_1
-    outingbox_subzone_1 = importer.save_or_locate(outingbox_subzone_1)
+    outingbox_subzone_1.save()
 
     outingbox_subzone_2 = SubZone()
     outingbox_subzone_2.title = 'Subhash Nagar'
     outingbox_subzone_2.zone = outingbox_zone_1
-    outingbox_subzone_2 = importer.save_or_locate(outingbox_subzone_2)
+    outingbox_subzone_2.save()
 
     outingbox_subzone_3 = SubZone()
     outingbox_subzone_3.title = 'Kapashera'
     outingbox_subzone_3.zone = outingbox_zone_1
-    outingbox_subzone_3 = importer.save_or_locate(outingbox_subzone_3)
+    outingbox_subzone_3.save()
 
     outingbox_subzone_4 = SubZone()
     outingbox_subzone_4.title = 'Sector 25A Noida'
     outingbox_subzone_4.zone = outingbox_zone_1
-    outingbox_subzone_4 = importer.save_or_locate(outingbox_subzone_4)
+    outingbox_subzone_4.save()
 
     outingbox_subzone_5 = SubZone()
     outingbox_subzone_5.title = 'East Delhi'
     outingbox_subzone_5.zone = outingbox_zone_2
-    outingbox_subzone_5 = importer.save_or_locate(outingbox_subzone_5)
+    outingbox_subzone_5.save()
 
     outingbox_subzone_6 = SubZone()
     outingbox_subzone_6.title = 'Mayur Vihar'
     outingbox_subzone_6.zone = outingbox_zone_2
-    outingbox_subzone_6 = importer.save_or_locate(outingbox_subzone_6)
+    outingbox_subzone_6.save()
 
     outingbox_subzone_7 = SubZone()
     outingbox_subzone_7.title = 'Mayur Vihar Phase 1'
     outingbox_subzone_7.zone = outingbox_zone_2
-    outingbox_subzone_7 = importer.save_or_locate(outingbox_subzone_7)
+    outingbox_subzone_7.save()
 
     outingbox_subzone_8 = SubZone()
     outingbox_subzone_8.title = 'Gurgaon'
     outingbox_subzone_8.zone = outingbox_zone_2
-    outingbox_subzone_8 = importer.save_or_locate(outingbox_subzone_8)
+    outingbox_subzone_8.save()
 
     outingbox_subzone_9 = SubZone()
     outingbox_subzone_9.title = 'South Delhi'
     outingbox_subzone_9.zone = outingbox_zone_2
-    outingbox_subzone_9 = importer.save_or_locate(outingbox_subzone_9)
+    outingbox_subzone_9.save()
 
     outingbox_subzone_10 = SubZone()
     outingbox_subzone_10.title = 'West Delhi'
     outingbox_subzone_10.zone = outingbox_zone_2
-    outingbox_subzone_10 = importer.save_or_locate(outingbox_subzone_10)
+    outingbox_subzone_10.save()
 
     outingbox_subzone_11 = SubZone()
     outingbox_subzone_11.title = 'GT Karnal Road'
     outingbox_subzone_11.zone = outingbox_zone_2
-    outingbox_subzone_11 = importer.save_or_locate(outingbox_subzone_11)
+    outingbox_subzone_11.save()
 
     outingbox_subzone_12 = SubZone()
     outingbox_subzone_12.title = 'GTB Memorial'
     outingbox_subzone_12.zone = outingbox_zone_2
-    outingbox_subzone_12 = importer.save_or_locate(outingbox_subzone_12)
+    outingbox_subzone_12.save()
 
     outingbox_subzone_13 = SubZone()
     outingbox_subzone_13.title = 'Narela'
     outingbox_subzone_13.zone = outingbox_zone_2
-    outingbox_subzone_13 = importer.save_or_locate(outingbox_subzone_13)
+    outingbox_subzone_13.save()
 
     outingbox_subzone_14 = SubZone()
     outingbox_subzone_14.title = 'North West Delhi'
     outingbox_subzone_14.zone = outingbox_zone_2
-    outingbox_subzone_14 = importer.save_or_locate(outingbox_subzone_14)
+    outingbox_subzone_14.save()
 
     outingbox_subzone_15 = SubZone()
     outingbox_subzone_15.title = 'Alipur'
     outingbox_subzone_15.zone = outingbox_zone_2
-    outingbox_subzone_15 = importer.save_or_locate(outingbox_subzone_15)
+    outingbox_subzone_15.save()
 
     outingbox_subzone_16 = SubZone()
     outingbox_subzone_16.title = 'North Delhi'
     outingbox_subzone_16.zone = outingbox_zone_2
-    outingbox_subzone_16 = importer.save_or_locate(outingbox_subzone_16)
+    outingbox_subzone_16.save()
 
     outingbox_subzone_17 = SubZone()
     outingbox_subzone_17.title = 'Sector 29 Gurgaon'
     outingbox_subzone_17.zone = outingbox_zone_2
-    outingbox_subzone_17 = importer.save_or_locate(outingbox_subzone_17)
+    outingbox_subzone_17.save()
 
     outingbox_subzone_18 = SubZone()
     outingbox_subzone_18.title = 'South West Delhi'
     outingbox_subzone_18.zone = outingbox_zone_2
-    outingbox_subzone_18 = importer.save_or_locate(outingbox_subzone_18)
+    outingbox_subzone_18.save()
 
     outingbox_subzone_19 = SubZone()
     outingbox_subzone_19.title = 'Kalindi Kunj'
     outingbox_subzone_19.zone = outingbox_zone_2
-    outingbox_subzone_19 = importer.save_or_locate(outingbox_subzone_19)
+    outingbox_subzone_19.save()
 
     outingbox_subzone_20 = SubZone()
     outingbox_subzone_20.title = 'Okhla'
     outingbox_subzone_20.zone = outingbox_zone_2
-    outingbox_subzone_20 = importer.save_or_locate(outingbox_subzone_20)
+    outingbox_subzone_20.save()
 
     outingbox_subzone_21 = SubZone()
     outingbox_subzone_21.title = 'Sector 38 Noida'
     outingbox_subzone_21.zone = outingbox_zone_2
-    outingbox_subzone_21 = importer.save_or_locate(outingbox_subzone_21)
+    outingbox_subzone_21.save()
 
     outingbox_subzone_22 = SubZone()
     outingbox_subzone_22.title = 'Noida'
     outingbox_subzone_22.zone = outingbox_zone_2
-    outingbox_subzone_22 = importer.save_or_locate(outingbox_subzone_22)
+    outingbox_subzone_22.save()
 
     outingbox_subzone_23 = SubZone()
     outingbox_subzone_23.title = 'Sector 10 Rohini'
     outingbox_subzone_23.zone = outingbox_zone_2
-    outingbox_subzone_23 = importer.save_or_locate(outingbox_subzone_23)
+    outingbox_subzone_23.save()
 
     outingbox_subzone_24 = SubZone()
     outingbox_subzone_24.title = 'Rohini'
     outingbox_subzone_24.zone = outingbox_zone_2
-    outingbox_subzone_24 = importer.save_or_locate(outingbox_subzone_24)
+    outingbox_subzone_24.save()
 
     outingbox_subzone_25 = SubZone()
     outingbox_subzone_25.title = 'Rithala '
     outingbox_subzone_25.zone = outingbox_zone_2
-    outingbox_subzone_25 = importer.save_or_locate(outingbox_subzone_25)
+    outingbox_subzone_25.save()
 
     outingbox_subzone_26 = SubZone()
     outingbox_subzone_26.title = 'Haryana'
     outingbox_subzone_26.zone = outingbox_zone_2
-    outingbox_subzone_26 = importer.save_or_locate(outingbox_subzone_26)
+    outingbox_subzone_26.save()
 
     outingbox_subzone_27 = SubZone()
     outingbox_subzone_27.title = 'Sonepat'
     outingbox_subzone_27.zone = outingbox_zone_2
-    outingbox_subzone_27 = importer.save_or_locate(outingbox_subzone_27)
+    outingbox_subzone_27.save()
 
     outingbox_subzone_28 = SubZone()
     outingbox_subzone_28.title = 'NH 1'
     outingbox_subzone_28.zone = outingbox_zone_2
-    outingbox_subzone_28 = importer.save_or_locate(outingbox_subzone_28)
+    outingbox_subzone_28.save()
 
     outingbox_subzone_29 = SubZone()
     outingbox_subzone_29.title = 'National Highway 1'
     outingbox_subzone_29.zone = outingbox_zone_2
-    outingbox_subzone_29 = importer.save_or_locate(outingbox_subzone_29)
+    outingbox_subzone_29.save()
 
     outingbox_subzone_30 = SubZone()
     outingbox_subzone_30.title = 'Ghaziabad'
     outingbox_subzone_30.zone = outingbox_zone_2
-    outingbox_subzone_30 = importer.save_or_locate(outingbox_subzone_30)
+    outingbox_subzone_30.save()
 
     outingbox_subzone_31 = SubZone()
     outingbox_subzone_31.title = 'Delhi Meerut Highway'
     outingbox_subzone_31.zone = outingbox_zone_2
-    outingbox_subzone_31 = importer.save_or_locate(outingbox_subzone_31)
+    outingbox_subzone_31.save()
 
     outingbox_subzone_32 = SubZone()
     outingbox_subzone_32.title = 'Duhai'
     outingbox_subzone_32.zone = outingbox_zone_2
-    outingbox_subzone_32 = importer.save_or_locate(outingbox_subzone_32)
+    outingbox_subzone_32.save()
 
     outingbox_subzone_33 = SubZone()
     outingbox_subzone_33.title = 'Bahadurgarh'
     outingbox_subzone_33.zone = outingbox_zone_2
-    outingbox_subzone_33 = importer.save_or_locate(outingbox_subzone_33)
+    outingbox_subzone_33.save()
 
     outingbox_subzone_34 = SubZone()
     outingbox_subzone_34.title = 'Delhi Jaipur Expressway'
     outingbox_subzone_34.zone = outingbox_zone_2
-    outingbox_subzone_34 = importer.save_or_locate(outingbox_subzone_34)
+    outingbox_subzone_34.save()
 
     outingbox_subzone_35 = SubZone()
     outingbox_subzone_35.title = ' Nh-8'
     outingbox_subzone_35.zone = outingbox_zone_2
-    outingbox_subzone_35 = importer.save_or_locate(outingbox_subzone_35)
+    outingbox_subzone_35.save()
 
     outingbox_subzone_36 = SubZone()
     outingbox_subzone_36.title = 'Faridabad'
     outingbox_subzone_36.zone = outingbox_zone_2
-    outingbox_subzone_36 = importer.save_or_locate(outingbox_subzone_36)
+    outingbox_subzone_36.save()
 
     outingbox_subzone_37 = SubZone()
     outingbox_subzone_37.title = 'Saket'
     outingbox_subzone_37.zone = outingbox_zone_2
-    outingbox_subzone_37 = importer.save_or_locate(outingbox_subzone_37)
+    outingbox_subzone_37.save()
 
     outingbox_subzone_38 = SubZone()
     outingbox_subzone_38.title = 'Tilak Nagar'
     outingbox_subzone_38.zone = outingbox_zone_2
-    outingbox_subzone_38 = importer.save_or_locate(outingbox_subzone_38)
+    outingbox_subzone_38.save()
 
     outingbox_subzone_39 = SubZone()
     outingbox_subzone_39.title = 'Chattarpur'
     outingbox_subzone_39.zone = outingbox_zone_2
-    outingbox_subzone_39 = importer.save_or_locate(outingbox_subzone_39)
+    outingbox_subzone_39.save()
 
     outingbox_subzone_40 = SubZone()
     outingbox_subzone_40.title = 'Sector 18 Noida'
     outingbox_subzone_40.zone = outingbox_zone_2
-    outingbox_subzone_40 = importer.save_or_locate(outingbox_subzone_40)
+    outingbox_subzone_40.save()
 
     outingbox_subzone_41 = SubZone()
     outingbox_subzone_41.title = 'Botanical Garden'
     outingbox_subzone_41.zone = outingbox_zone_2
-    outingbox_subzone_41 = importer.save_or_locate(outingbox_subzone_41)
+    outingbox_subzone_41.save()
 
     outingbox_subzone_42 = SubZone()
     outingbox_subzone_42.title = 'Sector 16 Noida'
     outingbox_subzone_42.zone = outingbox_zone_2
-    outingbox_subzone_42 = importer.save_or_locate(outingbox_subzone_42)
+    outingbox_subzone_42.save()
 
     outingbox_subzone_43 = SubZone()
     outingbox_subzone_43.title = 'Sector 17 Gurgaon'
     outingbox_subzone_43.zone = outingbox_zone_2
-    outingbox_subzone_43 = importer.save_or_locate(outingbox_subzone_43)
+    outingbox_subzone_43.save()
 
     outingbox_subzone_44 = SubZone()
     outingbox_subzone_44.title = 'Sector 18 Gurgaon'
     outingbox_subzone_44.zone = outingbox_zone_2
-    outingbox_subzone_44 = importer.save_or_locate(outingbox_subzone_44)
+    outingbox_subzone_44.save()
 
     outingbox_subzone_45 = SubZone()
     outingbox_subzone_45.title = 'Sector 15 Gurgaon'
     outingbox_subzone_45.zone = outingbox_zone_2
-    outingbox_subzone_45 = importer.save_or_locate(outingbox_subzone_45)
+    outingbox_subzone_45.save()
 
     outingbox_subzone_46 = SubZone()
     outingbox_subzone_46.title = 'Lajpat Nagar'
     outingbox_subzone_46.zone = outingbox_zone_2
-    outingbox_subzone_46 = importer.save_or_locate(outingbox_subzone_46)
+    outingbox_subzone_46.save()
 
     outingbox_subzone_47 = SubZone()
     outingbox_subzone_47.title = 'Hauz Khas'
     outingbox_subzone_47.zone = outingbox_zone_2
-    outingbox_subzone_47 = importer.save_or_locate(outingbox_subzone_47)
+    outingbox_subzone_47.save()
 
     outingbox_subzone_48 = SubZone()
     outingbox_subzone_48.title = 'Tughlakabad'
     outingbox_subzone_48.zone = outingbox_zone_2
-    outingbox_subzone_48 = importer.save_or_locate(outingbox_subzone_48)
+    outingbox_subzone_48.save()
 
     outingbox_subzone_49 = SubZone()
     outingbox_subzone_49.title = 'Badarpur'
     outingbox_subzone_49.zone = outingbox_zone_2
-    outingbox_subzone_49 = importer.save_or_locate(outingbox_subzone_49)
+    outingbox_subzone_49.save()
 
     outingbox_subzone_50 = SubZone()
     outingbox_subzone_50.title = 'Sohna'
     outingbox_subzone_50.zone = outingbox_zone_2
-    outingbox_subzone_50 = importer.save_or_locate(outingbox_subzone_50)
+    outingbox_subzone_50.save()
 
     outingbox_subzone_51 = SubZone()
     outingbox_subzone_51.title = 'DLF Phase 4'
     outingbox_subzone_51.zone = outingbox_zone_2
-    outingbox_subzone_51 = importer.save_or_locate(outingbox_subzone_51)
+    outingbox_subzone_51.save()
 
     outingbox_subzone_52 = SubZone()
     outingbox_subzone_52.title = 'Rajiv Chowk'
     outingbox_subzone_52.zone = outingbox_zone_2
-    outingbox_subzone_52 = importer.save_or_locate(outingbox_subzone_52)
+    outingbox_subzone_52.save()
 
     outingbox_subzone_53 = SubZone()
     outingbox_subzone_53.title = 'Connaught place'
     outingbox_subzone_53.zone = outingbox_zone_2
-    outingbox_subzone_53 = importer.save_or_locate(outingbox_subzone_53)
+    outingbox_subzone_53.save()
 
     outingbox_subzone_54 = SubZone()
     outingbox_subzone_54.title = 'CP'
     outingbox_subzone_54.zone = outingbox_zone_2
-    outingbox_subzone_54 = importer.save_or_locate(outingbox_subzone_54)
+    outingbox_subzone_54.save()
 
     outingbox_subzone_55 = SubZone()
     outingbox_subzone_55.title = 'Rouse Avenue'
     outingbox_subzone_55.zone = outingbox_zone_2
-    outingbox_subzone_55 = importer.save_or_locate(outingbox_subzone_55)
+    outingbox_subzone_55.save()
 
     outingbox_subzone_56 = SubZone()
     outingbox_subzone_56.title = 'Kailash Colony'
     outingbox_subzone_56.zone = outingbox_zone_2
-    outingbox_subzone_56 = importer.save_or_locate(outingbox_subzone_56)
+    outingbox_subzone_56.save()
 
     outingbox_subzone_57 = SubZone()
     outingbox_subzone_57.title = 'Lakshmi Nagar'
     outingbox_subzone_57.zone = outingbox_zone_2
-    outingbox_subzone_57 = importer.save_or_locate(outingbox_subzone_57)
+    outingbox_subzone_57.save()
 
     outingbox_subzone_58 = SubZone()
     outingbox_subzone_58.title = 'Sushant Lok'
     outingbox_subzone_58.zone = outingbox_zone_2
-    outingbox_subzone_58 = importer.save_or_locate(outingbox_subzone_58)
+    outingbox_subzone_58.save()
 
     outingbox_subzone_59 = SubZone()
     outingbox_subzone_59.title = 'Sector 43 Gurgaon'
     outingbox_subzone_59.zone = outingbox_zone_2
-    outingbox_subzone_59 = importer.save_or_locate(outingbox_subzone_59)
+    outingbox_subzone_59.save()
 
     outingbox_subzone_60 = SubZone()
     outingbox_subzone_60.title = 'DLF Phase 1'
     outingbox_subzone_60.zone = outingbox_zone_2
-    outingbox_subzone_60 = importer.save_or_locate(outingbox_subzone_60)
+    outingbox_subzone_60.save()
 
     outingbox_subzone_61 = SubZone()
     outingbox_subzone_61.title = 'Sector 6 Gurgaon'
     outingbox_subzone_61.zone = outingbox_zone_2
-    outingbox_subzone_61 = importer.save_or_locate(outingbox_subzone_61)
+    outingbox_subzone_61.save()
 
     outingbox_subzone_62 = SubZone()
     outingbox_subzone_62.title = 'Karkardooma'
     outingbox_subzone_62.zone = outingbox_zone_2
-    outingbox_subzone_62 = importer.save_or_locate(outingbox_subzone_62)
+    outingbox_subzone_62.save()
 
     outingbox_subzone_63 = SubZone()
     outingbox_subzone_63.title = 'Siri Fort'
     outingbox_subzone_63.zone = outingbox_zone_2
-    outingbox_subzone_63 = importer.save_or_locate(outingbox_subzone_63)
+    outingbox_subzone_63.save()
 
     outingbox_subzone_64 = SubZone()
     outingbox_subzone_64.title = 'Green Park'
     outingbox_subzone_64.zone = outingbox_zone_2
-    outingbox_subzone_64 = importer.save_or_locate(outingbox_subzone_64)
+    outingbox_subzone_64.save()
 
     outingbox_subzone_65 = SubZone()
     outingbox_subzone_65.title = 'Malviya Nagar'
     outingbox_subzone_65.zone = outingbox_zone_2
-    outingbox_subzone_65 = importer.save_or_locate(outingbox_subzone_65)
+    outingbox_subzone_65.save()
 
     outingbox_subzone_66 = SubZone()
     outingbox_subzone_66.title = 'Sector 24 Gurgaon'
     outingbox_subzone_66.zone = outingbox_zone_2
-    outingbox_subzone_66 = importer.save_or_locate(outingbox_subzone_66)
+    outingbox_subzone_66.save()
 
     outingbox_subzone_67 = SubZone()
     outingbox_subzone_67.title = 'Ambience Mall'
     outingbox_subzone_67.zone = outingbox_zone_2
-    outingbox_subzone_67 = importer.save_or_locate(outingbox_subzone_67)
+    outingbox_subzone_67.save()
 
     outingbox_subzone_68 = SubZone()
     outingbox_subzone_68.title = 'Panchsheel Park'
     outingbox_subzone_68.zone = outingbox_zone_2
-    outingbox_subzone_68 = importer.save_or_locate(outingbox_subzone_68)
+    outingbox_subzone_68.save()
 
     outingbox_subzone_69 = SubZone()
     outingbox_subzone_69.title = 'NFC'
     outingbox_subzone_69.zone = outingbox_zone_2
-    outingbox_subzone_69 = importer.save_or_locate(outingbox_subzone_69)
+    outingbox_subzone_69.save()
 
     outingbox_subzone_70 = SubZone()
     outingbox_subzone_70.title = 'New Friends Colony'
     outingbox_subzone_70.zone = outingbox_zone_2
-    outingbox_subzone_70 = importer.save_or_locate(outingbox_subzone_70)
+    outingbox_subzone_70.save()
 
     outingbox_subzone_71 = SubZone()
     outingbox_subzone_71.title = 'Defence Colony'
     outingbox_subzone_71.zone = outingbox_zone_2
-    outingbox_subzone_71 = importer.save_or_locate(outingbox_subzone_71)
+    outingbox_subzone_71.save()
 
     outingbox_subzone_72 = SubZone()
     outingbox_subzone_72.title = 'Lodhi Road'
     outingbox_subzone_72.zone = outingbox_zone_2
-    outingbox_subzone_72 = importer.save_or_locate(outingbox_subzone_72)
+    outingbox_subzone_72.save()
 
     outingbox_subzone_73 = SubZone()
     outingbox_subzone_73.title = 'Jor Bagh'
     outingbox_subzone_73.zone = outingbox_zone_2
-    outingbox_subzone_73 = importer.save_or_locate(outingbox_subzone_73)
+    outingbox_subzone_73.save()
 
     outingbox_subzone_74 = SubZone()
     outingbox_subzone_74.title = 'JLN Stadium'
     outingbox_subzone_74.zone = outingbox_zone_2
-    outingbox_subzone_74 = importer.save_or_locate(outingbox_subzone_74)
+    outingbox_subzone_74.save()
 
     outingbox_subzone_75 = SubZone()
     outingbox_subzone_75.title = 'Noida Sector 44'
     outingbox_subzone_75.zone = outingbox_zone_2
-    outingbox_subzone_75 = importer.save_or_locate(outingbox_subzone_75)
+    outingbox_subzone_75.save()
 
     outingbox_subzone_76 = SubZone()
     outingbox_subzone_76.title = 'Golf Course'
     outingbox_subzone_76.zone = outingbox_zone_2
-    outingbox_subzone_76 = importer.save_or_locate(outingbox_subzone_76)
+    outingbox_subzone_76.save()
 
     outingbox_subzone_77 = SubZone()
     outingbox_subzone_77.title = 'Pragati Maidan'
     outingbox_subzone_77.zone = outingbox_zone_1
-    outingbox_subzone_77 = importer.save_or_locate(outingbox_subzone_77)
+    outingbox_subzone_77.save()
 
     outingbox_subzone_78 = SubZone()
     outingbox_subzone_78.title = 'NDMC'
     outingbox_subzone_78.zone = outingbox_zone_1
-    outingbox_subzone_78 = importer.save_or_locate(outingbox_subzone_78)
+    outingbox_subzone_78.save()
 
     outingbox_subzone_79 = SubZone()
     outingbox_subzone_79.title = 'Race Course'
     outingbox_subzone_79.zone = outingbox_zone_1
-    outingbox_subzone_79 = importer.save_or_locate(outingbox_subzone_79)
+    outingbox_subzone_79.save()
 
     outingbox_subzone_80 = SubZone()
     outingbox_subzone_80.title = 'Teen Murti House'
     outingbox_subzone_80.zone = outingbox_zone_1
-    outingbox_subzone_80 = importer.save_or_locate(outingbox_subzone_80)
+    outingbox_subzone_80.save()
 
     outingbox_subzone_81 = SubZone()
     outingbox_subzone_81.title = 'Delhi'
     outingbox_subzone_81.zone = outingbox_zone_1
-    outingbox_subzone_81 = importer.save_or_locate(outingbox_subzone_81)
+    outingbox_subzone_81.save()
 
     outingbox_subzone_82 = SubZone()
     outingbox_subzone_82.title = 'Pandav Nagar Ext'
     outingbox_subzone_82.zone = outingbox_zone_2
-    outingbox_subzone_82 = importer.save_or_locate(outingbox_subzone_82)
+    outingbox_subzone_82.save()
 
     outingbox_subzone_83 = SubZone()
     outingbox_subzone_83.title = 'Delhi Rohtak Road'
     outingbox_subzone_83.zone = outingbox_zone_2
-    outingbox_subzone_83 = importer.save_or_locate(outingbox_subzone_83)
+    outingbox_subzone_83.save()
 
     # Processing model: MetroLineColor
 
@@ -569,32 +449,32 @@ def import_data():
     outingbox_metrolinecolor_1 = MetroLineColor()
     outingbox_metrolinecolor_1.title = 'green'
     outingbox_metrolinecolor_1.color = 'green'
-    outingbox_metrolinecolor_1 = importer.save_or_locate(outingbox_metrolinecolor_1)
+    outingbox_metrolinecolor_1.save()
 
     outingbox_metrolinecolor_2 = MetroLineColor()
     outingbox_metrolinecolor_2.title = 'red'
     outingbox_metrolinecolor_2.color = '#fb4f4f'
-    outingbox_metrolinecolor_2 = importer.save_or_locate(outingbox_metrolinecolor_2)
+    outingbox_metrolinecolor_2.save()
 
     outingbox_metrolinecolor_3 = MetroLineColor()
     outingbox_metrolinecolor_3.title = 'yellow'
     outingbox_metrolinecolor_3.color = '#fbc93d'
-    outingbox_metrolinecolor_3 = importer.save_or_locate(outingbox_metrolinecolor_3)
+    outingbox_metrolinecolor_3.save()
 
     outingbox_metrolinecolor_4 = MetroLineColor()
     outingbox_metrolinecolor_4.title = 'blue'
     outingbox_metrolinecolor_4.color = '#2e8ece'
-    outingbox_metrolinecolor_4 = importer.save_or_locate(outingbox_metrolinecolor_4)
+    outingbox_metrolinecolor_4.save()
 
     outingbox_metrolinecolor_5 = MetroLineColor()
     outingbox_metrolinecolor_5.title = 'violet'
     outingbox_metrolinecolor_5.color = '#8e44ad'
-    outingbox_metrolinecolor_5 = importer.save_or_locate(outingbox_metrolinecolor_5)
+    outingbox_metrolinecolor_5.save()
 
     outingbox_metrolinecolor_6 = MetroLineColor()
     outingbox_metrolinecolor_6.title = 'orange'
     outingbox_metrolinecolor_6.color = '#f39c12'
-    outingbox_metrolinecolor_6 = importer.save_or_locate(outingbox_metrolinecolor_6)
+    outingbox_metrolinecolor_6.save()
 
     # Processing model: MetroStation
 
@@ -603,697 +483,697 @@ def import_data():
     outingbox_metrostation_1 = MetroStation()
     outingbox_metrostation_1.title = 'Neelam Chowk Ajronda'
     outingbox_metrostation_1.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_1 = importer.save_or_locate(outingbox_metrostation_1)
+    outingbox_metrostation_1.save()
 
     outingbox_metrostation_2 = MetroStation()
     outingbox_metrostation_2.title = 'Adarsh Nagar'
     outingbox_metrostation_2.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_2 = importer.save_or_locate(outingbox_metrostation_2)
+    outingbox_metrostation_2.save()
 
     outingbox_metrostation_3 = MetroStation()
     outingbox_metrostation_3.title = 'AIIMS'
     outingbox_metrostation_3.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_3 = importer.save_or_locate(outingbox_metrostation_3)
+    outingbox_metrostation_3.save()
 
     outingbox_metrostation_4 = MetroStation()
     outingbox_metrostation_4.title = 'Akshardham'
     outingbox_metrostation_4.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_4 = importer.save_or_locate(outingbox_metrostation_4)
+    outingbox_metrostation_4.save()
 
     outingbox_metrostation_5 = MetroStation()
     outingbox_metrostation_5.title = 'Anand Vihar'
     outingbox_metrostation_5.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_5 = importer.save_or_locate(outingbox_metrostation_5)
+    outingbox_metrostation_5.save()
 
     outingbox_metrostation_6 = MetroStation()
     outingbox_metrostation_6.title = 'Arjan Garh'
     outingbox_metrostation_6.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_6 = importer.save_or_locate(outingbox_metrostation_6)
+    outingbox_metrostation_6.save()
 
     outingbox_metrostation_7 = MetroStation()
     outingbox_metrostation_7.title = 'Ashok Park Main'
     outingbox_metrostation_7.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_7 = importer.save_or_locate(outingbox_metrostation_7)
+    outingbox_metrostation_7.save()
 
     outingbox_metrostation_8 = MetroStation()
     outingbox_metrostation_8.title = 'Azadpur'
     outingbox_metrostation_8.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_8 = importer.save_or_locate(outingbox_metrostation_8)
+    outingbox_metrostation_8.save()
 
     outingbox_metrostation_9 = MetroStation()
     outingbox_metrostation_9.title = 'Badarpur'
     outingbox_metrostation_9.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_9 = importer.save_or_locate(outingbox_metrostation_9)
+    outingbox_metrostation_9.save()
 
     outingbox_metrostation_10 = MetroStation()
     outingbox_metrostation_10.title = 'Barakhambha Road'
     outingbox_metrostation_10.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_10 = importer.save_or_locate(outingbox_metrostation_10)
+    outingbox_metrostation_10.save()
 
     outingbox_metrostation_11 = MetroStation()
     outingbox_metrostation_11.title = 'Botanical Garden'
     outingbox_metrostation_11.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_11 = importer.save_or_locate(outingbox_metrostation_11)
+    outingbox_metrostation_11.save()
 
     outingbox_metrostation_12 = MetroStation()
     outingbox_metrostation_12.title = 'Central Secretariat'
     outingbox_metrostation_12.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_12 = importer.save_or_locate(outingbox_metrostation_12)
+    outingbox_metrostation_12.save()
 
     outingbox_metrostation_13 = MetroStation()
     outingbox_metrostation_13.title = 'Chandni Chowk'
     outingbox_metrostation_13.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_13 = importer.save_or_locate(outingbox_metrostation_13)
+    outingbox_metrostation_13.save()
 
     outingbox_metrostation_14 = MetroStation()
     outingbox_metrostation_14.title = 'Chhatarpur'
     outingbox_metrostation_14.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_14 = importer.save_or_locate(outingbox_metrostation_14)
+    outingbox_metrostation_14.save()
 
     outingbox_metrostation_15 = MetroStation()
     outingbox_metrostation_15.title = 'Chawri Bazar'
     outingbox_metrostation_15.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_15 = importer.save_or_locate(outingbox_metrostation_15)
+    outingbox_metrostation_15.save()
 
     outingbox_metrostation_16 = MetroStation()
     outingbox_metrostation_16.title = 'Civil Lines'
     outingbox_metrostation_16.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_16 = importer.save_or_locate(outingbox_metrostation_16)
+    outingbox_metrostation_16.save()
 
     outingbox_metrostation_17 = MetroStation()
     outingbox_metrostation_17.title = 'Delhi Aerocity'
     outingbox_metrostation_17.color = outingbox_metrolinecolor_6
-    outingbox_metrostation_17 = importer.save_or_locate(outingbox_metrostation_17)
+    outingbox_metrostation_17.save()
 
     outingbox_metrostation_18 = MetroStation()
     outingbox_metrostation_18.title = 'Dhaula Kuan'
     outingbox_metrostation_18.color = outingbox_metrolinecolor_6
-    outingbox_metrostation_18 = importer.save_or_locate(outingbox_metrostation_18)
+    outingbox_metrostation_18.save()
 
     outingbox_metrostation_19 = MetroStation()
     outingbox_metrostation_19.title = 'Dilshad Garden'
     outingbox_metrostation_19.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_19 = importer.save_or_locate(outingbox_metrostation_19)
+    outingbox_metrostation_19.save()
 
     outingbox_metrostation_20 = MetroStation()
     outingbox_metrostation_20.title = 'Dwarka'
     outingbox_metrostation_20.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_20 = importer.save_or_locate(outingbox_metrostation_20)
+    outingbox_metrostation_20.save()
 
     outingbox_metrostation_21 = MetroStation()
     outingbox_metrostation_21.title = 'Dwarka Morh'
     outingbox_metrostation_21.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_21 = importer.save_or_locate(outingbox_metrostation_21)
+    outingbox_metrostation_21.save()
 
     outingbox_metrostation_22 = MetroStation()
     outingbox_metrostation_22.title = 'Dwarka Sector 10'
     outingbox_metrostation_22.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_22 = importer.save_or_locate(outingbox_metrostation_22)
+    outingbox_metrostation_22.save()
 
     outingbox_metrostation_23 = MetroStation()
     outingbox_metrostation_23.title = 'Dwarka Sector 11'
     outingbox_metrostation_23.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_23 = importer.save_or_locate(outingbox_metrostation_23)
+    outingbox_metrostation_23.save()
 
     outingbox_metrostation_24 = MetroStation()
     outingbox_metrostation_24.title = 'Dwarka Sector 12'
     outingbox_metrostation_24.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_24 = importer.save_or_locate(outingbox_metrostation_24)
+    outingbox_metrostation_24.save()
 
     outingbox_metrostation_25 = MetroStation()
     outingbox_metrostation_25.title = 'Dwarka Sector 13'
     outingbox_metrostation_25.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_25 = importer.save_or_locate(outingbox_metrostation_25)
+    outingbox_metrostation_25.save()
 
     outingbox_metrostation_26 = MetroStation()
     outingbox_metrostation_26.title = 'Dwarka Sector 14'
     outingbox_metrostation_26.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_26 = importer.save_or_locate(outingbox_metrostation_26)
+    outingbox_metrostation_26.save()
 
     outingbox_metrostation_27 = MetroStation()
     outingbox_metrostation_27.title = 'Dwarka Sector 21'
     outingbox_metrostation_27.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_27 = importer.save_or_locate(outingbox_metrostation_27)
+    outingbox_metrostation_27.save()
 
     outingbox_metrostation_28 = MetroStation()
     outingbox_metrostation_28.title = 'Dwarka Sector 8'
     outingbox_metrostation_28.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_28 = importer.save_or_locate(outingbox_metrostation_28)
+    outingbox_metrostation_28.save()
 
     outingbox_metrostation_29 = MetroStation()
     outingbox_metrostation_29.title = 'Dwarka Sector 9'
     outingbox_metrostation_29.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_29 = importer.save_or_locate(outingbox_metrostation_29)
+    outingbox_metrostation_29.save()
 
     outingbox_metrostation_30 = MetroStation()
     outingbox_metrostation_30.title = 'Ghitorni'
     outingbox_metrostation_30.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_30 = importer.save_or_locate(outingbox_metrostation_30)
+    outingbox_metrostation_30.save()
 
     outingbox_metrostation_31 = MetroStation()
     outingbox_metrostation_31.title = 'Govind Puri'
     outingbox_metrostation_31.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_31 = importer.save_or_locate(outingbox_metrostation_31)
+    outingbox_metrostation_31.save()
 
     outingbox_metrostation_32 = MetroStation()
     outingbox_metrostation_32.title = 'Green Park'
     outingbox_metrostation_32.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_32 = importer.save_or_locate(outingbox_metrostation_32)
+    outingbox_metrostation_32.save()
 
     outingbox_metrostation_33 = MetroStation()
     outingbox_metrostation_33.title = 'GTB Nagar'
     outingbox_metrostation_33.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_33 = importer.save_or_locate(outingbox_metrostation_33)
+    outingbox_metrostation_33.save()
 
     outingbox_metrostation_34 = MetroStation()
     outingbox_metrostation_34.title = 'Guru Dronacharya'
     outingbox_metrostation_34.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_34 = importer.save_or_locate(outingbox_metrostation_34)
+    outingbox_metrostation_34.save()
 
     outingbox_metrostation_35 = MetroStation()
     outingbox_metrostation_35.title = 'Hauz Khas'
     outingbox_metrostation_35.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_35 = importer.save_or_locate(outingbox_metrostation_35)
+    outingbox_metrostation_35.save()
 
     outingbox_metrostation_36 = MetroStation()
     outingbox_metrostation_36.title = 'HUDA City Centre'
     outingbox_metrostation_36.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_36 = importer.save_or_locate(outingbox_metrostation_36)
+    outingbox_metrostation_36.save()
 
     outingbox_metrostation_37 = MetroStation()
     outingbox_metrostation_37.title = 'IFFCO Chowk'
     outingbox_metrostation_37.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_37 = importer.save_or_locate(outingbox_metrostation_37)
+    outingbox_metrostation_37.save()
 
     outingbox_metrostation_38 = MetroStation()
     outingbox_metrostation_38.title = 'INA'
     outingbox_metrostation_38.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_38 = importer.save_or_locate(outingbox_metrostation_38)
+    outingbox_metrostation_38.save()
 
     outingbox_metrostation_39 = MetroStation()
     outingbox_metrostation_39.title = 'Inderlok'
     outingbox_metrostation_39.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_39 = importer.save_or_locate(outingbox_metrostation_39)
+    outingbox_metrostation_39.save()
 
     outingbox_metrostation_40 = MetroStation()
     outingbox_metrostation_40.title = 'Indira Gandhi International Airport'
     outingbox_metrostation_40.color = outingbox_metrolinecolor_6
-    outingbox_metrostation_40 = importer.save_or_locate(outingbox_metrostation_40)
+    outingbox_metrostation_40.save()
 
     outingbox_metrostation_41 = MetroStation()
     outingbox_metrostation_41.title = 'Indraprastha'
     outingbox_metrostation_41.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_41 = importer.save_or_locate(outingbox_metrostation_41)
+    outingbox_metrostation_41.save()
 
     outingbox_metrostation_42 = MetroStation()
     outingbox_metrostation_42.title = 'Jahangirpuri'
     outingbox_metrostation_42.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_42 = importer.save_or_locate(outingbox_metrostation_42)
+    outingbox_metrostation_42.save()
 
     outingbox_metrostation_43 = MetroStation()
     outingbox_metrostation_43.title = 'Janakpuri East'
     outingbox_metrostation_43.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_43 = importer.save_or_locate(outingbox_metrostation_43)
+    outingbox_metrostation_43.save()
 
     outingbox_metrostation_44 = MetroStation()
     outingbox_metrostation_44.title = 'Janakpuri West'
     outingbox_metrostation_44.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_44 = importer.save_or_locate(outingbox_metrostation_44)
+    outingbox_metrostation_44.save()
 
     outingbox_metrostation_45 = MetroStation()
     outingbox_metrostation_45.title = 'Jangpura'
     outingbox_metrostation_45.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_45 = importer.save_or_locate(outingbox_metrostation_45)
+    outingbox_metrostation_45.save()
 
     outingbox_metrostation_46 = MetroStation()
     outingbox_metrostation_46.title = 'Jasola Apollo'
     outingbox_metrostation_46.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_46 = importer.save_or_locate(outingbox_metrostation_46)
+    outingbox_metrostation_46.save()
 
     outingbox_metrostation_47 = MetroStation()
     outingbox_metrostation_47.title = 'Jawaharlal Nehru Stadium'
     outingbox_metrostation_47.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_47 = importer.save_or_locate(outingbox_metrostation_47)
+    outingbox_metrostation_47.save()
 
     outingbox_metrostation_48 = MetroStation()
     outingbox_metrostation_48.title = 'Jhandewalan'
     outingbox_metrostation_48.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_48 = importer.save_or_locate(outingbox_metrostation_48)
+    outingbox_metrostation_48.save()
 
     outingbox_metrostation_49 = MetroStation()
     outingbox_metrostation_49.title = 'Jhilmil'
     outingbox_metrostation_49.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_49 = importer.save_or_locate(outingbox_metrostation_49)
+    outingbox_metrostation_49.save()
 
     outingbox_metrostation_50 = MetroStation()
     outingbox_metrostation_50.title = 'Jor Bagh'
     outingbox_metrostation_50.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_50 = importer.save_or_locate(outingbox_metrostation_50)
+    outingbox_metrostation_50.save()
 
     outingbox_metrostation_51 = MetroStation()
     outingbox_metrostation_51.title = 'Kailash Colony'
     outingbox_metrostation_51.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_51 = importer.save_or_locate(outingbox_metrostation_51)
+    outingbox_metrostation_51.save()
 
     outingbox_metrostation_52 = MetroStation()
     outingbox_metrostation_52.title = 'Kalkaji Mandir'
     outingbox_metrostation_52.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_52 = importer.save_or_locate(outingbox_metrostation_52)
+    outingbox_metrostation_52.save()
 
     outingbox_metrostation_53 = MetroStation()
     outingbox_metrostation_53.title = 'Kanhiya Nagar'
     outingbox_metrostation_53.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_53 = importer.save_or_locate(outingbox_metrostation_53)
+    outingbox_metrostation_53.save()
 
     outingbox_metrostation_54 = MetroStation()
     outingbox_metrostation_54.title = 'Karkarduma'
     outingbox_metrostation_54.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_54 = importer.save_or_locate(outingbox_metrostation_54)
+    outingbox_metrostation_54.save()
 
     outingbox_metrostation_55 = MetroStation()
     outingbox_metrostation_55.title = 'Karol Bagh'
     outingbox_metrostation_55.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_55 = importer.save_or_locate(outingbox_metrostation_55)
+    outingbox_metrostation_55.save()
 
     outingbox_metrostation_56 = MetroStation()
     outingbox_metrostation_56.title = 'Kashmere Gate'
     outingbox_metrostation_56.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_56 = importer.save_or_locate(outingbox_metrostation_56)
+    outingbox_metrostation_56.save()
 
     outingbox_metrostation_57 = MetroStation()
     outingbox_metrostation_57.title = 'Kaushambi'
     outingbox_metrostation_57.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_57 = importer.save_or_locate(outingbox_metrostation_57)
+    outingbox_metrostation_57.save()
 
     outingbox_metrostation_58 = MetroStation()
     outingbox_metrostation_58.title = 'Keshav Puram'
     outingbox_metrostation_58.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_58 = importer.save_or_locate(outingbox_metrostation_58)
+    outingbox_metrostation_58.save()
 
     outingbox_metrostation_59 = MetroStation()
     outingbox_metrostation_59.title = 'Khan Market'
     outingbox_metrostation_59.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_59 = importer.save_or_locate(outingbox_metrostation_59)
+    outingbox_metrostation_59.save()
 
     outingbox_metrostation_60 = MetroStation()
     outingbox_metrostation_60.title = 'Kirti Nagar'
     outingbox_metrostation_60.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_60 = importer.save_or_locate(outingbox_metrostation_60)
+    outingbox_metrostation_60.save()
 
     outingbox_metrostation_61 = MetroStation()
     outingbox_metrostation_61.title = 'Kohat Enclave'
     outingbox_metrostation_61.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_61 = importer.save_or_locate(outingbox_metrostation_61)
+    outingbox_metrostation_61.save()
 
     outingbox_metrostation_62 = MetroStation()
     outingbox_metrostation_62.title = 'Lajpat Nagar'
     outingbox_metrostation_62.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_62 = importer.save_or_locate(outingbox_metrostation_62)
+    outingbox_metrostation_62.save()
 
     outingbox_metrostation_63 = MetroStation()
     outingbox_metrostation_63.title = 'Laxmi Nagar'
     outingbox_metrostation_63.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_63 = importer.save_or_locate(outingbox_metrostation_63)
+    outingbox_metrostation_63.save()
 
     outingbox_metrostation_64 = MetroStation()
     outingbox_metrostation_64.title = 'Madipur'
     outingbox_metrostation_64.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_64 = importer.save_or_locate(outingbox_metrostation_64)
+    outingbox_metrostation_64.save()
 
     outingbox_metrostation_65 = MetroStation()
     outingbox_metrostation_65.title = 'Malviya Nagar'
     outingbox_metrostation_65.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_65 = importer.save_or_locate(outingbox_metrostation_65)
+    outingbox_metrostation_65.save()
 
     outingbox_metrostation_66 = MetroStation()
     outingbox_metrostation_66.title = 'Mandi House'
     outingbox_metrostation_66.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_66 = importer.save_or_locate(outingbox_metrostation_66)
+    outingbox_metrostation_66.save()
 
     outingbox_metrostation_67 = MetroStation()
     outingbox_metrostation_67.title = 'Mansarovar Park'
     outingbox_metrostation_67.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_67 = importer.save_or_locate(outingbox_metrostation_67)
+    outingbox_metrostation_67.save()
 
     outingbox_metrostation_68 = MetroStation()
     outingbox_metrostation_68.title = 'Mayur Vihar -I'
     outingbox_metrostation_68.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_68 = importer.save_or_locate(outingbox_metrostation_68)
+    outingbox_metrostation_68.save()
 
     outingbox_metrostation_69 = MetroStation()
     outingbox_metrostation_69.title = 'Mayur Vihar Extension'
     outingbox_metrostation_69.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_69 = importer.save_or_locate(outingbox_metrostation_69)
+    outingbox_metrostation_69.save()
 
     outingbox_metrostation_70 = MetroStation()
     outingbox_metrostation_70.title = 'MG Road'
     outingbox_metrostation_70.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_70 = importer.save_or_locate(outingbox_metrostation_70)
+    outingbox_metrostation_70.save()
 
     outingbox_metrostation_71 = MetroStation()
     outingbox_metrostation_71.title = 'Model Town'
     outingbox_metrostation_71.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_71 = importer.save_or_locate(outingbox_metrostation_71)
+    outingbox_metrostation_71.save()
 
     outingbox_metrostation_72 = MetroStation()
     outingbox_metrostation_72.title = 'Mohan Estate'
     outingbox_metrostation_72.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_72 = importer.save_or_locate(outingbox_metrostation_72)
+    outingbox_metrostation_72.save()
 
     outingbox_metrostation_73 = MetroStation()
     outingbox_metrostation_73.title = 'Moolchand'
     outingbox_metrostation_73.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_73 = importer.save_or_locate(outingbox_metrostation_73)
+    outingbox_metrostation_73.save()
 
     outingbox_metrostation_74 = MetroStation()
     outingbox_metrostation_74.title = 'Moti Nagar'
     outingbox_metrostation_74.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_74 = importer.save_or_locate(outingbox_metrostation_74)
+    outingbox_metrostation_74.save()
 
     outingbox_metrostation_75 = MetroStation()
     outingbox_metrostation_75.title = 'Mundka'
     outingbox_metrostation_75.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_75 = importer.save_or_locate(outingbox_metrostation_75)
+    outingbox_metrostation_75.save()
 
     outingbox_metrostation_76 = MetroStation()
     outingbox_metrostation_76.title = 'Nangloi'
     outingbox_metrostation_76.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_76 = importer.save_or_locate(outingbox_metrostation_76)
+    outingbox_metrostation_76.save()
 
     outingbox_metrostation_77 = MetroStation()
     outingbox_metrostation_77.title = 'Nangloi Railway station'
     outingbox_metrostation_77.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_77 = importer.save_or_locate(outingbox_metrostation_77)
+    outingbox_metrostation_77.save()
 
     outingbox_metrostation_78 = MetroStation()
     outingbox_metrostation_78.title = 'Nawada'
     outingbox_metrostation_78.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_78 = importer.save_or_locate(outingbox_metrostation_78)
+    outingbox_metrostation_78.save()
 
     outingbox_metrostation_79 = MetroStation()
     outingbox_metrostation_79.title = 'Nehru Place'
     outingbox_metrostation_79.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_79 = importer.save_or_locate(outingbox_metrostation_79)
+    outingbox_metrostation_79.save()
 
     outingbox_metrostation_80 = MetroStation()
     outingbox_metrostation_80.title = 'Netaji Subhash Place'
     outingbox_metrostation_80.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_80 = importer.save_or_locate(outingbox_metrostation_80)
+    outingbox_metrostation_80.save()
 
     outingbox_metrostation_81 = MetroStation()
     outingbox_metrostation_81.title = 'New Ashok Nagar'
     outingbox_metrostation_81.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_81 = importer.save_or_locate(outingbox_metrostation_81)
+    outingbox_metrostation_81.save()
 
     outingbox_metrostation_82 = MetroStation()
     outingbox_metrostation_82.title = 'New Delhi'
     outingbox_metrostation_82.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_82 = importer.save_or_locate(outingbox_metrostation_82)
+    outingbox_metrostation_82.save()
 
     outingbox_metrostation_83 = MetroStation()
     outingbox_metrostation_83.title = 'Nirman Vihar'
     outingbox_metrostation_83.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_83 = importer.save_or_locate(outingbox_metrostation_83)
+    outingbox_metrostation_83.save()
 
     outingbox_metrostation_84 = MetroStation()
     outingbox_metrostation_84.title = 'Noida City Centre'
     outingbox_metrostation_84.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_84 = importer.save_or_locate(outingbox_metrostation_84)
+    outingbox_metrostation_84.save()
 
     outingbox_metrostation_85 = MetroStation()
     outingbox_metrostation_85.title = 'Noida Golf Course'
     outingbox_metrostation_85.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_85 = importer.save_or_locate(outingbox_metrostation_85)
+    outingbox_metrostation_85.save()
 
     outingbox_metrostation_86 = MetroStation()
     outingbox_metrostation_86.title = 'Noida Sector 15'
     outingbox_metrostation_86.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_86 = importer.save_or_locate(outingbox_metrostation_86)
+    outingbox_metrostation_86.save()
 
     outingbox_metrostation_87 = MetroStation()
     outingbox_metrostation_87.title = 'Noida Sector 16'
     outingbox_metrostation_87.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_87 = importer.save_or_locate(outingbox_metrostation_87)
+    outingbox_metrostation_87.save()
 
     outingbox_metrostation_88 = MetroStation()
     outingbox_metrostation_88.title = 'Noida Sector 18'
     outingbox_metrostation_88.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_88 = importer.save_or_locate(outingbox_metrostation_88)
+    outingbox_metrostation_88.save()
 
     outingbox_metrostation_89 = MetroStation()
     outingbox_metrostation_89.title = 'Okhla'
     outingbox_metrostation_89.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_89 = importer.save_or_locate(outingbox_metrostation_89)
+    outingbox_metrostation_89.save()
 
     outingbox_metrostation_90 = MetroStation()
     outingbox_metrostation_90.title = 'Paschim Vihar East'
     outingbox_metrostation_90.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_90 = importer.save_or_locate(outingbox_metrostation_90)
+    outingbox_metrostation_90.save()
 
     outingbox_metrostation_91 = MetroStation()
     outingbox_metrostation_91.title = 'Paschim Vihar West'
     outingbox_metrostation_91.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_91 = importer.save_or_locate(outingbox_metrostation_91)
+    outingbox_metrostation_91.save()
 
     outingbox_metrostation_92 = MetroStation()
     outingbox_metrostation_92.title = 'Patel Chowk'
     outingbox_metrostation_92.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_92 = importer.save_or_locate(outingbox_metrostation_92)
+    outingbox_metrostation_92.save()
 
     outingbox_metrostation_93 = MetroStation()
     outingbox_metrostation_93.title = 'Patel Nagar'
     outingbox_metrostation_93.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_93 = importer.save_or_locate(outingbox_metrostation_93)
+    outingbox_metrostation_93.save()
 
     outingbox_metrostation_94 = MetroStation()
     outingbox_metrostation_94.title = 'Peera Garhi'
     outingbox_metrostation_94.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_94 = importer.save_or_locate(outingbox_metrostation_94)
+    outingbox_metrostation_94.save()
 
     outingbox_metrostation_95 = MetroStation()
     outingbox_metrostation_95.title = 'Pitam Pura'
     outingbox_metrostation_95.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_95 = importer.save_or_locate(outingbox_metrostation_95)
+    outingbox_metrostation_95.save()
 
     outingbox_metrostation_96 = MetroStation()
     outingbox_metrostation_96.title = 'Pragati Maidan'
     outingbox_metrostation_96.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_96 = importer.save_or_locate(outingbox_metrostation_96)
+    outingbox_metrostation_96.save()
 
     outingbox_metrostation_97 = MetroStation()
     outingbox_metrostation_97.title = 'Pratap Nagar'
     outingbox_metrostation_97.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_97 = importer.save_or_locate(outingbox_metrostation_97)
+    outingbox_metrostation_97.save()
 
     outingbox_metrostation_98 = MetroStation()
     outingbox_metrostation_98.title = 'Preet Vihar'
     outingbox_metrostation_98.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_98 = importer.save_or_locate(outingbox_metrostation_98)
+    outingbox_metrostation_98.save()
 
     outingbox_metrostation_99 = MetroStation()
     outingbox_metrostation_99.title = 'Pul Bangash'
     outingbox_metrostation_99.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_99 = importer.save_or_locate(outingbox_metrostation_99)
+    outingbox_metrostation_99.save()
 
     outingbox_metrostation_100 = MetroStation()
     outingbox_metrostation_100.title = 'Punjabi Bagh East'
     outingbox_metrostation_100.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_100 = importer.save_or_locate(outingbox_metrostation_100)
+    outingbox_metrostation_100.save()
 
     outingbox_metrostation_101 = MetroStation()
     outingbox_metrostation_101.title = 'Qutab Minar'
     outingbox_metrostation_101.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_101 = importer.save_or_locate(outingbox_metrostation_101)
+    outingbox_metrostation_101.save()
 
     outingbox_metrostation_102 = MetroStation()
     outingbox_metrostation_102.title = 'Race Course'
     outingbox_metrostation_102.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_102 = importer.save_or_locate(outingbox_metrostation_102)
+    outingbox_metrostation_102.save()
 
     outingbox_metrostation_103 = MetroStation()
     outingbox_metrostation_103.title = 'Rajdhani Park'
     outingbox_metrostation_103.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_103 = importer.save_or_locate(outingbox_metrostation_103)
+    outingbox_metrostation_103.save()
 
     outingbox_metrostation_104 = MetroStation()
     outingbox_metrostation_104.title = 'Rajendra Place'
     outingbox_metrostation_104.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_104 = importer.save_or_locate(outingbox_metrostation_104)
+    outingbox_metrostation_104.save()
 
     outingbox_metrostation_105 = MetroStation()
     outingbox_metrostation_105.title = 'Rajiv Chowk'
     outingbox_metrostation_105.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_105 = importer.save_or_locate(outingbox_metrostation_105)
+    outingbox_metrostation_105.save()
 
     outingbox_metrostation_106 = MetroStation()
     outingbox_metrostation_106.title = 'Rajouri Garden'
     outingbox_metrostation_106.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_106 = importer.save_or_locate(outingbox_metrostation_106)
+    outingbox_metrostation_106.save()
 
     outingbox_metrostation_107 = MetroStation()
     outingbox_metrostation_107.title = 'Ramakrishna Ashram Marg'
     outingbox_metrostation_107.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_107 = importer.save_or_locate(outingbox_metrostation_107)
+    outingbox_metrostation_107.save()
 
     outingbox_metrostation_108 = MetroStation()
     outingbox_metrostation_108.title = 'Ramesh Nagar'
     outingbox_metrostation_108.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_108 = importer.save_or_locate(outingbox_metrostation_108)
+    outingbox_metrostation_108.save()
 
     outingbox_metrostation_109 = MetroStation()
     outingbox_metrostation_109.title = 'Rithala'
     outingbox_metrostation_109.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_109 = importer.save_or_locate(outingbox_metrostation_109)
+    outingbox_metrostation_109.save()
 
     outingbox_metrostation_110 = MetroStation()
     outingbox_metrostation_110.title = 'Rohini East'
     outingbox_metrostation_110.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_110 = importer.save_or_locate(outingbox_metrostation_110)
+    outingbox_metrostation_110.save()
 
     outingbox_metrostation_111 = MetroStation()
     outingbox_metrostation_111.title = 'Rohini West'
     outingbox_metrostation_111.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_111 = importer.save_or_locate(outingbox_metrostation_111)
+    outingbox_metrostation_111.save()
 
     outingbox_metrostation_112 = MetroStation()
     outingbox_metrostation_112.title = 'Saket'
     outingbox_metrostation_112.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_112 = importer.save_or_locate(outingbox_metrostation_112)
+    outingbox_metrostation_112.save()
 
     outingbox_metrostation_113 = MetroStation()
     outingbox_metrostation_113.title = 'Sarita Vihar'
     outingbox_metrostation_113.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_113 = importer.save_or_locate(outingbox_metrostation_113)
+    outingbox_metrostation_113.save()
 
     outingbox_metrostation_114 = MetroStation()
     outingbox_metrostation_114.title = 'Satguru Ramsingh Marg'
     outingbox_metrostation_114.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_114 = importer.save_or_locate(outingbox_metrostation_114)
+    outingbox_metrostation_114.save()
 
     outingbox_metrostation_115 = MetroStation()
     outingbox_metrostation_115.title = 'Seelampur'
     outingbox_metrostation_115.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_115 = importer.save_or_locate(outingbox_metrostation_115)
+    outingbox_metrostation_115.save()
 
     outingbox_metrostation_116 = MetroStation()
     outingbox_metrostation_116.title = 'Shadipur'
     outingbox_metrostation_116.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_116 = importer.save_or_locate(outingbox_metrostation_116)
+    outingbox_metrostation_116.save()
 
     outingbox_metrostation_117 = MetroStation()
     outingbox_metrostation_117.title = 'Shahdara'
     outingbox_metrostation_117.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_117 = importer.save_or_locate(outingbox_metrostation_117)
+    outingbox_metrostation_117.save()
 
     outingbox_metrostation_118 = MetroStation()
     outingbox_metrostation_118.title = 'Shastri Nagar'
     outingbox_metrostation_118.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_118 = importer.save_or_locate(outingbox_metrostation_118)
+    outingbox_metrostation_118.save()
 
     outingbox_metrostation_119 = MetroStation()
     outingbox_metrostation_119.title = 'Shastri Park'
     outingbox_metrostation_119.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_119 = importer.save_or_locate(outingbox_metrostation_119)
+    outingbox_metrostation_119.save()
 
     outingbox_metrostation_120 = MetroStation()
     outingbox_metrostation_120.title = 'Shivaji Park'
     outingbox_metrostation_120.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_120 = importer.save_or_locate(outingbox_metrostation_120)
+    outingbox_metrostation_120.save()
 
     outingbox_metrostation_121 = MetroStation()
     outingbox_metrostation_121.title = 'Shivaji Stadium'
     outingbox_metrostation_121.color = outingbox_metrolinecolor_6
-    outingbox_metrostation_121 = importer.save_or_locate(outingbox_metrostation_121)
+    outingbox_metrostation_121.save()
 
     outingbox_metrostation_122 = MetroStation()
     outingbox_metrostation_122.title = 'Sikandarpur'
     outingbox_metrostation_122.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_122 = importer.save_or_locate(outingbox_metrostation_122)
+    outingbox_metrostation_122.save()
 
     outingbox_metrostation_123 = MetroStation()
     outingbox_metrostation_123.title = 'Subhash Nagar'
     outingbox_metrostation_123.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_123 = importer.save_or_locate(outingbox_metrostation_123)
+    outingbox_metrostation_123.save()
 
     outingbox_metrostation_124 = MetroStation()
     outingbox_metrostation_124.title = 'Sultanpur'
     outingbox_metrostation_124.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_124 = importer.save_or_locate(outingbox_metrostation_124)
+    outingbox_metrostation_124.save()
 
     outingbox_metrostation_125 = MetroStation()
     outingbox_metrostation_125.title = 'Surajmal Stadium'
     outingbox_metrostation_125.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_125 = importer.save_or_locate(outingbox_metrostation_125)
+    outingbox_metrostation_125.save()
 
     outingbox_metrostation_126 = MetroStation()
     outingbox_metrostation_126.title = 'Tagore Garden'
     outingbox_metrostation_126.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_126 = importer.save_or_locate(outingbox_metrostation_126)
+    outingbox_metrostation_126.save()
 
     outingbox_metrostation_127 = MetroStation()
     outingbox_metrostation_127.title = 'Tilak Nagar'
     outingbox_metrostation_127.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_127 = importer.save_or_locate(outingbox_metrostation_127)
+    outingbox_metrostation_127.save()
 
     outingbox_metrostation_128 = MetroStation()
     outingbox_metrostation_128.title = 'Tis Hazari'
     outingbox_metrostation_128.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_128 = importer.save_or_locate(outingbox_metrostation_128)
+    outingbox_metrostation_128.save()
 
     outingbox_metrostation_129 = MetroStation()
     outingbox_metrostation_129.title = 'Tughlakabad'
     outingbox_metrostation_129.color = outingbox_metrolinecolor_5
-    outingbox_metrostation_129 = importer.save_or_locate(outingbox_metrostation_129)
+    outingbox_metrostation_129.save()
 
     outingbox_metrostation_130 = MetroStation()
     outingbox_metrostation_130.title = 'Udyog Bhawan'
     outingbox_metrostation_130.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_130 = importer.save_or_locate(outingbox_metrostation_130)
+    outingbox_metrostation_130.save()
 
     outingbox_metrostation_131 = MetroStation()
     outingbox_metrostation_131.title = 'Udyog Nagar'
     outingbox_metrostation_131.color = outingbox_metrolinecolor_1
-    outingbox_metrostation_131 = importer.save_or_locate(outingbox_metrostation_131)
+    outingbox_metrostation_131.save()
 
     outingbox_metrostation_132 = MetroStation()
     outingbox_metrostation_132.title = 'Uttam Nagar East'
     outingbox_metrostation_132.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_132 = importer.save_or_locate(outingbox_metrostation_132)
+    outingbox_metrostation_132.save()
 
     outingbox_metrostation_133 = MetroStation()
     outingbox_metrostation_133.title = 'Uttam Nagar West'
     outingbox_metrostation_133.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_133 = importer.save_or_locate(outingbox_metrostation_133)
+    outingbox_metrostation_133.save()
 
     outingbox_metrostation_134 = MetroStation()
     outingbox_metrostation_134.title = 'Vaishali'
     outingbox_metrostation_134.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_134 = importer.save_or_locate(outingbox_metrostation_134)
+    outingbox_metrostation_134.save()
 
     outingbox_metrostation_135 = MetroStation()
     outingbox_metrostation_135.title = 'Vidhan Sabha'
     outingbox_metrostation_135.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_135 = importer.save_or_locate(outingbox_metrostation_135)
+    outingbox_metrostation_135.save()
 
     outingbox_metrostation_136 = MetroStation()
     outingbox_metrostation_136.title = 'Vishwa Vidyalaya'
     outingbox_metrostation_136.color = outingbox_metrolinecolor_3
-    outingbox_metrostation_136 = importer.save_or_locate(outingbox_metrostation_136)
+    outingbox_metrostation_136.save()
 
     outingbox_metrostation_137 = MetroStation()
     outingbox_metrostation_137.title = 'Welcome'
     outingbox_metrostation_137.color = outingbox_metrolinecolor_2
-    outingbox_metrostation_137 = importer.save_or_locate(outingbox_metrostation_137)
+    outingbox_metrostation_137.save()
 
     outingbox_metrostation_138 = MetroStation()
     outingbox_metrostation_138.title = 'Yamuna Bank'
     outingbox_metrostation_138.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_138 = importer.save_or_locate(outingbox_metrostation_138)
+    outingbox_metrostation_138.save()
 
     outingbox_metrostation_139 = MetroStation()
     outingbox_metrostation_139.title = 'Akshardham'
     outingbox_metrostation_139.color = outingbox_metrolinecolor_4
-    outingbox_metrostation_139 = importer.save_or_locate(outingbox_metrostation_139)
+    outingbox_metrostation_139.save()
 
     # Processing model: Address
 
@@ -1307,7 +1187,7 @@ def import_data():
     outingbox_address_1.pin_code = 201301
     outingbox_address_1.map_address = ''
     outingbox_address_1.location = ''
-    outingbox_address_1 = importer.save_or_locate(outingbox_address_1)
+    outingbox_address_1.save()
 
     outingbox_address_1.sub_zone.add(outingbox_subzone_21)
     outingbox_address_1.sub_zone.add(outingbox_subzone_22)
@@ -1321,7 +1201,7 @@ def import_data():
     outingbox_address_2.pin_code = 121003
     outingbox_address_2.map_address = ''
     outingbox_address_2.location = None
-    outingbox_address_2 = importer.save_or_locate(outingbox_address_2)
+    outingbox_address_2.save()
 
     outingbox_address_2.sub_zone.add(outingbox_subzone_36)
 
@@ -1333,7 +1213,7 @@ def import_data():
     outingbox_address_3.pin_code = 110017
     outingbox_address_3.map_address = ''
     outingbox_address_3.location = '28.542863,77.215889'
-    outingbox_address_3 = importer.save_or_locate(outingbox_address_3)
+    outingbox_address_3.save()
 
     outingbox_address_3.sub_zone.add(outingbox_subzone_9)
     outingbox_address_3.sub_zone.add(outingbox_subzone_68)
@@ -1348,7 +1228,7 @@ def import_data():
     outingbox_address_4.pin_code = 110001
     outingbox_address_4.map_address = ''
     outingbox_address_4.location = '28.632732,77.217847'
-    outingbox_address_4 = importer.save_or_locate(outingbox_address_4)
+    outingbox_address_4.save()
 
     outingbox_address_4.sub_zone.add(outingbox_subzone_52)
     outingbox_address_4.sub_zone.add(outingbox_subzone_53)
@@ -1364,7 +1244,7 @@ def import_data():
     outingbox_address_5.pin_code = 110049
     outingbox_address_5.map_address = ''
     outingbox_address_5.location = '28.548664,77.214060'
-    outingbox_address_5 = importer.save_or_locate(outingbox_address_5)
+    outingbox_address_5.save()
 
     outingbox_address_5.sub_zone.add(outingbox_subzone_9)
     outingbox_address_5.sub_zone.add(outingbox_subzone_63)
@@ -1379,7 +1259,7 @@ def import_data():
     outingbox_address_6.pin_code = 124505
     outingbox_address_6.map_address = ''
     outingbox_address_6.location = ''
-    outingbox_address_6 = importer.save_or_locate(outingbox_address_6)
+    outingbox_address_6.save()
 
     outingbox_address_6.sub_zone.add(outingbox_subzone_26)
     outingbox_address_6.sub_zone.add(outingbox_subzone_33)
@@ -1395,7 +1275,7 @@ def import_data():
     outingbox_address_7.pin_code = 110017
     outingbox_address_7.map_address = ''
     outingbox_address_7.location = '28.531865,77.208166'
-    outingbox_address_7 = importer.save_or_locate(outingbox_address_7)
+    outingbox_address_7.save()
 
     outingbox_address_7.sub_zone.add(outingbox_subzone_9)
     outingbox_address_7.sub_zone.add(outingbox_subzone_65)
@@ -1410,7 +1290,7 @@ def import_data():
     outingbox_address_8.pin_code = 122002
     outingbox_address_8.map_address = ''
     outingbox_address_8.location = '28.503812,77.097349'
-    outingbox_address_8 = importer.save_or_locate(outingbox_address_8)
+    outingbox_address_8.save()
 
     outingbox_address_8.sub_zone.add(outingbox_subzone_28)
     outingbox_address_8.sub_zone.add(outingbox_subzone_66)
@@ -1425,7 +1305,7 @@ def import_data():
     outingbox_address_9.pin_code = 110016
     outingbox_address_9.map_address = ''
     outingbox_address_9.location = ''
-    outingbox_address_9 = importer.save_or_locate(outingbox_address_9)
+    outingbox_address_9.save()
 
     outingbox_address_9.sub_zone.add(outingbox_subzone_9)
     outingbox_address_9.sub_zone.add(outingbox_subzone_64)
@@ -1440,7 +1320,7 @@ def import_data():
     outingbox_address_10.pin_code = 110092
     outingbox_address_10.map_address = ''
     outingbox_address_10.location = '28.613939,77.209021'
-    outingbox_address_10 = importer.save_or_locate(outingbox_address_10)
+    outingbox_address_10.save()
 
     outingbox_address_10.sub_zone.add(outingbox_subzone_5)
     outingbox_address_10.sub_zone.add(outingbox_subzone_62)
@@ -1455,7 +1335,7 @@ def import_data():
     outingbox_address_11.pin_code = 110025
     outingbox_address_11.map_address = ''
     outingbox_address_11.location = '28.545555,77.309635'
-    outingbox_address_11 = importer.save_or_locate(outingbox_address_11)
+    outingbox_address_11.save()
 
     outingbox_address_11.sub_zone.add(outingbox_subzone_9)
     outingbox_address_11.sub_zone.add(outingbox_subzone_19)
@@ -1471,7 +1351,7 @@ def import_data():
     outingbox_address_12.pin_code = 110048
     outingbox_address_12.map_address = ''
     outingbox_address_12.location = '28.553610,77.242764'
-    outingbox_address_12 = importer.save_or_locate(outingbox_address_12)
+    outingbox_address_12.save()
 
     outingbox_address_12.sub_zone.add(outingbox_subzone_9)
     outingbox_address_12.sub_zone.add(outingbox_subzone_56)
@@ -1486,7 +1366,7 @@ def import_data():
     outingbox_address_13.pin_code = 122001
     outingbox_address_13.map_address = ''
     outingbox_address_13.location = '28.465526,77.079122'
-    outingbox_address_13 = importer.save_or_locate(outingbox_address_13)
+    outingbox_address_13.save()
 
     outingbox_address_13.sub_zone.add(outingbox_subzone_58)
     outingbox_address_13.sub_zone.add(outingbox_subzone_59)
@@ -1500,7 +1380,7 @@ def import_data():
     outingbox_address_14.pin_code = 122001
     outingbox_address_14.map_address = ''
     outingbox_address_14.location = '28.475262,77.025490'
-    outingbox_address_14 = importer.save_or_locate(outingbox_address_14)
+    outingbox_address_14.save()
 
     outingbox_address_14.sub_zone.add(outingbox_subzone_8)
     outingbox_address_14.sub_zone.add(outingbox_subzone_60)
@@ -1515,7 +1395,7 @@ def import_data():
     outingbox_address_15.pin_code = 110016
     outingbox_address_15.map_address = ''
     outingbox_address_15.location = '28.550435,77.206611'
-    outingbox_address_15 = importer.save_or_locate(outingbox_address_15)
+    outingbox_address_15.save()
 
     outingbox_address_15.sub_zone.add(outingbox_subzone_9)
     outingbox_address_15.sub_zone.add(outingbox_subzone_47)
@@ -1531,7 +1411,7 @@ def import_data():
     outingbox_address_16.pin_code = 110002
     outingbox_address_16.map_address = ''
     outingbox_address_16.location = '28.629935,77.236802'
-    outingbox_address_16 = importer.save_or_locate(outingbox_address_16)
+    outingbox_address_16.save()
 
     outingbox_address_16.sub_zone.add(outingbox_subzone_52)
     outingbox_address_16.sub_zone.add(outingbox_subzone_53)
@@ -1550,7 +1430,7 @@ def import_data():
     outingbox_address_17.pin_code = 201301
     outingbox_address_17.map_address = ' sector 38 noida'
     outingbox_address_17.location = '28.562308,77.329571'
-    outingbox_address_17 = importer.save_or_locate(outingbox_address_17)
+    outingbox_address_17.save()
 
     outingbox_address_17.sub_zone.add(outingbox_subzone_21)
     outingbox_address_17.sub_zone.add(outingbox_subzone_22)
@@ -1565,7 +1445,7 @@ def import_data():
     outingbox_address_18.pin_code = 122002
     outingbox_address_18.map_address = ''
     outingbox_address_18.location = '28.468281,77.083210'
-    outingbox_address_18 = importer.save_or_locate(outingbox_address_18)
+    outingbox_address_18.save()
 
     outingbox_address_18.sub_zone.add(outingbox_subzone_8)
     outingbox_address_18.sub_zone.add(outingbox_subzone_51)
@@ -1579,7 +1459,7 @@ def import_data():
     outingbox_address_19.pin_code = 110027
     outingbox_address_19.map_address = ''
     outingbox_address_19.location = '18.501079,73.872429'
-    outingbox_address_19 = importer.save_or_locate(outingbox_address_19)
+    outingbox_address_19.save()
 
     outingbox_address_19.sub_zone.add(outingbox_subzone_38)
     outingbox_address_19.sub_zone.add(outingbox_subzone_81)
@@ -1593,7 +1473,7 @@ def import_data():
     outingbox_address_20.pin_code = 121101
     outingbox_address_20.map_address = ''
     outingbox_address_20.location = '28.570434,77.337280'
-    outingbox_address_20 = importer.save_or_locate(outingbox_address_20)
+    outingbox_address_20.save()
 
     outingbox_address_20.sub_zone.add(outingbox_subzone_36)
     outingbox_address_20.sub_zone.add(outingbox_subzone_49)
@@ -1607,7 +1487,7 @@ def import_data():
     outingbox_address_21.pin_code = 110085
     outingbox_address_21.map_address = ''
     outingbox_address_21.location = '28.698277,77.116007'
-    outingbox_address_21 = importer.save_or_locate(outingbox_address_21)
+    outingbox_address_21.save()
 
     outingbox_address_21.sub_zone.add(outingbox_subzone_14)
     outingbox_address_21.sub_zone.add(outingbox_subzone_16)
@@ -1623,7 +1503,7 @@ def import_data():
     outingbox_address_22.pin_code = 122001
     outingbox_address_22.map_address = ''
     outingbox_address_22.location = '28.237296,77.149235'
-    outingbox_address_22 = importer.save_or_locate(outingbox_address_22)
+    outingbox_address_22.save()
 
     outingbox_address_22.sub_zone.add(outingbox_subzone_8)
     outingbox_address_22.sub_zone.add(outingbox_subzone_50)
@@ -1637,7 +1517,7 @@ def import_data():
     outingbox_address_23.pin_code = 201301
     outingbox_address_23.map_address = ''
     outingbox_address_23.location = '28.561075,77.363055'
-    outingbox_address_23 = importer.save_or_locate(outingbox_address_23)
+    outingbox_address_23.save()
 
     outingbox_address_23.sub_zone.add(outingbox_subzone_22)
     outingbox_address_23.metro_station.add(outingbox_metrostation_88)
@@ -1650,7 +1530,7 @@ def import_data():
     outingbox_address_24.pin_code = 110044
     outingbox_address_24.map_address = ''
     outingbox_address_24.location = '28.469887,77.305907'
-    outingbox_address_24 = importer.save_or_locate(outingbox_address_24)
+    outingbox_address_24.save()
 
     outingbox_address_24.sub_zone.add(outingbox_subzone_48)
     outingbox_address_24.sub_zone.add(outingbox_subzone_49)
@@ -1665,7 +1545,7 @@ def import_data():
     outingbox_address_25.pin_code = 110044
     outingbox_address_25.map_address = ''
     outingbox_address_25.location = '28.611238,77.240114'
-    outingbox_address_25 = importer.save_or_locate(outingbox_address_25)
+    outingbox_address_25.save()
 
     outingbox_address_25.sub_zone.add(outingbox_subzone_48)
     outingbox_address_25.sub_zone.add(outingbox_subzone_49)
@@ -1680,7 +1560,7 @@ def import_data():
     outingbox_address_26.pin_code = 110092
     outingbox_address_26.map_address = ''
     outingbox_address_26.location = ''
-    outingbox_address_26 = importer.save_or_locate(outingbox_address_26)
+    outingbox_address_26.save()
 
     outingbox_address_26.sub_zone.add(outingbox_subzone_5)
     outingbox_address_26.sub_zone.add(outingbox_subzone_57)
@@ -1695,7 +1575,7 @@ def import_data():
     outingbox_address_27.pin_code = 0
     outingbox_address_27.map_address = ''
     outingbox_address_27.location = '28.561197,77.241680'
-    outingbox_address_27 = importer.save_or_locate(outingbox_address_27)
+    outingbox_address_27.save()
 
     outingbox_address_27.sub_zone.add(outingbox_subzone_9)
     outingbox_address_27.sub_zone.add(outingbox_subzone_46)
@@ -1710,7 +1590,7 @@ def import_data():
     outingbox_address_28.pin_code = 110017
     outingbox_address_28.map_address = ''
     outingbox_address_28.location = '28.524579,77.206615'
-    outingbox_address_28 = importer.save_or_locate(outingbox_address_28)
+    outingbox_address_28.save()
 
     outingbox_address_28.sub_zone.add(outingbox_subzone_9)
     outingbox_address_28.sub_zone.add(outingbox_subzone_37)
@@ -1725,7 +1605,7 @@ def import_data():
     outingbox_address_29.pin_code = 110049
     outingbox_address_29.map_address = ''
     outingbox_address_29.location = '28.548121,77.211445'
-    outingbox_address_29 = importer.save_or_locate(outingbox_address_29)
+    outingbox_address_29.save()
 
     outingbox_address_29.sub_zone.add(outingbox_subzone_9)
     outingbox_address_29.sub_zone.add(outingbox_subzone_47)
@@ -1740,7 +1620,7 @@ def import_data():
     outingbox_address_30.pin_code = 110018
     outingbox_address_30.map_address = 'rajouri garden'
     outingbox_address_30.location = '28.642207,77.106280'
-    outingbox_address_30 = importer.save_or_locate(outingbox_address_30)
+    outingbox_address_30.save()
 
     outingbox_address_30.sub_zone.add(outingbox_subzone_1)
     outingbox_address_30.sub_zone.add(outingbox_subzone_2)
@@ -1758,7 +1638,7 @@ def import_data():
     outingbox_address_31.pin_code = 110027
     outingbox_address_31.map_address = ''
     outingbox_address_31.location = '28.643895,77.112830'
-    outingbox_address_31 = importer.save_or_locate(outingbox_address_31)
+    outingbox_address_31.save()
 
     outingbox_address_31.sub_zone.add(outingbox_subzone_38)
     outingbox_address_31.sub_zone.add(outingbox_subzone_81)
@@ -1772,7 +1652,7 @@ def import_data():
     outingbox_address_32.pin_code = 122001
     outingbox_address_32.map_address = ''
     outingbox_address_32.location = '28.465067,77.507711'
-    outingbox_address_32 = importer.save_or_locate(outingbox_address_32)
+    outingbox_address_32.save()
 
     outingbox_address_32.sub_zone.add(outingbox_subzone_8)
     outingbox_address_32.sub_zone.add(outingbox_subzone_43)
@@ -1787,7 +1667,7 @@ def import_data():
     outingbox_address_33.pin_code = 110016
     outingbox_address_33.map_address = ''
     outingbox_address_33.location = '28.546344,77.202296'
-    outingbox_address_33 = importer.save_or_locate(outingbox_address_33)
+    outingbox_address_33.save()
 
     outingbox_address_33.sub_zone.add(outingbox_subzone_9)
     outingbox_address_33.sub_zone.add(outingbox_subzone_47)
@@ -1802,7 +1682,7 @@ def import_data():
     outingbox_address_34.pin_code = 110074
     outingbox_address_34.map_address = ''
     outingbox_address_34.location = '28.613939,77.209021'
-    outingbox_address_34 = importer.save_or_locate(outingbox_address_34)
+    outingbox_address_34.save()
 
     outingbox_address_34.sub_zone.add(outingbox_subzone_9)
     outingbox_address_34.sub_zone.add(outingbox_subzone_18)
@@ -1818,7 +1698,7 @@ def import_data():
     outingbox_address_35.pin_code = 201301
     outingbox_address_35.map_address = ''
     outingbox_address_35.location = '28.564066,77.325414'
-    outingbox_address_35 = importer.save_or_locate(outingbox_address_35)
+    outingbox_address_35.save()
 
     outingbox_address_35.sub_zone.add(outingbox_subzone_21)
     outingbox_address_35.sub_zone.add(outingbox_subzone_22)
@@ -1836,7 +1716,7 @@ def import_data():
     outingbox_address_36.pin_code = 122001
     outingbox_address_36.map_address = ''
     outingbox_address_36.location = '28.458089,77.041191'
-    outingbox_address_36 = importer.save_or_locate(outingbox_address_36)
+    outingbox_address_36.save()
 
     outingbox_address_36.sub_zone.add(outingbox_subzone_8)
     outingbox_address_36.sub_zone.add(outingbox_subzone_35)
@@ -1853,7 +1733,7 @@ def import_data():
     outingbox_address_37.pin_code = 110085
     outingbox_address_37.map_address = ''
     outingbox_address_37.location = '28.723728,77.113592'
-    outingbox_address_37 = importer.save_or_locate(outingbox_address_37)
+    outingbox_address_37.save()
 
     outingbox_address_37.sub_zone.add(outingbox_subzone_23)
     outingbox_address_37.sub_zone.add(outingbox_subzone_24)
@@ -1869,7 +1749,7 @@ def import_data():
     outingbox_address_38.pin_code = 122001
     outingbox_address_38.map_address = ''
     outingbox_address_38.location = '28.462200,77.071474'
-    outingbox_address_38 = importer.save_or_locate(outingbox_address_38)
+    outingbox_address_38.save()
 
     outingbox_address_38.sub_zone.add(outingbox_subzone_8)
     outingbox_address_38.sub_zone.add(outingbox_subzone_17)
@@ -1884,7 +1764,7 @@ def import_data():
     outingbox_address_39.pin_code = 122001
     outingbox_address_39.map_address = ''
     outingbox_address_39.location = '28.529568,77.220172'
-    outingbox_address_39 = importer.save_or_locate(outingbox_address_39)
+    outingbox_address_39.save()
 
     outingbox_address_39.sub_zone.add(outingbox_subzone_8)
     outingbox_address_39.sub_zone.add(outingbox_subzone_9)
@@ -1899,7 +1779,7 @@ def import_data():
     outingbox_address_40.pin_code = 201206
     outingbox_address_40.map_address = ''
     outingbox_address_40.location = ''
-    outingbox_address_40 = importer.save_or_locate(outingbox_address_40)
+    outingbox_address_40.save()
 
     outingbox_address_40.sub_zone.add(outingbox_subzone_30)
     outingbox_address_40.sub_zone.add(outingbox_subzone_31)
@@ -1914,7 +1794,7 @@ def import_data():
     outingbox_address_41.pin_code = 110037
     outingbox_address_41.map_address = 'fun and food village'
     outingbox_address_41.location = '28.527434,77.080704'
-    outingbox_address_41 = importer.save_or_locate(outingbox_address_41)
+    outingbox_address_41.save()
 
     outingbox_address_41.sub_zone.add(outingbox_subzone_3)
     outingbox_address_41.sub_zone.add(outingbox_subzone_8)
@@ -1930,7 +1810,7 @@ def import_data():
     outingbox_address_42.pin_code = 0
     outingbox_address_42.map_address = ''
     outingbox_address_42.location = '28.502705,77.097512'
-    outingbox_address_42 = importer.save_or_locate(outingbox_address_42)
+    outingbox_address_42.save()
 
     outingbox_address_42.sub_zone.add(outingbox_subzone_9)
     outingbox_address_42.sub_zone.add(outingbox_subzone_81)
@@ -1944,7 +1824,7 @@ def import_data():
     outingbox_address_43.pin_code = 201308
     outingbox_address_43.map_address = ''
     outingbox_address_43.location = '28.535902,77.392013'
-    outingbox_address_43 = importer.save_or_locate(outingbox_address_43)
+    outingbox_address_43.save()
 
     outingbox_address_43.sub_zone.add(outingbox_subzone_22)
     outingbox_address_43.metro_station.add(outingbox_metrostation_88)
@@ -1957,7 +1837,7 @@ def import_data():
     outingbox_address_44.pin_code = 110040
     outingbox_address_44.map_address = ''
     outingbox_address_44.location = '28.850358,77.128133'
-    outingbox_address_44 = importer.save_or_locate(outingbox_address_44)
+    outingbox_address_44.save()
 
     outingbox_address_44.sub_zone.add(outingbox_subzone_11)
     outingbox_address_44.sub_zone.add(outingbox_subzone_12)
@@ -1974,7 +1854,7 @@ def import_data():
     outingbox_address_45.pin_code = 110025
     outingbox_address_45.map_address = ''
     outingbox_address_45.location = '28.561436,77.267981'
-    outingbox_address_45 = importer.save_or_locate(outingbox_address_45)
+    outingbox_address_45.save()
 
     outingbox_address_45.sub_zone.add(outingbox_subzone_69)
     outingbox_address_45.sub_zone.add(outingbox_subzone_70)
@@ -1990,7 +1870,7 @@ def import_data():
     outingbox_address_46.pin_code = 110036
     outingbox_address_46.map_address = ''
     outingbox_address_46.location = ''
-    outingbox_address_46 = importer.save_or_locate(outingbox_address_46)
+    outingbox_address_46.save()
 
     outingbox_address_46.sub_zone.add(outingbox_subzone_11)
     outingbox_address_46.sub_zone.add(outingbox_subzone_15)
@@ -2006,7 +1886,7 @@ def import_data():
     outingbox_address_47.pin_code = 131021
     outingbox_address_47.map_address = ''
     outingbox_address_47.location = '29.008682,77.081989'
-    outingbox_address_47 = importer.save_or_locate(outingbox_address_47)
+    outingbox_address_47.save()
 
     outingbox_address_47.sub_zone.add(outingbox_subzone_11)
     outingbox_address_47.sub_zone.add(outingbox_subzone_26)
@@ -2023,7 +1903,7 @@ def import_data():
     outingbox_address_48.pin_code = 110027
     outingbox_address_48.map_address = ''
     outingbox_address_48.location = ''
-    outingbox_address_48 = importer.save_or_locate(outingbox_address_48)
+    outingbox_address_48.save()
 
     outingbox_address_48.sub_zone.add(outingbox_subzone_1)
     outingbox_address_48.sub_zone.add(outingbox_subzone_10)
@@ -2038,7 +1918,7 @@ def import_data():
     outingbox_address_49.pin_code = 201301
     outingbox_address_49.map_address = 'spice noida'
     outingbox_address_49.location = '28.586345,77.341250'
-    outingbox_address_49 = importer.save_or_locate(outingbox_address_49)
+    outingbox_address_49.save()
 
     outingbox_address_49.sub_zone.add(outingbox_subzone_4)
     outingbox_address_49.sub_zone.add(outingbox_subzone_22)
@@ -2053,7 +1933,7 @@ def import_data():
     outingbox_address_50.pin_code = 122001
     outingbox_address_50.map_address = ''
     outingbox_address_50.location = '28.386775,76.974399'
-    outingbox_address_50 = importer.save_or_locate(outingbox_address_50)
+    outingbox_address_50.save()
 
     outingbox_address_50.sub_zone.add(outingbox_subzone_8)
     outingbox_address_50.sub_zone.add(outingbox_subzone_26)
@@ -2070,7 +1950,7 @@ def import_data():
     outingbox_address_51.pin_code = 0
     outingbox_address_51.map_address = ''
     outingbox_address_51.location = '28.552320,77.235405'
-    outingbox_address_51 = importer.save_or_locate(outingbox_address_51)
+    outingbox_address_51.save()
 
     outingbox_address_51.sub_zone.add(outingbox_subzone_9)
     outingbox_address_51.sub_zone.add(outingbox_subzone_81)
@@ -2084,7 +1964,7 @@ def import_data():
     outingbox_address_52.pin_code = 0
     outingbox_address_52.map_address = ''
     outingbox_address_52.location = '28.535516,77.391026'
-    outingbox_address_52 = importer.save_or_locate(outingbox_address_52)
+    outingbox_address_52.save()
 
     outingbox_address_52.sub_zone.add(outingbox_subzone_22)
     outingbox_address_52.sub_zone.add(outingbox_subzone_75)
@@ -2100,7 +1980,7 @@ def import_data():
     outingbox_address_53.pin_code = 110001
     outingbox_address_53.map_address = 'National Science Centre, Delhi'
     outingbox_address_53.location = '28.612983,77.245724'
-    outingbox_address_53 = importer.save_or_locate(outingbox_address_53)
+    outingbox_address_53.save()
 
     outingbox_address_53.sub_zone.add(outingbox_subzone_77)
     outingbox_address_53.sub_zone.add(outingbox_subzone_81)
@@ -2114,7 +1994,7 @@ def import_data():
     outingbox_address_54.pin_code = 2
     outingbox_address_54.map_address = '28.603843, 77.198134'
     outingbox_address_54.location = '28.603835,77.198145'
-    outingbox_address_54 = importer.save_or_locate(outingbox_address_54)
+    outingbox_address_54.save()
 
     outingbox_address_54.sub_zone.add(outingbox_subzone_78)
     outingbox_address_54.sub_zone.add(outingbox_subzone_79)
@@ -2130,7 +2010,7 @@ def import_data():
     outingbox_address_55.pin_code = 110092
     outingbox_address_55.map_address = ''
     outingbox_address_55.location = '28.620798,77.283030'
-    outingbox_address_55 = importer.save_or_locate(outingbox_address_55)
+    outingbox_address_55.save()
 
     outingbox_address_55.sub_zone.add(outingbox_subzone_5)
     outingbox_address_55.sub_zone.add(outingbox_subzone_81)
@@ -2146,7 +2026,7 @@ def import_data():
     outingbox_address_56.pin_code = 110003
     outingbox_address_56.map_address = ''
     outingbox_address_56.location = '28.589890,77.225225'
-    outingbox_address_56 = importer.save_or_locate(outingbox_address_56)
+    outingbox_address_56.save()
 
     outingbox_address_56.sub_zone.add(outingbox_subzone_72)
     outingbox_address_56.sub_zone.add(outingbox_subzone_73)
@@ -2163,7 +2043,7 @@ def import_data():
     outingbox_address_57.pin_code = 110024
     outingbox_address_57.map_address = ''
     outingbox_address_57.location = '28.568649,77.234525'
-    outingbox_address_57 = importer.save_or_locate(outingbox_address_57)
+    outingbox_address_57.save()
 
     outingbox_address_57.sub_zone.add(outingbox_subzone_9)
     outingbox_address_57.sub_zone.add(outingbox_subzone_71)
@@ -2178,7 +2058,7 @@ def import_data():
     outingbox_address_58.pin_code = 110024
     outingbox_address_58.map_address = ''
     outingbox_address_58.location = '28.570746,77.235820'
-    outingbox_address_58 = importer.save_or_locate(outingbox_address_58)
+    outingbox_address_58.save()
 
     outingbox_address_58.sub_zone.add(outingbox_subzone_9)
     outingbox_address_58.sub_zone.add(outingbox_subzone_71)
@@ -2193,7 +2073,7 @@ def import_data():
     outingbox_address_59.pin_code = 110091
     outingbox_address_59.map_address = ''
     outingbox_address_59.location = '28.606984,77.294454'
-    outingbox_address_59 = importer.save_or_locate(outingbox_address_59)
+    outingbox_address_59.save()
 
     outingbox_address_59.sub_zone.add(outingbox_subzone_5)
     outingbox_address_59.sub_zone.add(outingbox_subzone_6)
@@ -2209,7 +2089,7 @@ def import_data():
     outingbox_address_60.pin_code = 0
     outingbox_address_60.map_address = ''
     outingbox_address_60.location = ''
-    outingbox_address_60 = importer.save_or_locate(outingbox_address_60)
+    outingbox_address_60.save()
 
     outingbox_address_60.sub_zone.add(outingbox_subzone_81)
 
@@ -2221,7 +2101,7 @@ def import_data():
     outingbox_address_61.pin_code = 0
     outingbox_address_61.map_address = ''
     outingbox_address_61.location = ''
-    outingbox_address_61 = importer.save_or_locate(outingbox_address_61)
+    outingbox_address_61.save()
 
     outingbox_address_61.sub_zone.add(outingbox_subzone_81)
 
@@ -2233,7 +2113,7 @@ def import_data():
     outingbox_address_62.pin_code = 0
     outingbox_address_62.map_address = ''
     outingbox_address_62.location = ''
-    outingbox_address_62 = importer.save_or_locate(outingbox_address_62)
+    outingbox_address_62.save()
 
     outingbox_address_62.sub_zone.add(outingbox_subzone_81)
 
@@ -2245,7 +2125,7 @@ def import_data():
     outingbox_address_63.pin_code = 0
     outingbox_address_63.map_address = ''
     outingbox_address_63.location = ''
-    outingbox_address_63 = importer.save_or_locate(outingbox_address_63)
+    outingbox_address_63.save()
 
     outingbox_address_63.sub_zone.add(outingbox_subzone_81)
 
@@ -2257,7 +2137,7 @@ def import_data():
     outingbox_address_64.pin_code = 0
     outingbox_address_64.map_address = ''
     outingbox_address_64.location = ''
-    outingbox_address_64 = importer.save_or_locate(outingbox_address_64)
+    outingbox_address_64.save()
 
     outingbox_address_64.sub_zone.add(outingbox_subzone_81)
 
@@ -2269,7 +2149,7 @@ def import_data():
     outingbox_address_65.pin_code = 0
     outingbox_address_65.map_address = ''
     outingbox_address_65.location = ''
-    outingbox_address_65 = importer.save_or_locate(outingbox_address_65)
+    outingbox_address_65.save()
 
     outingbox_address_65.sub_zone.add(outingbox_subzone_81)
 
@@ -2281,7 +2161,7 @@ def import_data():
     outingbox_address_66.pin_code = 0
     outingbox_address_66.map_address = ''
     outingbox_address_66.location = ''
-    outingbox_address_66 = importer.save_or_locate(outingbox_address_66)
+    outingbox_address_66.save()
 
     outingbox_address_66.sub_zone.add(outingbox_subzone_81)
 
@@ -2293,7 +2173,7 @@ def import_data():
     outingbox_address_67.pin_code = 121004
     outingbox_address_67.map_address = ''
     outingbox_address_67.location = '28.361108,77.188064'
-    outingbox_address_67 = importer.save_or_locate(outingbox_address_67)
+    outingbox_address_67.save()
 
     outingbox_address_67.sub_zone.add(outingbox_subzone_26)
     outingbox_address_67.sub_zone.add(outingbox_subzone_36)
@@ -2308,7 +2188,7 @@ def import_data():
     outingbox_address_68.pin_code = 122506
     outingbox_address_68.map_address = ''
     outingbox_address_68.location = '28.428191,76.952049'
-    outingbox_address_68 = importer.save_or_locate(outingbox_address_68)
+    outingbox_address_68.save()
 
     outingbox_address_68.sub_zone.add(outingbox_subzone_8)
     outingbox_address_68.sub_zone.add(outingbox_subzone_81)
@@ -2322,7 +2202,7 @@ def import_data():
     outingbox_address_69.pin_code = 122103
     outingbox_address_69.map_address = ''
     outingbox_address_69.location = '28.338168,77.008362'
-    outingbox_address_69 = importer.save_or_locate(outingbox_address_69)
+    outingbox_address_69.save()
 
     outingbox_address_69.sub_zone.add(outingbox_subzone_8)
     outingbox_address_69.sub_zone.add(outingbox_subzone_26)
@@ -2336,7 +2216,7 @@ def import_data():
     outingbox_address_70.pin_code = 122103
     outingbox_address_70.map_address = ''
     outingbox_address_70.location = '28.340107,77.010366'
-    outingbox_address_70 = importer.save_or_locate(outingbox_address_70)
+    outingbox_address_70.save()
 
     outingbox_address_70.sub_zone.add(outingbox_subzone_8)
     outingbox_address_70.metro_station.add(outingbox_metrostation_36)
@@ -2349,312 +2229,312 @@ def import_data():
     outingbox_place_1 = Place()
     outingbox_place_1.address = 'aapno ghar'
     outingbox_place_1.location = '28.386775,76.974399'
-    outingbox_place_1 = importer.save_or_locate(outingbox_place_1)
+    outingbox_place_1.save()
 
     outingbox_place_2 = Place()
     outingbox_place_2.address = 'bluo vasant kunj'
     outingbox_place_2.location = '28.502705,77.097512'
-    outingbox_place_2 = importer.save_or_locate(outingbox_place_2)
+    outingbox_place_2.save()
 
     outingbox_place_3 = Place()
     outingbox_place_3.address = 'Kapashera Estate, Old Delhi Gurgaon Road, Opp. Kapshera Bus Stand'
     outingbox_place_3.location = '28.525481,77.084136'
-    outingbox_place_3 = importer.save_or_locate(outingbox_place_3)
+    outingbox_place_3.save()
 
     outingbox_place_4 = Place()
     outingbox_place_4.address = 'Fun N Food Village,Kapashera Estate, Old Delhi Gurgaon Road, Opp. Kapshera Bus Stand'
     outingbox_place_4.location = '28.525481,77.084136'
-    outingbox_place_4 = importer.save_or_locate(outingbox_place_4)
+    outingbox_place_4.save()
 
     outingbox_place_5 = Place()
     outingbox_place_5.address = 'Fun and Food Village'
     outingbox_place_5.location = '28.524374,77.083415'
-    outingbox_place_5 = importer.save_or_locate(outingbox_place_5)
+    outingbox_place_5.save()
 
     outingbox_place_6 = Place()
     outingbox_place_6.address = 'Fun N Food Village'
     outingbox_place_6.location = '28.523910,77.084727'
-    outingbox_place_6 = importer.save_or_locate(outingbox_place_6)
+    outingbox_place_6.save()
 
     outingbox_place_7 = Place()
     outingbox_place_7.address = 'appu ghar,Gurgaon'
     outingbox_place_7.location = '28.462200,77.071474'
-    outingbox_place_7 = importer.save_or_locate(outingbox_place_7)
+    outingbox_place_7.save()
 
     outingbox_place_8 = Place()
     outingbox_place_8.address = 'delhirides'
     outingbox_place_8.location = '28.545555,77.309635'
-    outingbox_place_8 = importer.save_or_locate(outingbox_place_8)
+    outingbox_place_8.save()
 
     outingbox_place_9 = Place()
     outingbox_place_9.address = 'A- 265, Andheria Modh,Near Kishan Haat,New Delhi'
     outingbox_place_9.location = '28.613939,77.209021'
-    outingbox_place_9 = importer.save_or_locate(outingbox_place_9)
+    outingbox_place_9.save()
 
     outingbox_place_10 = Place()
     outingbox_place_10.address = 'A- 265, Andheria Modh,Near Kishan Haat,New Delhi'
     outingbox_place_10.location = '28.613939,77.209021'
-    outingbox_place_10 = importer.save_or_locate(outingbox_place_10)
+    outingbox_place_10.save()
 
     outingbox_place_11 = Place()
     outingbox_place_11.address = 'A- 265, Andheria Modh,Near Kishan Haat,New Delhi'
     outingbox_place_11.location = '28.613939,77.209021'
-    outingbox_place_11 = importer.save_or_locate(outingbox_place_11)
+    outingbox_place_11.save()
 
     outingbox_place_12 = Place()
     outingbox_place_12.address = 'Shop No. 239&240, 1st Floor, DLF Place Mall, Saket, New Delhi'
     outingbox_place_12.location = '28.524579,77.206615'
-    outingbox_place_12 = importer.save_or_locate(outingbox_place_12)
+    outingbox_place_12.save()
 
     outingbox_place_13 = Place()
     outingbox_place_13.address = 'NH. 8, Behind Sector 15, Gurgaon, Haryana 122001, India'
     outingbox_place_13.location = '28.458089,77.041191'
-    outingbox_place_13 = importer.save_or_locate(outingbox_place_13)
+    outingbox_place_13.save()
 
     outingbox_place_14 = Place()
     outingbox_place_14.address = 'E-238, Amar Colony, Lajpat Nagar 4, New Delhi'
     outingbox_place_14.location = '28.561197,77.241680'
-    outingbox_place_14 = importer.save_or_locate(outingbox_place_14)
+    outingbox_place_14.save()
 
     outingbox_place_15 = Place()
     outingbox_place_15.address = ' 505, Ring Road Mall, Sector 3, Rohini, New Delhi'
     outingbox_place_15.location = '28.698277,77.116007'
-    outingbox_place_15 = importer.save_or_locate(outingbox_place_15)
+    outingbox_place_15.save()
 
     outingbox_place_16 = Place()
     outingbox_place_16.address = 'just chill water park,new delhi'
     outingbox_place_16.location = '28.850358,77.128133'
-    outingbox_place_16 = importer.save_or_locate(outingbox_place_16)
+    outingbox_place_16.save()
 
     outingbox_place_17 = Place()
     outingbox_place_17.address = 'adventure island,rohini'
     outingbox_place_17.location = '28.723728,77.113592'
-    outingbox_place_17 = importer.save_or_locate(outingbox_place_17)
+    outingbox_place_17.save()
 
     outingbox_place_18 = Place()
     outingbox_place_18.address = 'jurassic park inn,sonepat'
     outingbox_place_18.location = '29.008682,77.081989'
-    outingbox_place_18 = importer.save_or_locate(outingbox_place_18)
+    outingbox_place_18.save()
 
     outingbox_place_19 = Place()
     outingbox_place_19.address = 'club platinum resort,'
     outingbox_place_19.location = '28.670857,77.085852'
-    outingbox_place_19 = importer.save_or_locate(outingbox_place_19)
+    outingbox_place_19.save()
 
     outingbox_place_20 = Place()
     outingbox_place_20.address = 'Shop No-309, Spice World, 2nd Flr, Sector 25 A, Noida'
     outingbox_place_20.location = '28.535516,77.391026'
-    outingbox_place_20 = importer.save_or_locate(outingbox_place_20)
+    outingbox_place_20.save()
 
     outingbox_place_21 = Place()
     outingbox_place_21.address = 'Shop No-309, Spice World, 2nd Flr, Sector 25 A, Noida'
     outingbox_place_21.location = '28.535516,77.391026'
-    outingbox_place_21 = importer.save_or_locate(outingbox_place_21)
+    outingbox_place_21.save()
 
     outingbox_place_22 = Place()
     outingbox_place_22.address = 'M.G.F Metropolitan Mall, Mehrauli'
     outingbox_place_22.location = '28.529568,77.220172'
-    outingbox_place_22 = importer.save_or_locate(outingbox_place_22)
+    outingbox_place_22.save()
 
     outingbox_place_23 = Place()
     outingbox_place_23.address = '4, Aurobindo Marg, New Delhi'
     outingbox_place_23.location = '28.546344,77.202296'
-    outingbox_place_23 = importer.save_or_locate(outingbox_place_23)
+    outingbox_place_23.save()
 
     outingbox_place_24 = Place()
     outingbox_place_24.address = 'Building No. 105, Plot No. 2A, Sector 38 A, Noida'
     outingbox_place_24.location = '28.562308,77.329571'
-    outingbox_place_24 = importer.save_or_locate(outingbox_place_24)
+    outingbox_place_24.save()
 
     outingbox_place_25 = Place()
     outingbox_place_25.address = '2nd Floor, Pacific Mall, Tagore Garden, New Delhi'
     outingbox_place_25.location = '28.643895,77.112830'
-    outingbox_place_25 = importer.save_or_locate(outingbox_place_25)
+    outingbox_place_25.save()
 
     outingbox_place_26 = Place()
     outingbox_place_26.address = 'Ug-17, Ansal Plaza, Greater Noida'
     outingbox_place_26.location = '28.535902,77.392013'
-    outingbox_place_26 = importer.save_or_locate(outingbox_place_26)
+    outingbox_place_26.save()
 
     outingbox_place_27 = Place()
     outingbox_place_27.address = 'A-38, Mohan Cooperative Industrial Estate,, Near Pind Balluchi Restaurant, Main Mathura Road, New Delhi'
     outingbox_place_27.location = '28.611238,77.240114'
-    outingbox_place_27 = importer.save_or_locate(outingbox_place_27)
+    outingbox_place_27.save()
 
     outingbox_place_28 = Place()
     outingbox_place_28.address = 'A-38, Mohan Co-Operative Industrial Estate, Mathura Road, Badarpur,Delhi'
     outingbox_place_28.location = '28.469887,77.305907'
-    outingbox_place_28 = importer.save_or_locate(outingbox_place_28)
+    outingbox_place_28.save()
 
     outingbox_place_29 = Place()
     outingbox_place_29.address = 'Dynamic House, Opp Petrol Bunk, Dadri Main Road, Sector-41, Noida'
     outingbox_place_29.location = '28.561075,77.363055'
-    outingbox_place_29 = importer.save_or_locate(outingbox_place_29)
+    outingbox_place_29.save()
 
     outingbox_place_30 = Place()
     outingbox_place_30.address = 'wonder speedways,noida'
     outingbox_place_30.location = '28.564066,77.325414'
-    outingbox_place_30 = importer.save_or_locate(outingbox_place_30)
+    outingbox_place_30.save()
 
     outingbox_place_31 = Place()
     outingbox_place_31.address = 'Westin Resort, Sohna, Gurgaon'
     outingbox_place_31.location = '28.248699,77.063512'
-    outingbox_place_31 = importer.save_or_locate(outingbox_place_31)
+    outingbox_place_31.save()
 
     outingbox_place_32 = Place()
     outingbox_place_32.address = 'F9 Go-Karting, Sector 17-18 Link Road, Gurgaon'
     outingbox_place_32.location = '28.423184,77.188572'
-    outingbox_place_32 = importer.save_or_locate(outingbox_place_32)
+    outingbox_place_32.save()
 
     outingbox_place_33 = Place()
     outingbox_place_33.address = 'F9 Go Karting Gurgaon'
     outingbox_place_33.location = '28.459497,77.026638'
-    outingbox_place_33 = importer.save_or_locate(outingbox_place_33)
+    outingbox_place_33.save()
 
     outingbox_place_34 = Place()
     outingbox_place_34.address = 'F9 Go Karting Gurgaon'
     outingbox_place_34.location = '28.459497,77.026638'
-    outingbox_place_34 = importer.save_or_locate(outingbox_place_34)
+    outingbox_place_34.save()
 
     outingbox_place_35 = Place()
     outingbox_place_35.address = 'luxmi plaza gurgaon'
     outingbox_place_35.location = '28.465048,77.507700'
-    outingbox_place_35 = importer.save_or_locate(outingbox_place_35)
+    outingbox_place_35.save()
 
     outingbox_place_36 = Place()
     outingbox_place_36.address = 'F9 Go Karting Gurgaon'
     outingbox_place_36.location = '28.465067,77.507711'
-    outingbox_place_36 = importer.save_or_locate(outingbox_place_36)
+    outingbox_place_36.save()
 
     outingbox_place_37 = Place()
     outingbox_place_37.address = 'Sohna Gugaon'
     outingbox_place_37.location = '28.237296, 77.149235'
-    outingbox_place_37 = importer.save_or_locate(outingbox_place_37)
+    outingbox_place_37.save()
 
     outingbox_place_38 = Place()
     outingbox_place_38.address = 'Pacific Mall, Subhash Nagar, 110027'
     outingbox_place_38.location = '18.501079,73.872429'
-    outingbox_place_38 = importer.save_or_locate(outingbox_place_38)
+    outingbox_place_38.save()
 
     outingbox_place_39 = Place()
     outingbox_place_39.address = 'City Mall, Sector 12 Faridabad'
     outingbox_place_39.location = '28.570434,77.337280'
-    outingbox_place_39 = importer.save_or_locate(outingbox_place_39)
+    outingbox_place_39.save()
 
     outingbox_place_40 = Place()
     outingbox_place_40.address = 'City Mall, Sector 12 Faridabad'
     outingbox_place_40.location = '28.570434,77.337280'
-    outingbox_place_40 = importer.save_or_locate(outingbox_place_40)
+    outingbox_place_40.save()
 
     outingbox_place_41 = Place()
     outingbox_place_41.address = 'M-22, Greater Kailash 1, Delhi'
     outingbox_place_41.location = '28.552320,77.235405'
-    outingbox_place_41 = importer.save_or_locate(outingbox_place_41)
+    outingbox_place_41.save()
 
     outingbox_place_42 = Place()
     outingbox_place_42.address = 'Mind Cafe'
     outingbox_place_42.location = '28.468281,77.083210'
-    outingbox_place_42 = importer.save_or_locate(outingbox_place_42)
+    outingbox_place_42.save()
 
     outingbox_place_43 = Place()
     outingbox_place_43.address = 'Iyengar Yoga Centre, new delhi'
     outingbox_place_43.location = '28.629935, 77.236802'
-    outingbox_place_43 = importer.save_or_locate(outingbox_place_43)
+    outingbox_place_43.save()
 
     outingbox_place_44 = Place()
     outingbox_place_44.address = 'Sivanand'
     outingbox_place_44.location = '28.553610, 77.242764'
-    outingbox_place_44 = importer.save_or_locate(outingbox_place_44)
+    outingbox_place_44.save()
 
     outingbox_place_45 = Place()
     outingbox_place_45.address = 'the yoga studio,'
     outingbox_place_45.location = '28.550435,77.206611'
-    outingbox_place_45 = importer.save_or_locate(outingbox_place_45)
+    outingbox_place_45.save()
 
     outingbox_place_46 = Place()
     outingbox_place_46.address = 'Kedarnath Yoga'
     outingbox_place_46.location = '28.465526, 77.079122'
-    outingbox_place_46 = importer.save_or_locate(outingbox_place_46)
+    outingbox_place_46.save()
 
     outingbox_place_47 = Place()
     outingbox_place_47.address = 'Universal Yoga Group'
     outingbox_place_47.location = '28.475262, 77.025490'
-    outingbox_place_47 = importer.save_or_locate(outingbox_place_47)
+    outingbox_place_47.save()
 
     outingbox_place_48 = Place()
     outingbox_place_48.address = 'Universal Yoga Group'
     outingbox_place_48.location = '28.613939,77.209021'
-    outingbox_place_48 = importer.save_or_locate(outingbox_place_48)
+    outingbox_place_48.save()
 
     outingbox_place_49 = Place()
     outingbox_place_49.address = 'Yogakul'
     outingbox_place_49.location = '28.548664, 77.214060'
-    outingbox_place_49 = importer.save_or_locate(outingbox_place_49)
+    outingbox_place_49.save()
 
     outingbox_place_50 = Place()
     outingbox_place_50.address = 'AtreYoga'
     outingbox_place_50.location = '28.548121, 77.211445'
-    outingbox_place_50 = importer.save_or_locate(outingbox_place_50)
+    outingbox_place_50.save()
 
     outingbox_place_51 = Place()
     outingbox_place_51.address = 'Studio Prana'
     outingbox_place_51.location = '28.606984, 77.294454'
-    outingbox_place_51 = importer.save_or_locate(outingbox_place_51)
+    outingbox_place_51.save()
 
     outingbox_place_52 = Place()
     outingbox_place_52.address = 'Studio Prana'
     outingbox_place_52.location = '28.606984, 77.294454'
-    outingbox_place_52 = importer.save_or_locate(outingbox_place_52)
+    outingbox_place_52.save()
 
     outingbox_place_53 = Place()
     outingbox_place_53.address = 'Navadha Yoga Centre'
     outingbox_place_53.location = '28.531865, 77.208166'
-    outingbox_place_53 = importer.save_or_locate(outingbox_place_53)
+    outingbox_place_53.save()
 
     outingbox_place_54 = Place()
     outingbox_place_54.address = 'iSkate'
     outingbox_place_54.location = '28.503812,77.097349'
-    outingbox_place_54 = importer.save_or_locate(outingbox_place_54)
+    outingbox_place_54.save()
 
     outingbox_place_55 = Place()
     outingbox_place_55.address = 'Art alive gallery'
     outingbox_place_55.location = '28.542863, 77.215889'
-    outingbox_place_55 = importer.save_or_locate(outingbox_place_55)
+    outingbox_place_55.save()
 
     outingbox_place_56 = Place()
     outingbox_place_56.address = 'Dhoomimal art gallery'
     outingbox_place_56.location = '28.632732, 77.217847'
-    outingbox_place_56 = importer.save_or_locate(outingbox_place_56)
+    outingbox_place_56.save()
 
     outingbox_place_57 = Place()
     outingbox_place_57.address = 'Gallery Espace'
     outingbox_place_57.location = '28.561436, 77.267981'
-    outingbox_place_57 = importer.save_or_locate(outingbox_place_57)
+    outingbox_place_57.save()
 
     outingbox_place_58 = Place()
     outingbox_place_58.address = 'Vadhera Art '
     outingbox_place_58.location = '28.570746, 77.235820'
-    outingbox_place_58 = importer.save_or_locate(outingbox_place_58)
+    outingbox_place_58.save()
 
     outingbox_place_59 = Place()
     outingbox_place_59.address = 'Vadhera Art '
     outingbox_place_59.location = '28.568649, 77.234525'
-    outingbox_place_59 = importer.save_or_locate(outingbox_place_59)
+    outingbox_place_59.save()
 
     outingbox_place_60 = Place()
     outingbox_place_60.address = 'Visual Art Gallery'
     outingbox_place_60.location = '28.589890, 77.225225'
-    outingbox_place_60 = importer.save_or_locate(outingbox_place_60)
+    outingbox_place_60.save()
 
     outingbox_place_61 = Place()
     outingbox_place_61.address = 'S11/C3, Pandav Nagar Ext, New Delhi 110092'
     outingbox_place_61.location = '28.620798,77.283030'
-    outingbox_place_61 = importer.save_or_locate(outingbox_place_61)
+    outingbox_place_61.save()
 
     outingbox_place_62 = Place()
     outingbox_place_62.address = 'Green View Resedency C-254, Sector-44 Near - Challera Market, Noida'
     outingbox_place_62.location = '28.535516,77.391026'
-    outingbox_place_62 = importer.save_or_locate(outingbox_place_62)
+    outingbox_place_62.save()
 
     # Processing model: Box
 
@@ -2664,37 +2544,37 @@ def import_data():
     outingbox_box_1.title = 'Science, Art, and History'
     outingbox_box_1.url_name = 'science-art-and-history'
     outingbox_box_1.featured_image = 'photos/box/science-art-and-history'
-    outingbox_box_1 = importer.save_or_locate(outingbox_box_1)
+    outingbox_box_1.save()
 
     outingbox_box_2 = Box()
     outingbox_box_2.title = 'Nature'
     outingbox_box_2.url_name = 'nature'
     outingbox_box_2.featured_image = 'photos/box/nature'
-    outingbox_box_2 = importer.save_or_locate(outingbox_box_2)
+    outingbox_box_2.save()
 
     outingbox_box_3 = Box()
     outingbox_box_3.title = 'Entertainment'
     outingbox_box_3.url_name = 'entertainment'
     outingbox_box_3.featured_image = 'photos/box/entertainment'
-    outingbox_box_3 = importer.save_or_locate(outingbox_box_3)
+    outingbox_box_3.save()
 
     outingbox_box_4 = Box()
     outingbox_box_4.title = 'Games and Sports'
     outingbox_box_4.url_name = 'games-and-sports'
     outingbox_box_4.featured_image = 'photos/box/games-and-sports'
-    outingbox_box_4 = importer.save_or_locate(outingbox_box_4)
+    outingbox_box_4.save()
 
     outingbox_box_5 = Box()
     outingbox_box_5.title = 'Hobbies'
     outingbox_box_5.url_name = 'hobbies'
     outingbox_box_5.featured_image = 'photos/box/hobbies'
-    outingbox_box_5 = importer.save_or_locate(outingbox_box_5)
+    outingbox_box_5.save()
 
     outingbox_box_6 = Box()
     outingbox_box_6.title = 'Health and Wellness'
     outingbox_box_6.url_name = 'health-and-wellness'
     outingbox_box_6.featured_image = 'photos/box/health-and-wellness'
-    outingbox_box_6 = importer.save_or_locate(outingbox_box_6)
+    outingbox_box_6.save()
 
     # Processing model: Category
 
@@ -2702,207 +2582,207 @@ def import_data():
 
     outingbox_category_1 = Category()
     outingbox_category_1.title = 'Science Center'
-    outingbox_category_1 = importer.save_or_locate(outingbox_category_1)
+    outingbox_category_1.save()
 
     outingbox_category_1.box.add(outingbox_box_1)
 
     outingbox_category_2 = Category()
     outingbox_category_2.title = 'Para Gliding'
-    outingbox_category_2 = importer.save_or_locate(outingbox_category_2)
+    outingbox_category_2.save()
 
     outingbox_category_2.box.add(outingbox_box_4)
     outingbox_category_2.box.add(outingbox_box_2)
 
     outingbox_category_3 = Category()
     outingbox_category_3.title = 'Para Motoring'
-    outingbox_category_3 = importer.save_or_locate(outingbox_category_3)
+    outingbox_category_3.save()
 
     outingbox_category_3.box.add(outingbox_box_4)
     outingbox_category_3.box.add(outingbox_box_2)
 
     outingbox_category_4 = Category()
     outingbox_category_4.title = 'Paintball'
-    outingbox_category_4 = importer.save_or_locate(outingbox_category_4)
+    outingbox_category_4.save()
 
     outingbox_category_4.box.add(outingbox_box_4)
 
     outingbox_category_5 = Category()
     outingbox_category_5.title = 'Arcade'
-    outingbox_category_5 = importer.save_or_locate(outingbox_category_5)
+    outingbox_category_5.save()
 
     outingbox_category_5.box.add(outingbox_box_4)
 
     outingbox_category_6 = Category()
     outingbox_category_6.title = 'Art Galleries'
-    outingbox_category_6 = importer.save_or_locate(outingbox_category_6)
+    outingbox_category_6.save()
 
     outingbox_category_6.box.add(outingbox_box_1)
 
     outingbox_category_7 = Category()
     outingbox_category_7.title = 'Bowling'
-    outingbox_category_7 = importer.save_or_locate(outingbox_category_7)
+    outingbox_category_7.save()
 
     outingbox_category_7.box.add(outingbox_box_4)
 
     outingbox_category_8 = Category()
     outingbox_category_8.title = 'Pool'
-    outingbox_category_8 = importer.save_or_locate(outingbox_category_8)
+    outingbox_category_8.save()
 
     outingbox_category_8.box.add(outingbox_box_4)
 
     outingbox_category_9 = Category()
     outingbox_category_9.title = 'Camping'
-    outingbox_category_9 = importer.save_or_locate(outingbox_category_9)
+    outingbox_category_9.save()
 
     outingbox_category_9.box.add(outingbox_box_2)
 
     outingbox_category_10 = Category()
     outingbox_category_10.title = 'Ice Skating'
-    outingbox_category_10 = importer.save_or_locate(outingbox_category_10)
+    outingbox_category_10.save()
 
     outingbox_category_10.box.add(outingbox_box_4)
 
     outingbox_category_11 = Category()
     outingbox_category_11.title = 'Pilates'
-    outingbox_category_11 = importer.save_or_locate(outingbox_category_11)
+    outingbox_category_11.save()
 
     outingbox_category_11.box.add(outingbox_box_6)
 
     outingbox_category_12 = Category()
     outingbox_category_12.title = 'Naturopathy'
-    outingbox_category_12 = importer.save_or_locate(outingbox_category_12)
+    outingbox_category_12.save()
 
     outingbox_category_12.box.add(outingbox_box_6)
 
     outingbox_category_13 = Category()
     outingbox_category_13.title = 'Yoga'
-    outingbox_category_13 = importer.save_or_locate(outingbox_category_13)
+    outingbox_category_13.save()
 
     outingbox_category_13.box.add(outingbox_box_6)
 
     outingbox_category_14 = Category()
     outingbox_category_14.title = 'Board Game'
-    outingbox_category_14 = importer.save_or_locate(outingbox_category_14)
+    outingbox_category_14.save()
 
     outingbox_category_14.box.add(outingbox_box_4)
 
     outingbox_category_15 = Category()
     outingbox_category_15.title = 'Zumba'
-    outingbox_category_15 = importer.save_or_locate(outingbox_category_15)
+    outingbox_category_15.save()
 
     outingbox_category_15.box.add(outingbox_box_5)
 
     outingbox_category_16 = Category()
     outingbox_category_16.title = 'Bollywood Dance'
-    outingbox_category_16 = importer.save_or_locate(outingbox_category_16)
+    outingbox_category_16.save()
 
     outingbox_category_16.box.add(outingbox_box_5)
 
     outingbox_category_17 = Category()
     outingbox_category_17.title = 'Contemporary Dance'
-    outingbox_category_17 = importer.save_or_locate(outingbox_category_17)
+    outingbox_category_17.save()
 
     outingbox_category_17.box.add(outingbox_box_5)
 
     outingbox_category_18 = Category()
     outingbox_category_18.title = 'Hip Hop Dance'
-    outingbox_category_18 = importer.save_or_locate(outingbox_category_18)
+    outingbox_category_18.save()
 
     outingbox_category_18.box.add(outingbox_box_5)
 
     outingbox_category_19 = Category()
     outingbox_category_19.title = 'Salsa'
-    outingbox_category_19 = importer.save_or_locate(outingbox_category_19)
+    outingbox_category_19.save()
 
     outingbox_category_19.box.add(outingbox_box_5)
 
     outingbox_category_20 = Category()
     outingbox_category_20.title = 'Wedding Choreography'
-    outingbox_category_20 = importer.save_or_locate(outingbox_category_20)
+    outingbox_category_20.save()
 
     outingbox_category_20.box.add(outingbox_box_5)
 
     outingbox_category_21 = Category()
     outingbox_category_21.title = 'Belly Dance'
-    outingbox_category_21 = importer.save_or_locate(outingbox_category_21)
+    outingbox_category_21.save()
 
     outingbox_category_21.box.add(outingbox_box_5)
 
     outingbox_category_22 = Category()
     outingbox_category_22.title = 'Martial Arts'
-    outingbox_category_22 = importer.save_or_locate(outingbox_category_22)
+    outingbox_category_22.save()
 
     outingbox_category_22.box.add(outingbox_box_5)
     outingbox_category_22.box.add(outingbox_box_6)
 
     outingbox_category_23 = Category()
     outingbox_category_23.title = 'Self Defence'
-    outingbox_category_23 = importer.save_or_locate(outingbox_category_23)
+    outingbox_category_23.save()
 
     outingbox_category_23.box.add(outingbox_box_5)
     outingbox_category_23.box.add(outingbox_box_6)
 
     outingbox_category_24 = Category()
     outingbox_category_24.title = 'Aerobics'
-    outingbox_category_24 = importer.save_or_locate(outingbox_category_24)
+    outingbox_category_24.save()
 
     outingbox_category_24.box.add(outingbox_box_5)
     outingbox_category_24.box.add(outingbox_box_6)
 
     outingbox_category_25 = Category()
     outingbox_category_25.title = 'B Boying and Break Dance'
-    outingbox_category_25 = importer.save_or_locate(outingbox_category_25)
+    outingbox_category_25.save()
 
     outingbox_category_25.box.add(outingbox_box_5)
 
     outingbox_category_26 = Category()
     outingbox_category_26.title = 'Jazz Dance'
-    outingbox_category_26 = importer.save_or_locate(outingbox_category_26)
+    outingbox_category_26.save()
 
     outingbox_category_26.box.add(outingbox_box_5)
 
     outingbox_category_27 = Category()
     outingbox_category_27.title = 'Gymnastics'
-    outingbox_category_27 = importer.save_or_locate(outingbox_category_27)
+    outingbox_category_27.save()
 
     outingbox_category_27.box.add(outingbox_box_5)
     outingbox_category_27.box.add(outingbox_box_6)
 
     outingbox_category_28 = Category()
     outingbox_category_28.title = 'Go Karting'
-    outingbox_category_28 = importer.save_or_locate(outingbox_category_28)
+    outingbox_category_28.save()
 
     outingbox_category_28.box.add(outingbox_box_4)
 
     outingbox_category_29 = Category()
     outingbox_category_29.title = 'Amusement Park'
-    outingbox_category_29 = importer.save_or_locate(outingbox_category_29)
+    outingbox_category_29.save()
 
     outingbox_category_29.box.add(outingbox_box_3)
     outingbox_category_29.box.add(outingbox_box_4)
 
     outingbox_category_30 = Category()
     outingbox_category_30.title = 'Water Park'
-    outingbox_category_30 = importer.save_or_locate(outingbox_category_30)
+    outingbox_category_30.save()
 
     outingbox_category_30.box.add(outingbox_box_3)
     outingbox_category_30.box.add(outingbox_box_4)
 
     outingbox_category_31 = Category()
     outingbox_category_31.title = 'Museum'
-    outingbox_category_31 = importer.save_or_locate(outingbox_category_31)
+    outingbox_category_31.save()
 
     outingbox_category_31.box.add(outingbox_box_1)
 
     outingbox_category_32 = Category()
     outingbox_category_32.title = 'Planetarium'
-    outingbox_category_32 = importer.save_or_locate(outingbox_category_32)
+    outingbox_category_32.save()
 
     outingbox_category_32.box.add(outingbox_box_1)
 
     outingbox_category_33 = Category()
     outingbox_category_33.title = 'History Walk'
-    outingbox_category_33 = importer.save_or_locate(outingbox_category_33)
+    outingbox_category_33.save()
 
     outingbox_category_33.box.add(outingbox_box_1)
 
@@ -2926,7 +2806,7 @@ def import_data():
     outingbox_activity_1.twitter = ''
     outingbox_activity_1.linkedin = ''
     outingbox_activity_1.featured_image = 'photos/activity/featured/img-1_p2BmAKf.jpg'
-    outingbox_activity_1 = importer.save_or_locate(outingbox_activity_1)
+    outingbox_activity_1.save()
 
     outingbox_activity_1.category.add(outingbox_category_29)
     outingbox_activity_1.category.add(outingbox_category_30)
@@ -2947,7 +2827,7 @@ def import_data():
     outingbox_activity_2.twitter = ''
     outingbox_activity_2.linkedin = ''
     outingbox_activity_2.featured_image = 'photos/activity/featured/img-1_zwDZQ7u.jpg'
-    outingbox_activity_2 = importer.save_or_locate(outingbox_activity_2)
+    outingbox_activity_2.save()
 
     outingbox_activity_2.category.add(outingbox_category_4)
 
@@ -2967,7 +2847,7 @@ def import_data():
     outingbox_activity_3.twitter = ''
     outingbox_activity_3.linkedin = ''
     outingbox_activity_3.featured_image = 'photos/activity/featured/img-1.JPG'
-    outingbox_activity_3 = importer.save_or_locate(outingbox_activity_3)
+    outingbox_activity_3.save()
 
     outingbox_activity_3.category.add(outingbox_category_7)
     outingbox_activity_3.category.add(outingbox_category_8)
@@ -2988,7 +2868,7 @@ def import_data():
     outingbox_activity_4.twitter = ''
     outingbox_activity_4.linkedin = ''
     outingbox_activity_4.featured_image = 'photos/activity/featured/img-5_wXJW06r.jpg'
-    outingbox_activity_4 = importer.save_or_locate(outingbox_activity_4)
+    outingbox_activity_4.save()
 
     outingbox_activity_4.category.add(outingbox_category_28)
     outingbox_activity_4.category.add(outingbox_category_29)
@@ -3010,7 +2890,7 @@ def import_data():
     outingbox_activity_5.twitter = ''
     outingbox_activity_5.linkedin = ''
     outingbox_activity_5.featured_image = 'photos/activity/featured/img-2.png'
-    outingbox_activity_5 = importer.save_or_locate(outingbox_activity_5)
+    outingbox_activity_5.save()
 
     outingbox_activity_5.category.add(outingbox_category_5)
     outingbox_activity_5.category.add(outingbox_category_7)
@@ -3032,7 +2912,7 @@ def import_data():
     outingbox_activity_6.twitter = ''
     outingbox_activity_6.linkedin = ''
     outingbox_activity_6.featured_image = 'photos/activity/featured/img-1_u9KlBna.jpg'
-    outingbox_activity_6 = importer.save_or_locate(outingbox_activity_6)
+    outingbox_activity_6.save()
 
     outingbox_activity_6.category.add(outingbox_category_5)
     outingbox_activity_6.category.add(outingbox_category_7)
@@ -3054,7 +2934,7 @@ def import_data():
     outingbox_activity_7.twitter = ''
     outingbox_activity_7.linkedin = ''
     outingbox_activity_7.featured_image = 'photos/activity/featured/img-8.png'
-    outingbox_activity_7 = importer.save_or_locate(outingbox_activity_7)
+    outingbox_activity_7.save()
 
     outingbox_activity_7.category.add(outingbox_category_29)
     outingbox_activity_7.category.add(outingbox_category_30)
@@ -3075,7 +2955,7 @@ def import_data():
     outingbox_activity_8.twitter = ''
     outingbox_activity_8.linkedin = ''
     outingbox_activity_8.featured_image = 'photos/activity/featured/img-1_hNL60oI.jpg'
-    outingbox_activity_8 = importer.save_or_locate(outingbox_activity_8)
+    outingbox_activity_8.save()
 
     outingbox_activity_8.category.add(outingbox_category_28)
 
@@ -3095,7 +2975,7 @@ def import_data():
     outingbox_activity_9.twitter = ''
     outingbox_activity_9.linkedin = ''
     outingbox_activity_9.featured_image = 'photos/activity/featured/img-1.png'
-    outingbox_activity_9 = importer.save_or_locate(outingbox_activity_9)
+    outingbox_activity_9.save()
 
     outingbox_activity_9.category.add(outingbox_category_29)
     outingbox_activity_9.category.add(outingbox_category_30)
@@ -3116,7 +2996,7 @@ def import_data():
     outingbox_activity_10.twitter = ''
     outingbox_activity_10.linkedin = ''
     outingbox_activity_10.featured_image = 'photos/activity/featured/img-3_7Q3Y0ZH.jpg'
-    outingbox_activity_10 = importer.save_or_locate(outingbox_activity_10)
+    outingbox_activity_10.save()
 
     outingbox_activity_10.category.add(outingbox_category_7)
     outingbox_activity_10.category.add(outingbox_category_8)
@@ -3137,7 +3017,7 @@ def import_data():
     outingbox_activity_11.twitter = ''
     outingbox_activity_11.linkedin = ''
     outingbox_activity_11.featured_image = 'photos/activity/featured/img-3.gif'
-    outingbox_activity_11 = importer.save_or_locate(outingbox_activity_11)
+    outingbox_activity_11.save()
 
     outingbox_activity_11.category.add(outingbox_category_29)
     outingbox_activity_11.category.add(outingbox_category_30)
@@ -3158,7 +3038,7 @@ def import_data():
     outingbox_activity_12.twitter = ''
     outingbox_activity_12.linkedin = ''
     outingbox_activity_12.featured_image = 'photos/activity/featured/img-1_ed8AFsk.JPG'
-    outingbox_activity_12 = importer.save_or_locate(outingbox_activity_12)
+    outingbox_activity_12.save()
 
     outingbox_activity_12.category.add(outingbox_category_5)
     outingbox_activity_12.category.add(outingbox_category_7)
@@ -3179,7 +3059,7 @@ def import_data():
     outingbox_activity_13.twitter = ''
     outingbox_activity_13.linkedin = ''
     outingbox_activity_13.featured_image = 'photos/activity/featured/img-1_6lAXl0N.jpg'
-    outingbox_activity_13 = importer.save_or_locate(outingbox_activity_13)
+    outingbox_activity_13.save()
 
     outingbox_activity_13.category.add(outingbox_category_30)
 
@@ -3199,7 +3079,7 @@ def import_data():
     outingbox_activity_14.twitter = ''
     outingbox_activity_14.linkedin = ''
     outingbox_activity_14.featured_image = 'photos/activity/featured/img-11.jpg'
-    outingbox_activity_14 = importer.save_or_locate(outingbox_activity_14)
+    outingbox_activity_14.save()
 
     outingbox_activity_14.category.add(outingbox_category_7)
     outingbox_activity_14.category.add(outingbox_category_28)
@@ -3220,7 +3100,7 @@ def import_data():
     outingbox_activity_15.twitter = ''
     outingbox_activity_15.linkedin = ''
     outingbox_activity_15.featured_image = 'photos/activity/featured/img-1_px4WhgU.jpg'
-    outingbox_activity_15 = importer.save_or_locate(outingbox_activity_15)
+    outingbox_activity_15.save()
 
     outingbox_activity_15.category.add(outingbox_category_7)
     outingbox_activity_15.category.add(outingbox_category_8)
@@ -3241,7 +3121,7 @@ def import_data():
     outingbox_activity_16.twitter = ''
     outingbox_activity_16.linkedin = ''
     outingbox_activity_16.featured_image = 'photos/activity/featured/img-2.jpg'
-    outingbox_activity_16 = importer.save_or_locate(outingbox_activity_16)
+    outingbox_activity_16.save()
 
     outingbox_activity_16.category.add(outingbox_category_29)
     outingbox_activity_16.category.add(outingbox_category_30)
@@ -3262,7 +3142,7 @@ def import_data():
     outingbox_activity_17.twitter = ''
     outingbox_activity_17.linkedin = ''
     outingbox_activity_17.featured_image = 'photos/activity/featured/img-1_WhoQIMQ.jpg'
-    outingbox_activity_17 = importer.save_or_locate(outingbox_activity_17)
+    outingbox_activity_17.save()
 
     outingbox_activity_17.category.add(outingbox_category_4)
 
@@ -3282,7 +3162,7 @@ def import_data():
     outingbox_activity_18.twitter = ''
     outingbox_activity_18.linkedin = ''
     outingbox_activity_18.featured_image = 'photos/activity/featured/img-4_0dFGJTQ.jpg'
-    outingbox_activity_18 = importer.save_or_locate(outingbox_activity_18)
+    outingbox_activity_18.save()
 
     outingbox_activity_18.category.add(outingbox_category_29)
     outingbox_activity_18.category.add(outingbox_category_30)
@@ -3303,7 +3183,7 @@ def import_data():
     outingbox_activity_19.twitter = ''
     outingbox_activity_19.linkedin = ''
     outingbox_activity_19.featured_image = 'photos/activity/featured/img-6.jpg'
-    outingbox_activity_19 = importer.save_or_locate(outingbox_activity_19)
+    outingbox_activity_19.save()
 
     outingbox_activity_19.category.add(outingbox_category_29)
     outingbox_activity_19.category.add(outingbox_category_30)
@@ -3324,7 +3204,7 @@ def import_data():
     outingbox_activity_20.twitter = ''
     outingbox_activity_20.linkedin = ''
     outingbox_activity_20.featured_image = 'photos/activity/featured/img-5.jpg'
-    outingbox_activity_20 = importer.save_or_locate(outingbox_activity_20)
+    outingbox_activity_20.save()
 
     outingbox_activity_20.category.add(outingbox_category_29)
     outingbox_activity_20.category.add(outingbox_category_30)
@@ -3345,7 +3225,7 @@ def import_data():
     outingbox_activity_21.twitter = ''
     outingbox_activity_21.linkedin = ''
     outingbox_activity_21.featured_image = 'photos/activity/featured/img-2_hjcJT62.jpg'
-    outingbox_activity_21 = importer.save_or_locate(outingbox_activity_21)
+    outingbox_activity_21.save()
 
     outingbox_activity_21.category.add(outingbox_category_29)
 
@@ -3365,7 +3245,7 @@ def import_data():
     outingbox_activity_22.twitter = ''
     outingbox_activity_22.linkedin = ''
     outingbox_activity_22.featured_image = 'photos/activity/featured/img-4_2jwipw0.jpg'
-    outingbox_activity_22 = importer.save_or_locate(outingbox_activity_22)
+    outingbox_activity_22.save()
 
     outingbox_activity_22.category.add(outingbox_category_5)
     outingbox_activity_22.category.add(outingbox_category_7)
@@ -3387,7 +3267,7 @@ def import_data():
     outingbox_activity_23.twitter = ''
     outingbox_activity_23.linkedin = ''
     outingbox_activity_23.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_23 = importer.save_or_locate(outingbox_activity_23)
+    outingbox_activity_23.save()
 
     outingbox_activity_23.category.add(outingbox_category_5)
 
@@ -3407,7 +3287,7 @@ def import_data():
     outingbox_activity_24.twitter = 'https://twitter.com/yogaathomeindia'
     outingbox_activity_24.linkedin = ''
     outingbox_activity_24.featured_image = 'photos/activity/featured/img-4_oUIaZRj.jpg'
-    outingbox_activity_24 = importer.save_or_locate(outingbox_activity_24)
+    outingbox_activity_24.save()
 
     outingbox_activity_24.category.add(outingbox_category_12)
     outingbox_activity_24.category.add(outingbox_category_13)
@@ -3428,7 +3308,7 @@ def import_data():
     outingbox_activity_25.twitter = ''
     outingbox_activity_25.linkedin = ''
     outingbox_activity_25.featured_image = 'photos/activity/featured/img-3_mn5h1CP.jpg'
-    outingbox_activity_25 = importer.save_or_locate(outingbox_activity_25)
+    outingbox_activity_25.save()
 
     outingbox_activity_25.category.add(outingbox_category_5)
     outingbox_activity_25.category.add(outingbox_category_7)
@@ -3450,7 +3330,7 @@ def import_data():
     outingbox_activity_26.twitter = ''
     outingbox_activity_26.linkedin = ''
     outingbox_activity_26.featured_image = 'photos/activity/featured/img-1_mUoQyM6.jpg'
-    outingbox_activity_26 = importer.save_or_locate(outingbox_activity_26)
+    outingbox_activity_26.save()
 
     outingbox_activity_26.category.add(outingbox_category_8)
 
@@ -3470,7 +3350,7 @@ def import_data():
     outingbox_activity_27.twitter = ''
     outingbox_activity_27.linkedin = ''
     outingbox_activity_27.featured_image = 'photos/activity/featured/img-3.JPG'
-    outingbox_activity_27 = importer.save_or_locate(outingbox_activity_27)
+    outingbox_activity_27.save()
 
     outingbox_activity_27.category.add(outingbox_category_28)
 
@@ -3490,7 +3370,7 @@ def import_data():
     outingbox_activity_28.twitter = ''
     outingbox_activity_28.linkedin = ''
     outingbox_activity_28.featured_image = 'photos/activity/featured/img-8.jpeg'
-    outingbox_activity_28 = importer.save_or_locate(outingbox_activity_28)
+    outingbox_activity_28.save()
 
     outingbox_activity_28.category.add(outingbox_category_5)
     outingbox_activity_28.category.add(outingbox_category_7)
@@ -3512,7 +3392,7 @@ def import_data():
     outingbox_activity_29.twitter = ''
     outingbox_activity_29.linkedin = ''
     outingbox_activity_29.featured_image = 'photos/activity/featured/img-1_7FY9X9g.jpg'
-    outingbox_activity_29 = importer.save_or_locate(outingbox_activity_29)
+    outingbox_activity_29.save()
 
     outingbox_activity_29.category.add(outingbox_category_13)
 
@@ -3532,7 +3412,7 @@ def import_data():
     outingbox_activity_30.twitter = ''
     outingbox_activity_30.linkedin = ''
     outingbox_activity_30.featured_image = 'photos/activity/featured/bikramyoga2.jpg'
-    outingbox_activity_30 = importer.save_or_locate(outingbox_activity_30)
+    outingbox_activity_30.save()
 
     outingbox_activity_30.category.add(outingbox_category_13)
 
@@ -3552,7 +3432,7 @@ def import_data():
     outingbox_activity_31.twitter = ''
     outingbox_activity_31.linkedin = ''
     outingbox_activity_31.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_31 = importer.save_or_locate(outingbox_activity_31)
+    outingbox_activity_31.save()
 
     outingbox_activity_31.category.add(outingbox_category_5)
 
@@ -3572,7 +3452,7 @@ def import_data():
     outingbox_activity_32.twitter = ''
     outingbox_activity_32.linkedin = ''
     outingbox_activity_32.featured_image = 'photos/activity/featured/img-5_rpvWFc9.jpg'
-    outingbox_activity_32 = importer.save_or_locate(outingbox_activity_32)
+    outingbox_activity_32.save()
 
     outingbox_activity_32.category.add(outingbox_category_4)
 
@@ -3592,7 +3472,7 @@ def import_data():
     outingbox_activity_33.twitter = ''
     outingbox_activity_33.linkedin = ''
     outingbox_activity_33.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_33 = importer.save_or_locate(outingbox_activity_33)
+    outingbox_activity_33.save()
 
     outingbox_activity_33.category.add(outingbox_category_7)
     outingbox_activity_33.category.add(outingbox_category_8)
@@ -3613,7 +3493,7 @@ def import_data():
     outingbox_activity_34.twitter = 'https://twitter.com/bigdancecentre'
     outingbox_activity_34.linkedin = ''
     outingbox_activity_34.featured_image = 'photos/activity/featured/Screen_Shot_2016-02-20_at_6.32.55_PM.png'
-    outingbox_activity_34 = importer.save_or_locate(outingbox_activity_34)
+    outingbox_activity_34.save()
 
     outingbox_activity_34.category.add(outingbox_category_26)
     outingbox_activity_34.category.add(outingbox_category_16)
@@ -3638,7 +3518,7 @@ def import_data():
     outingbox_activity_35.twitter = ''
     outingbox_activity_35.linkedin = ''
     outingbox_activity_35.featured_image = 'photos/activity/featured/img-6_XngWzU9.jpg'
-    outingbox_activity_35 = importer.save_or_locate(outingbox_activity_35)
+    outingbox_activity_35.save()
 
     outingbox_activity_35.category.add(outingbox_category_13)
 
@@ -3658,7 +3538,7 @@ def import_data():
     outingbox_activity_36.twitter = 'https://twitter.com/flyboyaviation'
     outingbox_activity_36.linkedin = ''
     outingbox_activity_36.featured_image = 'photos/activity/featured/dscn4087.jpg'
-    outingbox_activity_36 = importer.save_or_locate(outingbox_activity_36)
+    outingbox_activity_36.save()
 
     outingbox_activity_36.category.add(outingbox_category_2)
     outingbox_activity_36.category.add(outingbox_category_3)
@@ -3679,7 +3559,7 @@ def import_data():
     outingbox_activity_37.twitter = ''
     outingbox_activity_37.linkedin = ''
     outingbox_activity_37.featured_image = 'photos/activity/featured/glued-pool.jpg'
-    outingbox_activity_37 = importer.save_or_locate(outingbox_activity_37)
+    outingbox_activity_37.save()
 
     outingbox_activity_37.category.add(outingbox_category_8)
 
@@ -3699,7 +3579,7 @@ def import_data():
     outingbox_activity_38.twitter = ''
     outingbox_activity_38.linkedin = ''
     outingbox_activity_38.featured_image = 'photos/activity/featured/img-3_mxYJvWv.jpg'
-    outingbox_activity_38 = importer.save_or_locate(outingbox_activity_38)
+    outingbox_activity_38.save()
 
     outingbox_activity_38.category.add(outingbox_category_13)
 
@@ -3719,7 +3599,7 @@ def import_data():
     outingbox_activity_39.twitter = ''
     outingbox_activity_39.linkedin = ''
     outingbox_activity_39.featured_image = 'photos/activity/featured/slide-four.jpg'
-    outingbox_activity_39 = importer.save_or_locate(outingbox_activity_39)
+    outingbox_activity_39.save()
 
     outingbox_activity_39.category.add(outingbox_category_6)
 
@@ -3739,7 +3619,7 @@ def import_data():
     outingbox_activity_40.twitter = ''
     outingbox_activity_40.linkedin = ''
     outingbox_activity_40.featured_image = 'photos/activity/featured/283048_256487204378000_4704371_n.jpg'
-    outingbox_activity_40 = importer.save_or_locate(outingbox_activity_40)
+    outingbox_activity_40.save()
 
     outingbox_activity_40.category.add(outingbox_category_13)
 
@@ -3759,7 +3639,7 @@ def import_data():
     outingbox_activity_41.twitter = ''
     outingbox_activity_41.linkedin = ''
     outingbox_activity_41.featured_image = 'photos/activity/featured/10645310_980910568640124_8347948851935456579_n.jpg'
-    outingbox_activity_41 = importer.save_or_locate(outingbox_activity_41)
+    outingbox_activity_41.save()
 
     outingbox_activity_41.category.add(outingbox_category_11)
     outingbox_activity_41.category.add(outingbox_category_13)
@@ -3780,7 +3660,7 @@ def import_data():
     outingbox_activity_42.twitter = ''
     outingbox_activity_42.linkedin = ''
     outingbox_activity_42.featured_image = 'photos/activity/featured/img-4_cjPDMAU.jpg'
-    outingbox_activity_42 = importer.save_or_locate(outingbox_activity_42)
+    outingbox_activity_42.save()
 
     outingbox_activity_42.category.add(outingbox_category_13)
 
@@ -3800,7 +3680,7 @@ def import_data():
     outingbox_activity_43.twitter = ''
     outingbox_activity_43.linkedin = ''
     outingbox_activity_43.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_43 = importer.save_or_locate(outingbox_activity_43)
+    outingbox_activity_43.save()
 
     outingbox_activity_43.category.add(outingbox_category_6)
 
@@ -3820,7 +3700,7 @@ def import_data():
     outingbox_activity_44.twitter = ''
     outingbox_activity_44.linkedin = ''
     outingbox_activity_44.featured_image = 'photos/activity/featured/art-gallery.jpg'
-    outingbox_activity_44 = importer.save_or_locate(outingbox_activity_44)
+    outingbox_activity_44.save()
 
     outingbox_activity_44.category.add(outingbox_category_6)
 
@@ -3840,7 +3720,7 @@ def import_data():
     outingbox_activity_45.twitter = ''
     outingbox_activity_45.linkedin = ''
     outingbox_activity_45.featured_image = 'photos/activity/featured/img-3_myHZSmZ.jpg'
-    outingbox_activity_45 = importer.save_or_locate(outingbox_activity_45)
+    outingbox_activity_45.save()
 
     outingbox_activity_45.category.add(outingbox_category_5)
     outingbox_activity_45.category.add(outingbox_category_7)
@@ -3862,7 +3742,7 @@ def import_data():
     outingbox_activity_46.twitter = ''
     outingbox_activity_46.linkedin = ''
     outingbox_activity_46.featured_image = 'photos/activity/featured/10733797_928762400518291_3656194764249358557_o.jpg'
-    outingbox_activity_46 = importer.save_or_locate(outingbox_activity_46)
+    outingbox_activity_46.save()
 
     outingbox_activity_46.category.add(outingbox_category_13)
 
@@ -3882,7 +3762,7 @@ def import_data():
     outingbox_activity_47.twitter = ''
     outingbox_activity_47.linkedin = ''
     outingbox_activity_47.featured_image = 'photos/activity/featured/img-4_RLyUZCP.jpg'
-    outingbox_activity_47 = importer.save_or_locate(outingbox_activity_47)
+    outingbox_activity_47.save()
 
     outingbox_activity_47.category.add(outingbox_category_11)
     outingbox_activity_47.category.add(outingbox_category_13)
@@ -3903,7 +3783,7 @@ def import_data():
     outingbox_activity_48.twitter = ''
     outingbox_activity_48.linkedin = ''
     outingbox_activity_48.featured_image = 'photos/activity/featured/12747416_1123096257722969_5032867245218531870_o.jpg'
-    outingbox_activity_48 = importer.save_or_locate(outingbox_activity_48)
+    outingbox_activity_48.save()
 
     outingbox_activity_48.category.add(outingbox_category_6)
 
@@ -3923,7 +3803,7 @@ def import_data():
     outingbox_activity_49.twitter = ''
     outingbox_activity_49.linkedin = ''
     outingbox_activity_49.featured_image = 'photos/activity/featured/img-1_UqcKTZC.jpg'
-    outingbox_activity_49 = importer.save_or_locate(outingbox_activity_49)
+    outingbox_activity_49.save()
 
     outingbox_activity_49.category.add(outingbox_category_11)
     outingbox_activity_49.category.add(outingbox_category_13)
@@ -3944,7 +3824,7 @@ def import_data():
     outingbox_activity_50.twitter = ''
     outingbox_activity_50.linkedin = ''
     outingbox_activity_50.featured_image = 'photos/activity/featured/img-3_nDUtmml.jpg'
-    outingbox_activity_50 = importer.save_or_locate(outingbox_activity_50)
+    outingbox_activity_50.save()
 
     outingbox_activity_50.category.add(outingbox_category_13)
 
@@ -3964,7 +3844,7 @@ def import_data():
     outingbox_activity_51.twitter = ''
     outingbox_activity_51.linkedin = ''
     outingbox_activity_51.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_51 = importer.save_or_locate(outingbox_activity_51)
+    outingbox_activity_51.save()
 
     outingbox_activity_51.category.add(outingbox_category_4)
 
@@ -3984,7 +3864,7 @@ def import_data():
     outingbox_activity_52.twitter = ''
     outingbox_activity_52.linkedin = ''
     outingbox_activity_52.featured_image = 'photos/activity/featured/img-3_hCxjj8Y.jpg'
-    outingbox_activity_52 = importer.save_or_locate(outingbox_activity_52)
+    outingbox_activity_52.save()
 
     outingbox_activity_52.category.add(outingbox_category_13)
 
@@ -4004,7 +3884,7 @@ def import_data():
     outingbox_activity_53.twitter = ''
     outingbox_activity_53.linkedin = ''
     outingbox_activity_53.featured_image = 'photos/activity/featured/Howard_Tran.jpg'
-    outingbox_activity_53 = importer.save_or_locate(outingbox_activity_53)
+    outingbox_activity_53.save()
 
     outingbox_activity_53.category.add(outingbox_category_6)
 
@@ -4024,7 +3904,7 @@ def import_data():
     outingbox_activity_54.twitter = ''
     outingbox_activity_54.linkedin = ''
     outingbox_activity_54.featured_image = 'photos/activity/featured/12651027_989168394455491_1964824886806369645_n.jpg'
-    outingbox_activity_54 = importer.save_or_locate(outingbox_activity_54)
+    outingbox_activity_54.save()
 
     outingbox_activity_54.category.add(outingbox_category_6)
 
@@ -4044,7 +3924,7 @@ def import_data():
     outingbox_activity_55.twitter = ''
     outingbox_activity_55.linkedin = ''
     outingbox_activity_55.featured_image = 'photos/activity/featured/skaters-enjoy-at-iskate.jpg'
-    outingbox_activity_55 = importer.save_or_locate(outingbox_activity_55)
+    outingbox_activity_55.save()
 
     outingbox_activity_55.category.add(outingbox_category_10)
 
@@ -4064,7 +3944,7 @@ def import_data():
     outingbox_activity_56.twitter = 'https://twitter.com/dancedelhi'
     outingbox_activity_56.linkedin = ''
     outingbox_activity_56.featured_image = 'photos/activity/featured/793908_590843794264014_1393347949_o.jpg'
-    outingbox_activity_56 = importer.save_or_locate(outingbox_activity_56)
+    outingbox_activity_56.save()
 
     outingbox_activity_56.category.add(outingbox_category_13)
     outingbox_activity_56.category.add(outingbox_category_26)
@@ -4097,7 +3977,7 @@ def import_data():
     outingbox_activity_57.twitter = 'https://twitter.com/delhiwalks'
     outingbox_activity_57.linkedin = 'https://www.linkedin.com/company/delhi-walks'
     outingbox_activity_57.featured_image = 'photos/activity/featured/The-Artifacts-Inside-Picture.jpg'
-    outingbox_activity_57 = importer.save_or_locate(outingbox_activity_57)
+    outingbox_activity_57.save()
 
     outingbox_activity_57.category.add(outingbox_category_33)
 
@@ -4117,7 +3997,7 @@ def import_data():
     outingbox_activity_58.twitter = ''
     outingbox_activity_58.linkedin = ''
     outingbox_activity_58.featured_image = 'photos/activity/featured/themindcafe.jpg'
-    outingbox_activity_58 = importer.save_or_locate(outingbox_activity_58)
+    outingbox_activity_58.save()
 
     outingbox_activity_58.category.add(outingbox_category_14)
 
@@ -4137,7 +4017,7 @@ def import_data():
     outingbox_activity_59.twitter = ''
     outingbox_activity_59.linkedin = ''
     outingbox_activity_59.featured_image = 'photos/activity/featured/421736_3566404129903_396932093_n.jpg'
-    outingbox_activity_59 = importer.save_or_locate(outingbox_activity_59)
+    outingbox_activity_59.save()
 
     outingbox_activity_59.category.add(outingbox_category_33)
 
@@ -4157,7 +4037,7 @@ def import_data():
     outingbox_activity_60.twitter = ''
     outingbox_activity_60.linkedin = ''
     outingbox_activity_60.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_60 = importer.save_or_locate(outingbox_activity_60)
+    outingbox_activity_60.save()
 
     outingbox_activity_60.category.add(outingbox_category_33)
 
@@ -4177,7 +4057,7 @@ def import_data():
     outingbox_activity_61.twitter = 'https://twitter.com/HeritageWalks'
     outingbox_activity_61.linkedin = ''
     outingbox_activity_61.featured_image = 'photos/activity/featured/551649_411411975564239_1567849126_n.jpg'
-    outingbox_activity_61 = importer.save_or_locate(outingbox_activity_61)
+    outingbox_activity_61.save()
 
     outingbox_activity_61.category.add(outingbox_category_33)
 
@@ -4197,7 +4077,7 @@ def import_data():
     outingbox_activity_62.twitter = ''
     outingbox_activity_62.linkedin = ''
     outingbox_activity_62.featured_image = 'photos/activity/featured/10357636_989233181164475_4194660819674661375_o.jpg'
-    outingbox_activity_62 = importer.save_or_locate(outingbox_activity_62)
+    outingbox_activity_62.save()
 
     outingbox_activity_62.category.add(outingbox_category_33)
 
@@ -4217,7 +4097,7 @@ def import_data():
     outingbox_activity_63.twitter = ''
     outingbox_activity_63.linkedin = ''
     outingbox_activity_63.featured_image = 'photos/activity/featured/12672015_1532031713761867_1513809538782779832_o.jpg'
-    outingbox_activity_63 = importer.save_or_locate(outingbox_activity_63)
+    outingbox_activity_63.save()
 
     outingbox_activity_63.category.add(outingbox_category_32)
 
@@ -4237,7 +4117,7 @@ def import_data():
     outingbox_activity_64.twitter = 'https://twitter.com/DelhibyFoot'
     outingbox_activity_64.linkedin = ''
     outingbox_activity_64.featured_image = 'photos/activity/featured/1005943_10201460665538058_263412653_n.jpg'
-    outingbox_activity_64 = importer.save_or_locate(outingbox_activity_64)
+    outingbox_activity_64.save()
 
     outingbox_activity_64.category.add(outingbox_category_33)
 
@@ -4257,7 +4137,7 @@ def import_data():
     outingbox_activity_65.twitter = ''
     outingbox_activity_65.linkedin = ''
     outingbox_activity_65.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_65 = importer.save_or_locate(outingbox_activity_65)
+    outingbox_activity_65.save()
 
     outingbox_activity_65.category.add(outingbox_category_9)
 
@@ -4277,7 +4157,7 @@ def import_data():
     outingbox_activity_66.twitter = ''
     outingbox_activity_66.linkedin = ''
     outingbox_activity_66.featured_image = 'photos/activity/featured/11745482_947026338673327_8473836414331798034_n.jpg'
-    outingbox_activity_66 = importer.save_or_locate(outingbox_activity_66)
+    outingbox_activity_66.save()
 
     outingbox_activity_66.category.add(outingbox_category_33)
 
@@ -4297,7 +4177,7 @@ def import_data():
     outingbox_activity_67.twitter = ''
     outingbox_activity_67.linkedin = ''
     outingbox_activity_67.featured_image = 'photos/activity/featured/922957_206099403064781_4524394341635628337_n.jpg'
-    outingbox_activity_67 = importer.save_or_locate(outingbox_activity_67)
+    outingbox_activity_67.save()
 
     outingbox_activity_67.category.add(outingbox_category_1)
     outingbox_activity_67.category.add(outingbox_category_31)
@@ -4318,7 +4198,7 @@ def import_data():
     outingbox_activity_68.twitter = ''
     outingbox_activity_68.linkedin = ''
     outingbox_activity_68.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_68 = importer.save_or_locate(outingbox_activity_68)
+    outingbox_activity_68.save()
 
     outingbox_activity_68.category.add(outingbox_category_9)
 
@@ -4338,7 +4218,7 @@ def import_data():
     outingbox_activity_69.twitter = ''
     outingbox_activity_69.linkedin = ''
     outingbox_activity_69.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_69 = importer.save_or_locate(outingbox_activity_69)
+    outingbox_activity_69.save()
 
     outingbox_activity_69.category.add(outingbox_category_9)
 
@@ -4358,225 +4238,9 @@ def import_data():
     outingbox_activity_70.twitter = ''
     outingbox_activity_70.linkedin = ''
     outingbox_activity_70.featured_image = 'photos/activity/featured/featured.png'
-    outingbox_activity_70 = importer.save_or_locate(outingbox_activity_70)
+    outingbox_activity_70.save()
 
     outingbox_activity_70.category.add(outingbox_category_9)
-
-    # Processing model: UserBookmark
-
-    from outingbox.models import UserBookmark
-
-    outingbox_userbookmark_1 = UserBookmark()
-    outingbox_userbookmark_1.user =  importer.locate_object(User, "id", User, "id", 9, {'email': 'rohananand1995@gmail.com', 'is_superuser': False, 'password': '!O6VEZiizVq9C3Q5fsCv5goFfiBr0AcEHlz3TL1TH', 'is_staff': False, 'first_name': 'Rohan', 'date_joined': datetime.datetime(2016, 2, 13, 14, 41, 55, 432000, tzinfo=<UTC>), 'is_active': True, 'id': 9, 'username': 'rohananand', '_userbookmark_cache': 'rohananand', 'last_login': datetime.datetime(2016, 2, 21, 17, 14, 48, 758754, tzinfo=<UTC>), 'last_name': 'Anand'} ) 
-    outingbox_userbookmark_1 = importer.save_or_locate(outingbox_userbookmark_1)
-
-    outingbox_userbookmark_1.bookmarks.add(outingbox_activity_2)
-    outingbox_userbookmark_1.bookmarks.add(outingbox_activity_3)
-    outingbox_userbookmark_1.bookmarks.add(outingbox_activity_6)
-    outingbox_userbookmark_1.bookmarks.add(outingbox_activity_19)
-
-    outingbox_userbookmark_2 = UserBookmark()
-    outingbox_userbookmark_2.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', '_userbookmark_cache': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userbookmark_2 = importer.save_or_locate(outingbox_userbookmark_2)
-
-    outingbox_userbookmark_2.bookmarks.add(outingbox_activity_3)
-    outingbox_userbookmark_2.bookmarks.add(outingbox_activity_33)
-
-    outingbox_userbookmark_3 = UserBookmark()
-    outingbox_userbookmark_3.user =  importer.locate_object(User, "id", User, "id", 3, {'email': '', 'is_superuser': False, 'password': 'pbkdf2_sha256$20000$UIRmwdql9JWM$pMi8ZnGIw5hj3OZXv4RLZQCxDsG9ncpiRtXwrt0DJo8=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 11, 13, 23, 47, tzinfo=<UTC>), 'is_active': True, 'id': 3, 'username': 'anuj', '_userbookmark_cache': 'anuj', 'last_login': datetime.datetime(2016, 2, 24, 16, 54, 25, 548850, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userbookmark_3 = importer.save_or_locate(outingbox_userbookmark_3)
-
-    outingbox_userbookmark_3.bookmarks.add(outingbox_activity_2)
-
-    outingbox_userbookmark_4 = UserBookmark()
-    outingbox_userbookmark_4.user =  importer.locate_object(User, "id", User, "id", 10, {'email': 'guptajatin057@gmail.com', 'is_superuser': False, 'password': '!RAxQkpraN433y6KIMA4bGe1FGfwGGAV0EcZF70XS', 'is_staff': False, 'first_name': 'Jatin', 'date_joined': datetime.datetime(2016, 2, 17, 16, 35, 31, 286000, tzinfo=<UTC>), 'is_active': True, 'id': 10, 'username': 'jatingupta', '_userbookmark_cache': 'jatingupta', 'last_login': datetime.datetime(2016, 2, 17, 16, 36, 32, 920019, tzinfo=<UTC>), 'last_name': 'Gupta'} ) 
-    outingbox_userbookmark_4 = importer.save_or_locate(outingbox_userbookmark_4)
-
-    outingbox_userbookmark_4.bookmarks.add(outingbox_activity_3)
-
-    outingbox_userbookmark_5 = UserBookmark()
-    outingbox_userbookmark_5.user =  importer.locate_object(User, "id", User, "id", 11, {'email': 'atishay.tpg@gmail.com', 'is_superuser': False, 'password': '!4jLE0QlXIfpcRzoGq2dlFDiHXo6iP61ThzdChv6k', 'is_staff': False, 'first_name': 'atishay', 'date_joined': datetime.datetime(2016, 2, 20, 14, 52, 15, 918000, tzinfo=<UTC>), 'is_active': True, 'id': 11, 'username': 'atishayjain', '_userbookmark_cache': 'atishayjain', 'last_login': datetime.datetime(2016, 2, 21, 10, 17, 51, 982943, tzinfo=<UTC>), 'last_name': 'jain'} ) 
-    outingbox_userbookmark_5 = importer.save_or_locate(outingbox_userbookmark_5)
-
-    outingbox_userbookmark_5.bookmarks.add(outingbox_activity_14)
-
-    outingbox_userbookmark_6 = UserBookmark()
-    outingbox_userbookmark_6.user =  importer.locate_object(User, "id", User, "id", 12, {'email': 'ankitdeogirkar.031189@gmail.com', 'is_superuser': False, 'password': '!ZJkY3zu4By0MuzkcVhYbNyaqUTNyLKWJxK67hvAc', 'is_staff': False, 'first_name': 'Ankit', 'date_joined': datetime.datetime(2016, 2, 22, 7, 6, 11, 742000, tzinfo=<UTC>), 'is_active': True, 'id': 12, 'username': 'ankitd', '_userbookmark_cache': 'ankitd', 'last_login': datetime.datetime(2016, 2, 22, 7, 6, 20, 895226, tzinfo=<UTC>), 'last_name': 'Deogirkar'} ) 
-    outingbox_userbookmark_6 = importer.save_or_locate(outingbox_userbookmark_6)
-
-    outingbox_userbookmark_6.bookmarks.add(outingbox_activity_2)
-
-    # Processing model: UserRating
-
-    from outingbox.models import UserRating
-
-    outingbox_userrating_1 = UserRating()
-    outingbox_userrating_1.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_1.activity = outingbox_activity_19
-    outingbox_userrating_1.rating = 5
-    outingbox_userrating_1 = importer.save_or_locate(outingbox_userrating_1)
-
-    outingbox_userrating_2 = UserRating()
-    outingbox_userrating_2.user =  importer.locate_object(User, "id", User, "id", 3, {'email': '', 'is_superuser': False, 'password': 'pbkdf2_sha256$20000$UIRmwdql9JWM$pMi8ZnGIw5hj3OZXv4RLZQCxDsG9ncpiRtXwrt0DJo8=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 11, 13, 23, 47, tzinfo=<UTC>), 'is_active': True, 'id': 3, 'username': 'anuj', 'last_login': datetime.datetime(2016, 2, 24, 16, 54, 25, 548850, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_2.activity = outingbox_activity_2
-    outingbox_userrating_2.rating = 4
-    outingbox_userrating_2 = importer.save_or_locate(outingbox_userrating_2)
-
-    outingbox_userrating_3 = UserRating()
-    outingbox_userrating_3.user =  importer.locate_object(User, "id", User, "id", 10, {'email': 'guptajatin057@gmail.com', 'is_superuser': False, 'password': '!RAxQkpraN433y6KIMA4bGe1FGfwGGAV0EcZF70XS', 'is_staff': False, 'first_name': 'Jatin', 'date_joined': datetime.datetime(2016, 2, 17, 16, 35, 31, 286000, tzinfo=<UTC>), 'is_active': True, 'id': 10, 'username': 'jatingupta', 'last_login': datetime.datetime(2016, 2, 17, 16, 36, 32, 920019, tzinfo=<UTC>), 'last_name': 'Gupta'} ) 
-    outingbox_userrating_3.activity = outingbox_activity_3
-    outingbox_userrating_3.rating = 5
-    outingbox_userrating_3 = importer.save_or_locate(outingbox_userrating_3)
-
-    outingbox_userrating_4 = UserRating()
-    outingbox_userrating_4.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_4.activity = outingbox_activity_2
-    outingbox_userrating_4.rating = 5
-    outingbox_userrating_4 = importer.save_or_locate(outingbox_userrating_4)
-
-    outingbox_userrating_5 = UserRating()
-    outingbox_userrating_5.user =  importer.locate_object(User, "id", User, "id", 9, {'email': 'rohananand1995@gmail.com', 'is_superuser': False, 'password': '!O6VEZiizVq9C3Q5fsCv5goFfiBr0AcEHlz3TL1TH', 'is_staff': False, 'first_name': 'Rohan', 'date_joined': datetime.datetime(2016, 2, 13, 14, 41, 55, 432000, tzinfo=<UTC>), 'is_active': True, 'id': 9, 'username': 'rohananand', 'last_login': datetime.datetime(2016, 2, 21, 17, 14, 48, 758754, tzinfo=<UTC>), 'last_name': 'Anand'} ) 
-    outingbox_userrating_5.activity = outingbox_activity_3
-    outingbox_userrating_5.rating = 5
-    outingbox_userrating_5 = importer.save_or_locate(outingbox_userrating_5)
-
-    outingbox_userrating_6 = UserRating()
-    outingbox_userrating_6.user =  importer.locate_object(User, "id", User, "id", 9, {'email': 'rohananand1995@gmail.com', 'is_superuser': False, 'password': '!O6VEZiizVq9C3Q5fsCv5goFfiBr0AcEHlz3TL1TH', 'is_staff': False, 'first_name': 'Rohan', 'date_joined': datetime.datetime(2016, 2, 13, 14, 41, 55, 432000, tzinfo=<UTC>), 'is_active': True, 'id': 9, 'username': 'rohananand', 'last_login': datetime.datetime(2016, 2, 21, 17, 14, 48, 758754, tzinfo=<UTC>), 'last_name': 'Anand'} ) 
-    outingbox_userrating_6.activity = outingbox_activity_6
-    outingbox_userrating_6.rating = 1
-    outingbox_userrating_6 = importer.save_or_locate(outingbox_userrating_6)
-
-    outingbox_userrating_7 = UserRating()
-    outingbox_userrating_7.user =  importer.locate_object(User, "id", User, "id", 9, {'email': 'rohananand1995@gmail.com', 'is_superuser': False, 'password': '!O6VEZiizVq9C3Q5fsCv5goFfiBr0AcEHlz3TL1TH', 'is_staff': False, 'first_name': 'Rohan', 'date_joined': datetime.datetime(2016, 2, 13, 14, 41, 55, 432000, tzinfo=<UTC>), 'is_active': True, 'id': 9, 'username': 'rohananand', 'last_login': datetime.datetime(2016, 2, 21, 17, 14, 48, 758754, tzinfo=<UTC>), 'last_name': 'Anand'} ) 
-    outingbox_userrating_7.activity = outingbox_activity_20
-    outingbox_userrating_7.rating = 4
-    outingbox_userrating_7 = importer.save_or_locate(outingbox_userrating_7)
-
-    outingbox_userrating_8 = UserRating()
-    outingbox_userrating_8.user =  importer.locate_object(User, "id", User, "id", 9, {'email': 'rohananand1995@gmail.com', 'is_superuser': False, 'password': '!O6VEZiizVq9C3Q5fsCv5goFfiBr0AcEHlz3TL1TH', 'is_staff': False, 'first_name': 'Rohan', 'date_joined': datetime.datetime(2016, 2, 13, 14, 41, 55, 432000, tzinfo=<UTC>), 'is_active': True, 'id': 9, 'username': 'rohananand', 'last_login': datetime.datetime(2016, 2, 21, 17, 14, 48, 758754, tzinfo=<UTC>), 'last_name': 'Anand'} ) 
-    outingbox_userrating_8.activity = outingbox_activity_9
-    outingbox_userrating_8.rating = 3
-    outingbox_userrating_8 = importer.save_or_locate(outingbox_userrating_8)
-
-    outingbox_userrating_9 = UserRating()
-    outingbox_userrating_9.user =  importer.locate_object(User, "id", User, "id", 11, {'email': 'atishay.tpg@gmail.com', 'is_superuser': False, 'password': '!4jLE0QlXIfpcRzoGq2dlFDiHXo6iP61ThzdChv6k', 'is_staff': False, 'first_name': 'atishay', 'date_joined': datetime.datetime(2016, 2, 20, 14, 52, 15, 918000, tzinfo=<UTC>), 'is_active': True, 'id': 11, 'username': 'atishayjain', 'last_login': datetime.datetime(2016, 2, 21, 10, 17, 51, 982943, tzinfo=<UTC>), 'last_name': 'jain'} ) 
-    outingbox_userrating_9.activity = outingbox_activity_14
-    outingbox_userrating_9.rating = 4
-    outingbox_userrating_9 = importer.save_or_locate(outingbox_userrating_9)
-
-    outingbox_userrating_10 = UserRating()
-    outingbox_userrating_10.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_10.activity = outingbox_activity_20
-    outingbox_userrating_10.rating = 5
-    outingbox_userrating_10 = importer.save_or_locate(outingbox_userrating_10)
-
-    outingbox_userrating_11 = UserRating()
-    outingbox_userrating_11.user =  importer.locate_object(User, "id", User, "id", 11, {'email': 'atishay.tpg@gmail.com', 'is_superuser': False, 'password': '!4jLE0QlXIfpcRzoGq2dlFDiHXo6iP61ThzdChv6k', 'is_staff': False, 'first_name': 'atishay', 'date_joined': datetime.datetime(2016, 2, 20, 14, 52, 15, 918000, tzinfo=<UTC>), 'is_active': True, 'id': 11, 'username': 'atishayjain', 'last_login': datetime.datetime(2016, 2, 21, 10, 17, 51, 982943, tzinfo=<UTC>), 'last_name': 'jain'} ) 
-    outingbox_userrating_11.activity = outingbox_activity_6
-    outingbox_userrating_11.rating = 2
-    outingbox_userrating_11 = importer.save_or_locate(outingbox_userrating_11)
-
-    outingbox_userrating_12 = UserRating()
-    outingbox_userrating_12.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_12.activity = outingbox_activity_3
-    outingbox_userrating_12.rating = 5
-    outingbox_userrating_12 = importer.save_or_locate(outingbox_userrating_12)
-
-    outingbox_userrating_13 = UserRating()
-    outingbox_userrating_13.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_13.activity = outingbox_activity_33
-    outingbox_userrating_13.rating = 5
-    outingbox_userrating_13 = importer.save_or_locate(outingbox_userrating_13)
-
-    outingbox_userrating_14 = UserRating()
-    outingbox_userrating_14.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_14.activity = outingbox_activity_55
-    outingbox_userrating_14.rating = 5
-    outingbox_userrating_14 = importer.save_or_locate(outingbox_userrating_14)
-
-    outingbox_userrating_15 = UserRating()
-    outingbox_userrating_15.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userrating_15.activity = outingbox_activity_34
-    outingbox_userrating_15.rating = 4
-    outingbox_userrating_15 = importer.save_or_locate(outingbox_userrating_15)
-
-    # Processing model: UserReview
-
-    from outingbox.models import UserReview
-
-    outingbox_userreview_1 = UserReview()
-    outingbox_userreview_1.user =  importer.locate_object(User, "id", User, "id", 3, {'email': '', 'is_superuser': False, 'password': 'pbkdf2_sha256$20000$UIRmwdql9JWM$pMi8ZnGIw5hj3OZXv4RLZQCxDsG9ncpiRtXwrt0DJo8=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 11, 13, 23, 47, tzinfo=<UTC>), 'is_active': True, 'id': 3, 'username': 'anuj', 'last_login': datetime.datetime(2016, 2, 24, 16, 54, 25, 548850, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userreview_1.activity = outingbox_activity_2
-    outingbox_userreview_1.pub_date = dateutil.parser.parse("2016-02-15T17:08:08.988776+00:00")
-    outingbox_userreview_1.review = 'Best place to hangout'
-    outingbox_userreview_1.is_published = False
-    outingbox_userreview_1 = importer.save_or_locate(outingbox_userreview_1)
-
-    outingbox_userreview_2 = UserReview()
-    outingbox_userreview_2.user =  importer.locate_object(User, "id", User, "id", 10, {'email': 'guptajatin057@gmail.com', 'is_superuser': False, 'password': '!RAxQkpraN433y6KIMA4bGe1FGfwGGAV0EcZF70XS', 'is_staff': False, 'first_name': 'Jatin', 'date_joined': datetime.datetime(2016, 2, 17, 16, 35, 31, 286000, tzinfo=<UTC>), 'is_active': True, 'id': 10, 'username': 'jatingupta', 'last_login': datetime.datetime(2016, 2, 17, 16, 36, 32, 920019, tzinfo=<UTC>), 'last_name': 'Gupta'} ) 
-    outingbox_userreview_2.activity = outingbox_activity_3
-    outingbox_userreview_2.pub_date = dateutil.parser.parse("2016-02-17T16:37:37.396035+00:00")
-    outingbox_userreview_2.review = 'Loved the place.'
-    outingbox_userreview_2.is_published = False
-    outingbox_userreview_2 = importer.save_or_locate(outingbox_userreview_2)
-
-    outingbox_userreview_3 = UserReview()
-    outingbox_userreview_3.user =  importer.locate_object(User, "id", User, "id", 3, {'email': '', 'is_superuser': False, 'password': 'pbkdf2_sha256$20000$UIRmwdql9JWM$pMi8ZnGIw5hj3OZXv4RLZQCxDsG9ncpiRtXwrt0DJo8=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 11, 13, 23, 47, tzinfo=<UTC>), 'is_active': True, 'id': 3, 'username': 'anuj', 'last_login': datetime.datetime(2016, 2, 24, 16, 54, 25, 548850, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userreview_3.activity = outingbox_activity_6
-    outingbox_userreview_3.pub_date = dateutil.parser.parse("2016-02-18T16:20:35.303211+00:00")
-    outingbox_userreview_3.review = 'Amoeba'
-    outingbox_userreview_3.is_published = True
-    outingbox_userreview_3 = importer.save_or_locate(outingbox_userreview_3)
-
-    outingbox_userreview_4 = UserReview()
-    outingbox_userreview_4.user =  importer.locate_object(User, "id", User, "id", 9, {'email': 'rohananand1995@gmail.com', 'is_superuser': False, 'password': '!O6VEZiizVq9C3Q5fsCv5goFfiBr0AcEHlz3TL1TH', 'is_staff': False, 'first_name': 'Rohan', 'date_joined': datetime.datetime(2016, 2, 13, 14, 41, 55, 432000, tzinfo=<UTC>), 'is_active': True, 'id': 9, 'username': 'rohananand', 'last_login': datetime.datetime(2016, 2, 21, 17, 14, 48, 758754, tzinfo=<UTC>), 'last_name': 'Anand'} ) 
-    outingbox_userreview_4.activity = outingbox_activity_3
-    outingbox_userreview_4.pub_date = dateutil.parser.parse("2016-02-19T16:25:13.098577+00:00")
-    outingbox_userreview_4.review = 'Best place to do bowling!!\r\nVery cheap and full on entertainment.'
-    outingbox_userreview_4.is_published = True
-    outingbox_userreview_4 = importer.save_or_locate(outingbox_userreview_4)
-
-    outingbox_userreview_5 = UserReview()
-    outingbox_userreview_5.user =  importer.locate_object(User, "id", User, "id", 11, {'email': 'atishay.tpg@gmail.com', 'is_superuser': False, 'password': '!4jLE0QlXIfpcRzoGq2dlFDiHXo6iP61ThzdChv6k', 'is_staff': False, 'first_name': 'atishay', 'date_joined': datetime.datetime(2016, 2, 20, 14, 52, 15, 918000, tzinfo=<UTC>), 'is_active': True, 'id': 11, 'username': 'atishayjain', 'last_login': datetime.datetime(2016, 2, 21, 10, 17, 51, 982943, tzinfo=<UTC>), 'last_name': 'jain'} ) 
-    outingbox_userreview_5.activity = outingbox_activity_9
-    outingbox_userreview_5.pub_date = dateutil.parser.parse("2016-02-20T15:02:43.579775+00:00")
-    outingbox_userreview_5.review = 'YO!'
-    outingbox_userreview_5.is_published = False
-    outingbox_userreview_5 = importer.save_or_locate(outingbox_userreview_5)
-
-    outingbox_userreview_6 = UserReview()
-    outingbox_userreview_6.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userreview_6.activity = outingbox_activity_20
-    outingbox_userreview_6.pub_date = dateutil.parser.parse("2016-02-21T07:44:51.594590+00:00")
-    outingbox_userreview_6.review = 'Nice place!'
-    outingbox_userreview_6.is_published = False
-    outingbox_userreview_6 = importer.save_or_locate(outingbox_userreview_6)
-
-    outingbox_userreview_7 = UserReview()
-    outingbox_userreview_7.user =  importer.locate_object(User, "id", User, "id", 1, {'email': 'kartikanand1992@gmail.com', 'is_superuser': True, 'password': 'pbkdf2_sha256$20000$VPGUp5h62hsu$qMtSaLNAwx21pmJc80EqksomvT8GwPJKoV8qagouxaU=', 'is_staff': True, 'first_name': '', 'date_joined': datetime.datetime(2016, 2, 6, 14, 46, 39, 870407, tzinfo=<UTC>), 'is_active': True, 'id': 1, 'username': 'kartik', 'last_login': datetime.datetime(2016, 2, 25, 13, 17, 41, 854364, tzinfo=<UTC>), 'last_name': ''} ) 
-    outingbox_userreview_7.activity = outingbox_activity_19
-    outingbox_userreview_7.pub_date = dateutil.parser.parse("2016-02-21T08:02:39.606615+00:00")
-    outingbox_userreview_7.review = 'nice'
-    outingbox_userreview_7.is_published = False
-    outingbox_userreview_7 = importer.save_or_locate(outingbox_userreview_7)
-
-    outingbox_userreview_8 = UserReview()
-    outingbox_userreview_8.user =  importer.locate_object(User, "id", User, "id", 11, {'email': 'atishay.tpg@gmail.com', 'is_superuser': False, 'password': '!4jLE0QlXIfpcRzoGq2dlFDiHXo6iP61ThzdChv6k', 'is_staff': False, 'first_name': 'atishay', 'date_joined': datetime.datetime(2016, 2, 20, 14, 52, 15, 918000, tzinfo=<UTC>), 'is_active': True, 'id': 11, 'username': 'atishayjain', 'last_login': datetime.datetime(2016, 2, 21, 10, 17, 51, 982943, tzinfo=<UTC>), 'last_name': 'jain'} ) 
-    outingbox_userreview_8.activity = outingbox_activity_6
-    outingbox_userreview_8.pub_date = dateutil.parser.parse("2016-02-21T10:18:43.227792+00:00")
-    outingbox_userreview_8.review = 'Rating chal gaya (y)\r\nNo 500 now! :D\r\n\r\nP.S. - Isko approve matt kario'
-    outingbox_userreview_8.is_published = False
-    outingbox_userreview_8 = importer.save_or_locate(outingbox_userreview_8)
-
-    outingbox_userreview_9 = UserReview()
-    outingbox_userreview_9.user =  importer.locate_object(User, "id", User, "id", 12, {'email': 'ankitdeogirkar.031189@gmail.com', 'is_superuser': False, 'password': '!ZJkY3zu4By0MuzkcVhYbNyaqUTNyLKWJxK67hvAc', 'is_staff': False, 'first_name': 'Ankit', 'date_joined': datetime.datetime(2016, 2, 22, 7, 6, 11, 742000, tzinfo=<UTC>), 'is_active': True, 'id': 12, 'username': 'ankitd', 'last_login': datetime.datetime(2016, 2, 22, 7, 6, 20, 895226, tzinfo=<UTC>), 'last_name': 'Deogirkar'} ) 
-    outingbox_userreview_9.activity = outingbox_activity_4
-    outingbox_userreview_9.pub_date = dateutil.parser.parse("2016-02-22T07:07:18.055327+00:00")
-    outingbox_userreview_9.review = 'sdfsdf asdasd'
-    outingbox_userreview_9.is_published = True
-    outingbox_userreview_9 = importer.save_or_locate(outingbox_userreview_9)
-
-    # Processing model: FeaturedActivity
 
     from outingbox.models import FeaturedActivity
 
@@ -4585,1522 +4249,6 @@ def import_data():
     outingbox_featuredactivity_1.featured_2 = outingbox_activity_19
     outingbox_featuredactivity_1.featured_3 = outingbox_activity_3
     outingbox_featuredactivity_1.featured_4 = outingbox_activity_6
-    outingbox_featuredactivity_1 = importer.save_or_locate(outingbox_featuredactivity_1)
+    outingbox_featuredactivity_1.save()
 
-    # Processing model: ImageGallery
-
-    from outingbox.models import ImageGallery
-
-    outingbox_imagegallery_1 = ImageGallery()
-    outingbox_imagegallery_1.activity = outingbox_activity_2
-    outingbox_imagegallery_1.image = 'photos/activity/1/photos/img-1.jpg'
-    outingbox_imagegallery_1 = importer.save_or_locate(outingbox_imagegallery_1)
-
-    outingbox_imagegallery_2 = ImageGallery()
-    outingbox_imagegallery_2.activity = outingbox_activity_2
-    outingbox_imagegallery_2.image = 'photos/activity/1/photos/img-2.jpg'
-    outingbox_imagegallery_2 = importer.save_or_locate(outingbox_imagegallery_2)
-
-    outingbox_imagegallery_3 = ImageGallery()
-    outingbox_imagegallery_3.activity = outingbox_activity_2
-    outingbox_imagegallery_3.image = 'photos/activity/1/photos/img-3.jpg'
-    outingbox_imagegallery_3 = importer.save_or_locate(outingbox_imagegallery_3)
-
-    outingbox_imagegallery_4 = ImageGallery()
-    outingbox_imagegallery_4.activity = outingbox_activity_2
-    outingbox_imagegallery_4.image = 'photos/activity/1/photos/img-4.jpg'
-    outingbox_imagegallery_4 = importer.save_or_locate(outingbox_imagegallery_4)
-
-    outingbox_imagegallery_5 = ImageGallery()
-    outingbox_imagegallery_5.activity = outingbox_activity_2
-    outingbox_imagegallery_5.image = 'photos/activity/1/photos/img-5.jpg'
-    outingbox_imagegallery_5 = importer.save_or_locate(outingbox_imagegallery_5)
-
-    outingbox_imagegallery_6 = ImageGallery()
-    outingbox_imagegallery_6.activity = outingbox_activity_2
-    outingbox_imagegallery_6.image = 'photos/activity/1/photos/img-6.jpg'
-    outingbox_imagegallery_6 = importer.save_or_locate(outingbox_imagegallery_6)
-
-    outingbox_imagegallery_7 = ImageGallery()
-    outingbox_imagegallery_7.activity = outingbox_activity_2
-    outingbox_imagegallery_7.image = 'photos/activity/1/photos/img-7.jpg'
-    outingbox_imagegallery_7 = importer.save_or_locate(outingbox_imagegallery_7)
-
-    outingbox_imagegallery_8 = ImageGallery()
-    outingbox_imagegallery_8.activity = outingbox_activity_19
-    outingbox_imagegallery_8.image = 'photos/activity/2/photos/img-1.jpg'
-    outingbox_imagegallery_8 = importer.save_or_locate(outingbox_imagegallery_8)
-
-    outingbox_imagegallery_9 = ImageGallery()
-    outingbox_imagegallery_9.activity = outingbox_activity_19
-    outingbox_imagegallery_9.image = 'photos/activity/2/photos/img-2.jpg'
-    outingbox_imagegallery_9 = importer.save_or_locate(outingbox_imagegallery_9)
-
-    outingbox_imagegallery_10 = ImageGallery()
-    outingbox_imagegallery_10.activity = outingbox_activity_19
-    outingbox_imagegallery_10.image = 'photos/activity/2/photos/img-3.jpg'
-    outingbox_imagegallery_10 = importer.save_or_locate(outingbox_imagegallery_10)
-
-    outingbox_imagegallery_11 = ImageGallery()
-    outingbox_imagegallery_11.activity = outingbox_activity_19
-    outingbox_imagegallery_11.image = 'photos/activity/2/photos/img-4.jpg'
-    outingbox_imagegallery_11 = importer.save_or_locate(outingbox_imagegallery_11)
-
-    outingbox_imagegallery_12 = ImageGallery()
-    outingbox_imagegallery_12.activity = outingbox_activity_19
-    outingbox_imagegallery_12.image = 'photos/activity/2/photos/img-5.jpg'
-    outingbox_imagegallery_12 = importer.save_or_locate(outingbox_imagegallery_12)
-
-    outingbox_imagegallery_13 = ImageGallery()
-    outingbox_imagegallery_13.activity = outingbox_activity_19
-    outingbox_imagegallery_13.image = 'photos/activity/2/photos/img-6.jpg'
-    outingbox_imagegallery_13 = importer.save_or_locate(outingbox_imagegallery_13)
-
-    outingbox_imagegallery_14 = ImageGallery()
-    outingbox_imagegallery_14.activity = outingbox_activity_3
-    outingbox_imagegallery_14.image = 'photos/activity/3/photos/img-1.JPG'
-    outingbox_imagegallery_14 = importer.save_or_locate(outingbox_imagegallery_14)
-
-    outingbox_imagegallery_15 = ImageGallery()
-    outingbox_imagegallery_15.activity = outingbox_activity_3
-    outingbox_imagegallery_15.image = 'photos/activity/3/photos/img-2.jpg'
-    outingbox_imagegallery_15 = importer.save_or_locate(outingbox_imagegallery_15)
-
-    outingbox_imagegallery_16 = ImageGallery()
-    outingbox_imagegallery_16.activity = outingbox_activity_3
-    outingbox_imagegallery_16.image = 'photos/activity/3/photos/img-3.jpg'
-    outingbox_imagegallery_16 = importer.save_or_locate(outingbox_imagegallery_16)
-
-    outingbox_imagegallery_17 = ImageGallery()
-    outingbox_imagegallery_17.activity = outingbox_activity_3
-    outingbox_imagegallery_17.image = 'photos/activity/3/photos/img-4.jpg'
-    outingbox_imagegallery_17 = importer.save_or_locate(outingbox_imagegallery_17)
-
-    outingbox_imagegallery_18 = ImageGallery()
-    outingbox_imagegallery_18.activity = outingbox_activity_3
-    outingbox_imagegallery_18.image = 'photos/activity/3/photos/img-5.jpg'
-    outingbox_imagegallery_18 = importer.save_or_locate(outingbox_imagegallery_18)
-
-    outingbox_imagegallery_19 = ImageGallery()
-    outingbox_imagegallery_19.activity = outingbox_activity_3
-    outingbox_imagegallery_19.image = 'photos/activity/3/photos/img-6.jpg'
-    outingbox_imagegallery_19 = importer.save_or_locate(outingbox_imagegallery_19)
-
-    outingbox_imagegallery_20 = ImageGallery()
-    outingbox_imagegallery_20.activity = outingbox_activity_6
-    outingbox_imagegallery_20.image = 'photos/activity/4/photos/img-1.jpg'
-    outingbox_imagegallery_20 = importer.save_or_locate(outingbox_imagegallery_20)
-
-    outingbox_imagegallery_21 = ImageGallery()
-    outingbox_imagegallery_21.activity = outingbox_activity_6
-    outingbox_imagegallery_21.image = 'photos/activity/4/photos/img-2.jpg'
-    outingbox_imagegallery_21 = importer.save_or_locate(outingbox_imagegallery_21)
-
-    outingbox_imagegallery_22 = ImageGallery()
-    outingbox_imagegallery_22.activity = outingbox_activity_6
-    outingbox_imagegallery_22.image = 'photos/activity/4/photos/img-3.jpg'
-    outingbox_imagegallery_22 = importer.save_or_locate(outingbox_imagegallery_22)
-
-    outingbox_imagegallery_23 = ImageGallery()
-    outingbox_imagegallery_23.activity = outingbox_activity_6
-    outingbox_imagegallery_23.image = 'photos/activity/4/photos/img-4.jpg'
-    outingbox_imagegallery_23 = importer.save_or_locate(outingbox_imagegallery_23)
-
-    outingbox_imagegallery_24 = ImageGallery()
-    outingbox_imagegallery_24.activity = outingbox_activity_9
-    outingbox_imagegallery_24.image = 'photos/activity/5/photos/img-14.png'
-    outingbox_imagegallery_24 = importer.save_or_locate(outingbox_imagegallery_24)
-
-    outingbox_imagegallery_25 = ImageGallery()
-    outingbox_imagegallery_25.activity = outingbox_activity_9
-    outingbox_imagegallery_25.image = 'photos/activity/5/photos/img-12.png'
-    outingbox_imagegallery_25 = importer.save_or_locate(outingbox_imagegallery_25)
-
-    outingbox_imagegallery_26 = ImageGallery()
-    outingbox_imagegallery_26.activity = outingbox_activity_9
-    outingbox_imagegallery_26.image = 'photos/activity/5/photos/img-10.png'
-    outingbox_imagegallery_26 = importer.save_or_locate(outingbox_imagegallery_26)
-
-    outingbox_imagegallery_27 = ImageGallery()
-    outingbox_imagegallery_27.activity = outingbox_activity_4
-    outingbox_imagegallery_27.image = 'photos/activity/7/photos/img-6.jpg'
-    outingbox_imagegallery_27 = importer.save_or_locate(outingbox_imagegallery_27)
-
-    outingbox_imagegallery_28 = ImageGallery()
-    outingbox_imagegallery_28.activity = outingbox_activity_4
-    outingbox_imagegallery_28.image = 'photos/activity/7/photos/img-5.jpg'
-    outingbox_imagegallery_28 = importer.save_or_locate(outingbox_imagegallery_28)
-
-    outingbox_imagegallery_29 = ImageGallery()
-    outingbox_imagegallery_29.activity = outingbox_activity_4
-    outingbox_imagegallery_29.image = 'photos/activity/7/photos/img-4.jpg'
-    outingbox_imagegallery_29 = importer.save_or_locate(outingbox_imagegallery_29)
-
-    outingbox_imagegallery_30 = ImageGallery()
-    outingbox_imagegallery_30.activity = outingbox_activity_4
-    outingbox_imagegallery_30.image = 'photos/activity/7/photos/img-3.jpg'
-    outingbox_imagegallery_30 = importer.save_or_locate(outingbox_imagegallery_30)
-
-    outingbox_imagegallery_31 = ImageGallery()
-    outingbox_imagegallery_31.activity = outingbox_activity_4
-    outingbox_imagegallery_31.image = 'photos/activity/7/photos/img-2.jpg'
-    outingbox_imagegallery_31 = importer.save_or_locate(outingbox_imagegallery_31)
-
-    outingbox_imagegallery_32 = ImageGallery()
-    outingbox_imagegallery_32.activity = outingbox_activity_4
-    outingbox_imagegallery_32.image = 'photos/activity/7/photos/img-1.jpg'
-    outingbox_imagegallery_32 = importer.save_or_locate(outingbox_imagegallery_32)
-
-    outingbox_imagegallery_33 = ImageGallery()
-    outingbox_imagegallery_33.activity = outingbox_activity_20
-    outingbox_imagegallery_33.image = 'photos/activity/9/photos/img-5.jpg'
-    outingbox_imagegallery_33 = importer.save_or_locate(outingbox_imagegallery_33)
-
-    outingbox_imagegallery_34 = ImageGallery()
-    outingbox_imagegallery_34.activity = outingbox_activity_20
-    outingbox_imagegallery_34.image = 'photos/activity/9/photos/img-4.jpg'
-    outingbox_imagegallery_34 = importer.save_or_locate(outingbox_imagegallery_34)
-
-    outingbox_imagegallery_35 = ImageGallery()
-    outingbox_imagegallery_35.activity = outingbox_activity_20
-    outingbox_imagegallery_35.image = 'photos/activity/9/photos/img-3.jpg'
-    outingbox_imagegallery_35 = importer.save_or_locate(outingbox_imagegallery_35)
-
-    outingbox_imagegallery_36 = ImageGallery()
-    outingbox_imagegallery_36.activity = outingbox_activity_20
-    outingbox_imagegallery_36.image = 'photos/activity/9/photos/img-2.jpg'
-    outingbox_imagegallery_36 = importer.save_or_locate(outingbox_imagegallery_36)
-
-    outingbox_imagegallery_37 = ImageGallery()
-    outingbox_imagegallery_37.activity = outingbox_activity_20
-    outingbox_imagegallery_37.image = 'photos/activity/9/photos/img-1.jpg'
-    outingbox_imagegallery_37 = importer.save_or_locate(outingbox_imagegallery_37)
-
-    outingbox_imagegallery_38 = ImageGallery()
-    outingbox_imagegallery_38.activity = outingbox_activity_9
-    outingbox_imagegallery_38.image = 'photos/activity/5/photos/img-8.png'
-    outingbox_imagegallery_38 = importer.save_or_locate(outingbox_imagegallery_38)
-
-    outingbox_imagegallery_39 = ImageGallery()
-    outingbox_imagegallery_39.activity = outingbox_activity_9
-    outingbox_imagegallery_39.image = 'photos/activity/5/photos/img-6.png'
-    outingbox_imagegallery_39 = importer.save_or_locate(outingbox_imagegallery_39)
-
-    outingbox_imagegallery_40 = ImageGallery()
-    outingbox_imagegallery_40.activity = outingbox_activity_9
-    outingbox_imagegallery_40.image = 'photos/activity/5/photos/img-4.png'
-    outingbox_imagegallery_40 = importer.save_or_locate(outingbox_imagegallery_40)
-
-    outingbox_imagegallery_41 = ImageGallery()
-    outingbox_imagegallery_41.activity = outingbox_activity_7
-    outingbox_imagegallery_41.image = 'photos/activity/10/photos/img-1.jpg'
-    outingbox_imagegallery_41 = importer.save_or_locate(outingbox_imagegallery_41)
-
-    outingbox_imagegallery_42 = ImageGallery()
-    outingbox_imagegallery_42.activity = outingbox_activity_7
-    outingbox_imagegallery_42.image = 'photos/activity/10/photos/img-2.jpg'
-    outingbox_imagegallery_42 = importer.save_or_locate(outingbox_imagegallery_42)
-
-    outingbox_imagegallery_43 = ImageGallery()
-    outingbox_imagegallery_43.activity = outingbox_activity_7
-    outingbox_imagegallery_43.image = 'photos/activity/10/photos/img-3.jpg'
-    outingbox_imagegallery_43 = importer.save_or_locate(outingbox_imagegallery_43)
-
-    outingbox_imagegallery_44 = ImageGallery()
-    outingbox_imagegallery_44.activity = outingbox_activity_7
-    outingbox_imagegallery_44.image = 'photos/activity/10/photos/img-4.jpg'
-    outingbox_imagegallery_44 = importer.save_or_locate(outingbox_imagegallery_44)
-
-    outingbox_imagegallery_45 = ImageGallery()
-    outingbox_imagegallery_45.activity = outingbox_activity_7
-    outingbox_imagegallery_45.image = 'photos/activity/10/photos/img-6.jpg'
-    outingbox_imagegallery_45 = importer.save_or_locate(outingbox_imagegallery_45)
-
-    outingbox_imagegallery_46 = ImageGallery()
-    outingbox_imagegallery_46.activity = outingbox_activity_7
-    outingbox_imagegallery_46.image = 'photos/activity/10/photos/img-7.png'
-    outingbox_imagegallery_46 = importer.save_or_locate(outingbox_imagegallery_46)
-
-    outingbox_imagegallery_47 = ImageGallery()
-    outingbox_imagegallery_47.activity = outingbox_activity_10
-    outingbox_imagegallery_47.image = 'photos/activity/11/photos/img-7.jpg'
-    outingbox_imagegallery_47 = importer.save_or_locate(outingbox_imagegallery_47)
-
-    outingbox_imagegallery_48 = ImageGallery()
-    outingbox_imagegallery_48.activity = outingbox_activity_10
-    outingbox_imagegallery_48.image = 'photos/activity/11/photos/img-6.jpg'
-    outingbox_imagegallery_48 = importer.save_or_locate(outingbox_imagegallery_48)
-
-    outingbox_imagegallery_49 = ImageGallery()
-    outingbox_imagegallery_49.activity = outingbox_activity_10
-    outingbox_imagegallery_49.image = 'photos/activity/11/photos/img-3.jpg'
-    outingbox_imagegallery_49 = importer.save_or_locate(outingbox_imagegallery_49)
-
-    outingbox_imagegallery_50 = ImageGallery()
-    outingbox_imagegallery_50.activity = outingbox_activity_10
-    outingbox_imagegallery_50.image = 'photos/activity/11/photos/img-4.jpg'
-    outingbox_imagegallery_50 = importer.save_or_locate(outingbox_imagegallery_50)
-
-    outingbox_imagegallery_51 = ImageGallery()
-    outingbox_imagegallery_51.activity = outingbox_activity_10
-    outingbox_imagegallery_51.image = 'photos/activity/11/photos/img-1.jpg'
-    outingbox_imagegallery_51 = importer.save_or_locate(outingbox_imagegallery_51)
-
-    outingbox_imagegallery_52 = ImageGallery()
-    outingbox_imagegallery_52.activity = outingbox_activity_10
-    outingbox_imagegallery_52.image = 'photos/activity/11/photos/img-5.jpg'
-    outingbox_imagegallery_52 = importer.save_or_locate(outingbox_imagegallery_52)
-
-    outingbox_imagegallery_53 = ImageGallery()
-    outingbox_imagegallery_53.activity = outingbox_activity_8
-    outingbox_imagegallery_53.image = 'photos/activity/12/photos/img-6.jpg'
-    outingbox_imagegallery_53 = importer.save_or_locate(outingbox_imagegallery_53)
-
-    outingbox_imagegallery_54 = ImageGallery()
-    outingbox_imagegallery_54.activity = outingbox_activity_8
-    outingbox_imagegallery_54.image = 'photos/activity/12/photos/img-5.jpg'
-    outingbox_imagegallery_54 = importer.save_or_locate(outingbox_imagegallery_54)
-
-    outingbox_imagegallery_55 = ImageGallery()
-    outingbox_imagegallery_55.activity = outingbox_activity_8
-    outingbox_imagegallery_55.image = 'photos/activity/12/photos/img-4.jpg'
-    outingbox_imagegallery_55 = importer.save_or_locate(outingbox_imagegallery_55)
-
-    outingbox_imagegallery_56 = ImageGallery()
-    outingbox_imagegallery_56.activity = outingbox_activity_8
-    outingbox_imagegallery_56.image = 'photos/activity/12/photos/img-3.jpg'
-    outingbox_imagegallery_56 = importer.save_or_locate(outingbox_imagegallery_56)
-
-    outingbox_imagegallery_57 = ImageGallery()
-    outingbox_imagegallery_57.activity = outingbox_activity_8
-    outingbox_imagegallery_57.image = 'photos/activity/12/photos/img-2.jpg'
-    outingbox_imagegallery_57 = importer.save_or_locate(outingbox_imagegallery_57)
-
-    outingbox_imagegallery_58 = ImageGallery()
-    outingbox_imagegallery_58.activity = outingbox_activity_8
-    outingbox_imagegallery_58.image = 'photos/activity/12/photos/img-1.jpg'
-    outingbox_imagegallery_58 = importer.save_or_locate(outingbox_imagegallery_58)
-
-    outingbox_imagegallery_59 = ImageGallery()
-    outingbox_imagegallery_59.activity = outingbox_activity_1
-    outingbox_imagegallery_59.image = 'photos/activity/13/photos/img-5.png'
-    outingbox_imagegallery_59 = importer.save_or_locate(outingbox_imagegallery_59)
-
-    outingbox_imagegallery_60 = ImageGallery()
-    outingbox_imagegallery_60.activity = outingbox_activity_1
-    outingbox_imagegallery_60.image = 'photos/activity/13/photos/img-4.jpg'
-    outingbox_imagegallery_60 = importer.save_or_locate(outingbox_imagegallery_60)
-
-    outingbox_imagegallery_61 = ImageGallery()
-    outingbox_imagegallery_61.activity = outingbox_activity_1
-    outingbox_imagegallery_61.image = 'photos/activity/13/photos/img-3.jpg'
-    outingbox_imagegallery_61 = importer.save_or_locate(outingbox_imagegallery_61)
-
-    outingbox_imagegallery_62 = ImageGallery()
-    outingbox_imagegallery_62.activity = outingbox_activity_1
-    outingbox_imagegallery_62.image = 'photos/activity/13/photos/img-2.jpg'
-    outingbox_imagegallery_62 = importer.save_or_locate(outingbox_imagegallery_62)
-
-    outingbox_imagegallery_63 = ImageGallery()
-    outingbox_imagegallery_63.activity = outingbox_activity_1
-    outingbox_imagegallery_63.image = 'photos/activity/13/photos/img-1.jpg'
-    outingbox_imagegallery_63 = importer.save_or_locate(outingbox_imagegallery_63)
-
-    outingbox_imagegallery_64 = ImageGallery()
-    outingbox_imagegallery_64.activity = outingbox_activity_16
-    outingbox_imagegallery_64.image = 'photos/activity/14/photos/img-1.jpg'
-    outingbox_imagegallery_64 = importer.save_or_locate(outingbox_imagegallery_64)
-
-    outingbox_imagegallery_65 = ImageGallery()
-    outingbox_imagegallery_65.activity = outingbox_activity_16
-    outingbox_imagegallery_65.image = 'photos/activity/14/photos/img-3.jpg'
-    outingbox_imagegallery_65 = importer.save_or_locate(outingbox_imagegallery_65)
-
-    outingbox_imagegallery_66 = ImageGallery()
-    outingbox_imagegallery_66.activity = outingbox_activity_16
-    outingbox_imagegallery_66.image = 'photos/activity/14/photos/img-7.JPG'
-    outingbox_imagegallery_66 = importer.save_or_locate(outingbox_imagegallery_66)
-
-    outingbox_imagegallery_67 = ImageGallery()
-    outingbox_imagegallery_67.activity = outingbox_activity_16
-    outingbox_imagegallery_67.image = 'photos/activity/14/photos/img-17.JPG'
-    outingbox_imagegallery_67 = importer.save_or_locate(outingbox_imagegallery_67)
-
-    outingbox_imagegallery_68 = ImageGallery()
-    outingbox_imagegallery_68.activity = outingbox_activity_16
-    outingbox_imagegallery_68.image = 'photos/activity/14/photos/img-10.JPG'
-    outingbox_imagegallery_68 = importer.save_or_locate(outingbox_imagegallery_68)
-
-    outingbox_imagegallery_69 = ImageGallery()
-    outingbox_imagegallery_69.activity = outingbox_activity_16
-    outingbox_imagegallery_69.image = 'photos/activity/14/photos/img-17_wGHTMVk.JPG'
-    outingbox_imagegallery_69 = importer.save_or_locate(outingbox_imagegallery_69)
-
-    outingbox_imagegallery_70 = ImageGallery()
-    outingbox_imagegallery_70.activity = outingbox_activity_11
-    outingbox_imagegallery_70.image = 'photos/activity/15/photos/img-7.gif'
-    outingbox_imagegallery_70 = importer.save_or_locate(outingbox_imagegallery_70)
-
-    outingbox_imagegallery_71 = ImageGallery()
-    outingbox_imagegallery_71.activity = outingbox_activity_11
-    outingbox_imagegallery_71.image = 'photos/activity/15/photos/img-5.gif'
-    outingbox_imagegallery_71 = importer.save_or_locate(outingbox_imagegallery_71)
-
-    outingbox_imagegallery_72 = ImageGallery()
-    outingbox_imagegallery_72.activity = outingbox_activity_11
-    outingbox_imagegallery_72.image = 'photos/activity/15/photos/img-4.jpg'
-    outingbox_imagegallery_72 = importer.save_or_locate(outingbox_imagegallery_72)
-
-    outingbox_imagegallery_73 = ImageGallery()
-    outingbox_imagegallery_73.activity = outingbox_activity_11
-    outingbox_imagegallery_73.image = 'photos/activity/15/photos/img-3.gif'
-    outingbox_imagegallery_73 = importer.save_or_locate(outingbox_imagegallery_73)
-
-    outingbox_imagegallery_74 = ImageGallery()
-    outingbox_imagegallery_74.activity = outingbox_activity_11
-    outingbox_imagegallery_74.image = 'photos/activity/15/photos/img-2.jpg'
-    outingbox_imagegallery_74 = importer.save_or_locate(outingbox_imagegallery_74)
-
-    outingbox_imagegallery_75 = ImageGallery()
-    outingbox_imagegallery_75.activity = outingbox_activity_11
-    outingbox_imagegallery_75.image = 'photos/activity/15/photos/img-1.jpg'
-    outingbox_imagegallery_75 = importer.save_or_locate(outingbox_imagegallery_75)
-
-    outingbox_imagegallery_76 = ImageGallery()
-    outingbox_imagegallery_76.activity = outingbox_activity_21
-    outingbox_imagegallery_76.image = 'photos/activity/16/photos/img-6.jpg'
-    outingbox_imagegallery_76 = importer.save_or_locate(outingbox_imagegallery_76)
-
-    outingbox_imagegallery_77 = ImageGallery()
-    outingbox_imagegallery_77.activity = outingbox_activity_21
-    outingbox_imagegallery_77.image = 'photos/activity/16/photos/img-5.jpg'
-    outingbox_imagegallery_77 = importer.save_or_locate(outingbox_imagegallery_77)
-
-    outingbox_imagegallery_78 = ImageGallery()
-    outingbox_imagegallery_78.activity = outingbox_activity_21
-    outingbox_imagegallery_78.image = 'photos/activity/16/photos/img-4.jpg'
-    outingbox_imagegallery_78 = importer.save_or_locate(outingbox_imagegallery_78)
-
-    outingbox_imagegallery_79 = ImageGallery()
-    outingbox_imagegallery_79.activity = outingbox_activity_21
-    outingbox_imagegallery_79.image = 'photos/activity/16/photos/img-3.jpg'
-    outingbox_imagegallery_79 = importer.save_or_locate(outingbox_imagegallery_79)
-
-    outingbox_imagegallery_80 = ImageGallery()
-    outingbox_imagegallery_80.activity = outingbox_activity_21
-    outingbox_imagegallery_80.image = 'photos/activity/16/photos/img-2.jpg'
-    outingbox_imagegallery_80 = importer.save_or_locate(outingbox_imagegallery_80)
-
-    outingbox_imagegallery_81 = ImageGallery()
-    outingbox_imagegallery_81.activity = outingbox_activity_21
-    outingbox_imagegallery_81.image = 'photos/activity/16/photos/img-1.jpg'
-    outingbox_imagegallery_81 = importer.save_or_locate(outingbox_imagegallery_81)
-
-    outingbox_imagegallery_82 = ImageGallery()
-    outingbox_imagegallery_82.activity = outingbox_activity_13
-    outingbox_imagegallery_82.image = 'photos/activity/17/photos/img-7.jpg'
-    outingbox_imagegallery_82 = importer.save_or_locate(outingbox_imagegallery_82)
-
-    outingbox_imagegallery_83 = ImageGallery()
-    outingbox_imagegallery_83.activity = outingbox_activity_13
-    outingbox_imagegallery_83.image = 'photos/activity/17/photos/img-6.jpg'
-    outingbox_imagegallery_83 = importer.save_or_locate(outingbox_imagegallery_83)
-
-    outingbox_imagegallery_84 = ImageGallery()
-    outingbox_imagegallery_84.activity = outingbox_activity_13
-    outingbox_imagegallery_84.image = 'photos/activity/17/photos/img-5.jpg'
-    outingbox_imagegallery_84 = importer.save_or_locate(outingbox_imagegallery_84)
-
-    outingbox_imagegallery_85 = ImageGallery()
-    outingbox_imagegallery_85.activity = outingbox_activity_13
-    outingbox_imagegallery_85.image = 'photos/activity/17/photos/img-4.jpg'
-    outingbox_imagegallery_85 = importer.save_or_locate(outingbox_imagegallery_85)
-
-    outingbox_imagegallery_86 = ImageGallery()
-    outingbox_imagegallery_86.activity = outingbox_activity_13
-    outingbox_imagegallery_86.image = 'photos/activity/17/photos/img-3.jpg'
-    outingbox_imagegallery_86 = importer.save_or_locate(outingbox_imagegallery_86)
-
-    outingbox_imagegallery_87 = ImageGallery()
-    outingbox_imagegallery_87.activity = outingbox_activity_13
-    outingbox_imagegallery_87.image = 'photos/activity/17/photos/img-2.jpg'
-    outingbox_imagegallery_87 = importer.save_or_locate(outingbox_imagegallery_87)
-
-    outingbox_imagegallery_88 = ImageGallery()
-    outingbox_imagegallery_88.activity = outingbox_activity_17
-    outingbox_imagegallery_88.image = 'photos/activity/18/photos/img-5.jpg'
-    outingbox_imagegallery_88 = importer.save_or_locate(outingbox_imagegallery_88)
-
-    outingbox_imagegallery_89 = ImageGallery()
-    outingbox_imagegallery_89.activity = outingbox_activity_17
-    outingbox_imagegallery_89.image = 'photos/activity/18/photos/img-4.jpg'
-    outingbox_imagegallery_89 = importer.save_or_locate(outingbox_imagegallery_89)
-
-    outingbox_imagegallery_90 = ImageGallery()
-    outingbox_imagegallery_90.activity = outingbox_activity_17
-    outingbox_imagegallery_90.image = 'photos/activity/18/photos/img-3.jpg'
-    outingbox_imagegallery_90 = importer.save_or_locate(outingbox_imagegallery_90)
-
-    outingbox_imagegallery_91 = ImageGallery()
-    outingbox_imagegallery_91.activity = outingbox_activity_17
-    outingbox_imagegallery_91.image = 'photos/activity/18/photos/img-2.jpg'
-    outingbox_imagegallery_91 = importer.save_or_locate(outingbox_imagegallery_91)
-
-    outingbox_imagegallery_92 = ImageGallery()
-    outingbox_imagegallery_92.activity = outingbox_activity_17
-    outingbox_imagegallery_92.image = 'photos/activity/18/photos/img-1.jpg'
-    outingbox_imagegallery_92 = importer.save_or_locate(outingbox_imagegallery_92)
-
-    outingbox_imagegallery_93 = ImageGallery()
-    outingbox_imagegallery_93.activity = outingbox_activity_12
-    outingbox_imagegallery_93.image = 'photos/activity/21/photos/img-4.JPG'
-    outingbox_imagegallery_93 = importer.save_or_locate(outingbox_imagegallery_93)
-
-    outingbox_imagegallery_94 = ImageGallery()
-    outingbox_imagegallery_94.activity = outingbox_activity_12
-    outingbox_imagegallery_94.image = 'photos/activity/21/photos/img-3.jpg'
-    outingbox_imagegallery_94 = importer.save_or_locate(outingbox_imagegallery_94)
-
-    outingbox_imagegallery_95 = ImageGallery()
-    outingbox_imagegallery_95.activity = outingbox_activity_12
-    outingbox_imagegallery_95.image = 'photos/activity/21/photos/img-2.jpg'
-    outingbox_imagegallery_95 = importer.save_or_locate(outingbox_imagegallery_95)
-
-    outingbox_imagegallery_96 = ImageGallery()
-    outingbox_imagegallery_96.activity = outingbox_activity_12
-    outingbox_imagegallery_96.image = 'photos/activity/21/photos/img-1.JPG'
-    outingbox_imagegallery_96 = importer.save_or_locate(outingbox_imagegallery_96)
-
-    outingbox_imagegallery_97 = ImageGallery()
-    outingbox_imagegallery_97.activity = outingbox_activity_15
-    outingbox_imagegallery_97.image = 'photos/activity/19/photos/img-3.jpg'
-    outingbox_imagegallery_97 = importer.save_or_locate(outingbox_imagegallery_97)
-
-    outingbox_imagegallery_98 = ImageGallery()
-    outingbox_imagegallery_98.activity = outingbox_activity_15
-    outingbox_imagegallery_98.image = 'photos/activity/19/photos/img-2.jpg'
-    outingbox_imagegallery_98 = importer.save_or_locate(outingbox_imagegallery_98)
-
-    outingbox_imagegallery_99 = ImageGallery()
-    outingbox_imagegallery_99.activity = outingbox_activity_15
-    outingbox_imagegallery_99.image = 'photos/activity/19/photos/img-1.jpg'
-    outingbox_imagegallery_99 = importer.save_or_locate(outingbox_imagegallery_99)
-
-    outingbox_imagegallery_100 = ImageGallery()
-    outingbox_imagegallery_100.activity = outingbox_activity_14
-    outingbox_imagegallery_100.image = 'photos/activity/20/photos/img-2.jpg'
-    outingbox_imagegallery_100 = importer.save_or_locate(outingbox_imagegallery_100)
-
-    outingbox_imagegallery_101 = ImageGallery()
-    outingbox_imagegallery_101.activity = outingbox_activity_14
-    outingbox_imagegallery_101.image = 'photos/activity/20/photos/img-5.jpg'
-    outingbox_imagegallery_101 = importer.save_or_locate(outingbox_imagegallery_101)
-
-    outingbox_imagegallery_102 = ImageGallery()
-    outingbox_imagegallery_102.activity = outingbox_activity_14
-    outingbox_imagegallery_102.image = 'photos/activity/20/photos/img-6.jpg'
-    outingbox_imagegallery_102 = importer.save_or_locate(outingbox_imagegallery_102)
-
-    outingbox_imagegallery_103 = ImageGallery()
-    outingbox_imagegallery_103.activity = outingbox_activity_14
-    outingbox_imagegallery_103.image = 'photos/activity/20/photos/img-11.jpg'
-    outingbox_imagegallery_103 = importer.save_or_locate(outingbox_imagegallery_103)
-
-    outingbox_imagegallery_104 = ImageGallery()
-    outingbox_imagegallery_104.activity = outingbox_activity_14
-    outingbox_imagegallery_104.image = 'photos/activity/20/photos/img-9.jpg'
-    outingbox_imagegallery_104 = importer.save_or_locate(outingbox_imagegallery_104)
-
-    outingbox_imagegallery_105 = ImageGallery()
-    outingbox_imagegallery_105.activity = outingbox_activity_5
-    outingbox_imagegallery_105.image = 'photos/activity/22/photos/img-6.png'
-    outingbox_imagegallery_105 = importer.save_or_locate(outingbox_imagegallery_105)
-
-    outingbox_imagegallery_106 = ImageGallery()
-    outingbox_imagegallery_106.activity = outingbox_activity_5
-    outingbox_imagegallery_106.image = 'photos/activity/22/photos/img-4.png'
-    outingbox_imagegallery_106 = importer.save_or_locate(outingbox_imagegallery_106)
-
-    outingbox_imagegallery_107 = ImageGallery()
-    outingbox_imagegallery_107.activity = outingbox_activity_5
-    outingbox_imagegallery_107.image = 'photos/activity/22/photos/img-3.png'
-    outingbox_imagegallery_107 = importer.save_or_locate(outingbox_imagegallery_107)
-
-    outingbox_imagegallery_108 = ImageGallery()
-    outingbox_imagegallery_108.activity = outingbox_activity_5
-    outingbox_imagegallery_108.image = 'photos/activity/22/photos/img-1.png'
-    outingbox_imagegallery_108 = importer.save_or_locate(outingbox_imagegallery_108)
-
-    outingbox_imagegallery_109 = ImageGallery()
-    outingbox_imagegallery_109.activity = outingbox_activity_5
-    outingbox_imagegallery_109.image = 'photos/activity/22/photos/img-2.png'
-    outingbox_imagegallery_109 = importer.save_or_locate(outingbox_imagegallery_109)
-
-    outingbox_imagegallery_110 = ImageGallery()
-    outingbox_imagegallery_110.activity = outingbox_activity_45
-    outingbox_imagegallery_110.image = 'photos/activity/24/photos/img-6.jpg'
-    outingbox_imagegallery_110 = importer.save_or_locate(outingbox_imagegallery_110)
-
-    outingbox_imagegallery_111 = ImageGallery()
-    outingbox_imagegallery_111.activity = outingbox_activity_45
-    outingbox_imagegallery_111.image = 'photos/activity/24/photos/img-5.jpg'
-    outingbox_imagegallery_111 = importer.save_or_locate(outingbox_imagegallery_111)
-
-    outingbox_imagegallery_112 = ImageGallery()
-    outingbox_imagegallery_112.activity = outingbox_activity_45
-    outingbox_imagegallery_112.image = 'photos/activity/24/photos/img-4.jpg'
-    outingbox_imagegallery_112 = importer.save_or_locate(outingbox_imagegallery_112)
-
-    outingbox_imagegallery_113 = ImageGallery()
-    outingbox_imagegallery_113.activity = outingbox_activity_45
-    outingbox_imagegallery_113.image = 'photos/activity/24/photos/img-3.jpg'
-    outingbox_imagegallery_113 = importer.save_or_locate(outingbox_imagegallery_113)
-
-    outingbox_imagegallery_114 = ImageGallery()
-    outingbox_imagegallery_114.activity = outingbox_activity_45
-    outingbox_imagegallery_114.image = 'photos/activity/24/photos/img-2.jpg'
-    outingbox_imagegallery_114 = importer.save_or_locate(outingbox_imagegallery_114)
-
-    outingbox_imagegallery_115 = ImageGallery()
-    outingbox_imagegallery_115.activity = outingbox_activity_45
-    outingbox_imagegallery_115.image = 'photos/activity/24/photos/img-1.jpg'
-    outingbox_imagegallery_115 = importer.save_or_locate(outingbox_imagegallery_115)
-
-    outingbox_imagegallery_116 = ImageGallery()
-    outingbox_imagegallery_116.activity = outingbox_activity_27
-    outingbox_imagegallery_116.image = 'photos/activity/25/photos/img-3.JPG'
-    outingbox_imagegallery_116 = importer.save_or_locate(outingbox_imagegallery_116)
-
-    outingbox_imagegallery_117 = ImageGallery()
-    outingbox_imagegallery_117.activity = outingbox_activity_27
-    outingbox_imagegallery_117.image = 'photos/activity/25/photos/img-2.JPG'
-    outingbox_imagegallery_117 = importer.save_or_locate(outingbox_imagegallery_117)
-
-    outingbox_imagegallery_118 = ImageGallery()
-    outingbox_imagegallery_118.activity = outingbox_activity_27
-    outingbox_imagegallery_118.image = 'photos/activity/25/photos/img-1.jpg'
-    outingbox_imagegallery_118 = importer.save_or_locate(outingbox_imagegallery_118)
-
-    outingbox_imagegallery_119 = ImageGallery()
-    outingbox_imagegallery_119.activity = outingbox_activity_32
-    outingbox_imagegallery_119.image = 'photos/activity/60/photos/img-7.jpg'
-    outingbox_imagegallery_119 = importer.save_or_locate(outingbox_imagegallery_119)
-
-    outingbox_imagegallery_120 = ImageGallery()
-    outingbox_imagegallery_120.activity = outingbox_activity_32
-    outingbox_imagegallery_120.image = 'photos/activity/60/photos/img-6.jpg'
-    outingbox_imagegallery_120 = importer.save_or_locate(outingbox_imagegallery_120)
-
-    outingbox_imagegallery_121 = ImageGallery()
-    outingbox_imagegallery_121.activity = outingbox_activity_32
-    outingbox_imagegallery_121.image = 'photos/activity/60/photos/img-5.jpg'
-    outingbox_imagegallery_121 = importer.save_or_locate(outingbox_imagegallery_121)
-
-    outingbox_imagegallery_122 = ImageGallery()
-    outingbox_imagegallery_122.activity = outingbox_activity_32
-    outingbox_imagegallery_122.image = 'photos/activity/60/photos/img-4.jpg'
-    outingbox_imagegallery_122 = importer.save_or_locate(outingbox_imagegallery_122)
-
-    outingbox_imagegallery_123 = ImageGallery()
-    outingbox_imagegallery_123.activity = outingbox_activity_32
-    outingbox_imagegallery_123.image = 'photos/activity/60/photos/img-3.jpg'
-    outingbox_imagegallery_123 = importer.save_or_locate(outingbox_imagegallery_123)
-
-    outingbox_imagegallery_124 = ImageGallery()
-    outingbox_imagegallery_124.activity = outingbox_activity_32
-    outingbox_imagegallery_124.image = 'photos/activity/60/photos/img-2.jpg'
-    outingbox_imagegallery_124 = importer.save_or_locate(outingbox_imagegallery_124)
-
-    outingbox_imagegallery_125 = ImageGallery()
-    outingbox_imagegallery_125.activity = outingbox_activity_18
-    outingbox_imagegallery_125.image = 'photos/activity/52/photos/img-6.jpg'
-    outingbox_imagegallery_125 = importer.save_or_locate(outingbox_imagegallery_125)
-
-    outingbox_imagegallery_126 = ImageGallery()
-    outingbox_imagegallery_126.activity = outingbox_activity_18
-    outingbox_imagegallery_126.image = 'photos/activity/52/photos/img-5.jpg'
-    outingbox_imagegallery_126 = importer.save_or_locate(outingbox_imagegallery_126)
-
-    outingbox_imagegallery_127 = ImageGallery()
-    outingbox_imagegallery_127.activity = outingbox_activity_18
-    outingbox_imagegallery_127.image = 'photos/activity/52/photos/img-4.jpg'
-    outingbox_imagegallery_127 = importer.save_or_locate(outingbox_imagegallery_127)
-
-    outingbox_imagegallery_128 = ImageGallery()
-    outingbox_imagegallery_128.activity = outingbox_activity_18
-    outingbox_imagegallery_128.image = 'photos/activity/52/photos/img-3.jpg'
-    outingbox_imagegallery_128 = importer.save_or_locate(outingbox_imagegallery_128)
-
-    outingbox_imagegallery_129 = ImageGallery()
-    outingbox_imagegallery_129.activity = outingbox_activity_18
-    outingbox_imagegallery_129.image = 'photos/activity/52/photos/img-2.jpg'
-    outingbox_imagegallery_129 = importer.save_or_locate(outingbox_imagegallery_129)
-
-    outingbox_imagegallery_130 = ImageGallery()
-    outingbox_imagegallery_130.activity = outingbox_activity_18
-    outingbox_imagegallery_130.image = 'photos/activity/52/photos/img-1.jpg'
-    outingbox_imagegallery_130 = importer.save_or_locate(outingbox_imagegallery_130)
-
-    outingbox_imagegallery_131 = ImageGallery()
-    outingbox_imagegallery_131.activity = outingbox_activity_52
-    outingbox_imagegallery_131.image = 'photos/activity/51/photos/img-3.jpg'
-    outingbox_imagegallery_131 = importer.save_or_locate(outingbox_imagegallery_131)
-
-    outingbox_imagegallery_132 = ImageGallery()
-    outingbox_imagegallery_132.activity = outingbox_activity_52
-    outingbox_imagegallery_132.image = 'photos/activity/51/photos/img-2.jpg'
-    outingbox_imagegallery_132 = importer.save_or_locate(outingbox_imagegallery_132)
-
-    outingbox_imagegallery_133 = ImageGallery()
-    outingbox_imagegallery_133.activity = outingbox_activity_52
-    outingbox_imagegallery_133.image = 'photos/activity/51/photos/img-1.jpg'
-    outingbox_imagegallery_133 = importer.save_or_locate(outingbox_imagegallery_133)
-
-    outingbox_imagegallery_134 = ImageGallery()
-    outingbox_imagegallery_134.activity = outingbox_activity_47
-    outingbox_imagegallery_134.image = 'photos/activity/49/photos/img-4.jpg'
-    outingbox_imagegallery_134 = importer.save_or_locate(outingbox_imagegallery_134)
-
-    outingbox_imagegallery_135 = ImageGallery()
-    outingbox_imagegallery_135.activity = outingbox_activity_47
-    outingbox_imagegallery_135.image = 'photos/activity/49/photos/img-2.jpg'
-    outingbox_imagegallery_135 = importer.save_or_locate(outingbox_imagegallery_135)
-
-    outingbox_imagegallery_136 = ImageGallery()
-    outingbox_imagegallery_136.activity = outingbox_activity_47
-    outingbox_imagegallery_136.image = 'photos/activity/49/photos/img-3.JPG'
-    outingbox_imagegallery_136 = importer.save_or_locate(outingbox_imagegallery_136)
-
-    outingbox_imagegallery_137 = ImageGallery()
-    outingbox_imagegallery_137.activity = outingbox_activity_47
-    outingbox_imagegallery_137.image = 'photos/activity/49/photos/img-1.jpg'
-    outingbox_imagegallery_137 = importer.save_or_locate(outingbox_imagegallery_137)
-
-    outingbox_imagegallery_138 = ImageGallery()
-    outingbox_imagegallery_138.activity = outingbox_activity_49
-    outingbox_imagegallery_138.image = 'photos/activity/47/photos/img-7.jpg'
-    outingbox_imagegallery_138 = importer.save_or_locate(outingbox_imagegallery_138)
-
-    outingbox_imagegallery_139 = ImageGallery()
-    outingbox_imagegallery_139.activity = outingbox_activity_49
-    outingbox_imagegallery_139.image = 'photos/activity/47/photos/img-6.png'
-    outingbox_imagegallery_139 = importer.save_or_locate(outingbox_imagegallery_139)
-
-    outingbox_imagegallery_140 = ImageGallery()
-    outingbox_imagegallery_140.activity = outingbox_activity_49
-    outingbox_imagegallery_140.image = 'photos/activity/47/photos/img-5.png'
-    outingbox_imagegallery_140 = importer.save_or_locate(outingbox_imagegallery_140)
-
-    outingbox_imagegallery_141 = ImageGallery()
-    outingbox_imagegallery_141.activity = outingbox_activity_49
-    outingbox_imagegallery_141.image = 'photos/activity/47/photos/img-4.png'
-    outingbox_imagegallery_141 = importer.save_or_locate(outingbox_imagegallery_141)
-
-    outingbox_imagegallery_142 = ImageGallery()
-    outingbox_imagegallery_142.activity = outingbox_activity_49
-    outingbox_imagegallery_142.image = 'photos/activity/47/photos/img-3.jpg'
-    outingbox_imagegallery_142 = importer.save_or_locate(outingbox_imagegallery_142)
-
-    outingbox_imagegallery_143 = ImageGallery()
-    outingbox_imagegallery_143.activity = outingbox_activity_49
-    outingbox_imagegallery_143.image = 'photos/activity/47/photos/img-2.jpg'
-    outingbox_imagegallery_143 = importer.save_or_locate(outingbox_imagegallery_143)
-
-    outingbox_imagegallery_144 = ImageGallery()
-    outingbox_imagegallery_144.activity = outingbox_activity_38
-    outingbox_imagegallery_144.image = 'photos/activity/46/photos/img-3.jpg'
-    outingbox_imagegallery_144 = importer.save_or_locate(outingbox_imagegallery_144)
-
-    outingbox_imagegallery_145 = ImageGallery()
-    outingbox_imagegallery_145.activity = outingbox_activity_38
-    outingbox_imagegallery_145.image = 'photos/activity/46/photos/img-2.jpg'
-    outingbox_imagegallery_145 = importer.save_or_locate(outingbox_imagegallery_145)
-
-    outingbox_imagegallery_146 = ImageGallery()
-    outingbox_imagegallery_146.activity = outingbox_activity_38
-    outingbox_imagegallery_146.image = 'photos/activity/46/photos/img-1.jpg'
-    outingbox_imagegallery_146 = importer.save_or_locate(outingbox_imagegallery_146)
-
-    outingbox_imagegallery_147 = ImageGallery()
-    outingbox_imagegallery_147.activity = outingbox_activity_24
-    outingbox_imagegallery_147.image = 'photos/activity/45/photos/img-4.jpg'
-    outingbox_imagegallery_147 = importer.save_or_locate(outingbox_imagegallery_147)
-
-    outingbox_imagegallery_148 = ImageGallery()
-    outingbox_imagegallery_148.activity = outingbox_activity_24
-    outingbox_imagegallery_148.image = 'photos/activity/45/photos/img-1.jpg'
-    outingbox_imagegallery_148 = importer.save_or_locate(outingbox_imagegallery_148)
-
-    outingbox_imagegallery_149 = ImageGallery()
-    outingbox_imagegallery_149.activity = outingbox_activity_50
-    outingbox_imagegallery_149.image = 'photos/activity/43/photos/img-3.jpg'
-    outingbox_imagegallery_149 = importer.save_or_locate(outingbox_imagegallery_149)
-
-    outingbox_imagegallery_150 = ImageGallery()
-    outingbox_imagegallery_150.activity = outingbox_activity_50
-    outingbox_imagegallery_150.image = 'photos/activity/43/photos/img-2.jpg'
-    outingbox_imagegallery_150 = importer.save_or_locate(outingbox_imagegallery_150)
-
-    outingbox_imagegallery_151 = ImageGallery()
-    outingbox_imagegallery_151.activity = outingbox_activity_50
-    outingbox_imagegallery_151.image = 'photos/activity/43/photos/img-1.jpg'
-    outingbox_imagegallery_151 = importer.save_or_locate(outingbox_imagegallery_151)
-
-    outingbox_imagegallery_152 = ImageGallery()
-    outingbox_imagegallery_152.activity = outingbox_activity_26
-    outingbox_imagegallery_152.image = 'photos/activity/37/photos/img-1.jpg'
-    outingbox_imagegallery_152 = importer.save_or_locate(outingbox_imagegallery_152)
-
-    outingbox_imagegallery_153 = ImageGallery()
-    outingbox_imagegallery_153.activity = outingbox_activity_35
-    outingbox_imagegallery_153.image = 'photos/activity/26/photos/img-7.jpg'
-    outingbox_imagegallery_153 = importer.save_or_locate(outingbox_imagegallery_153)
-
-    outingbox_imagegallery_154 = ImageGallery()
-    outingbox_imagegallery_154.activity = outingbox_activity_35
-    outingbox_imagegallery_154.image = 'photos/activity/26/photos/img-6.jpg'
-    outingbox_imagegallery_154 = importer.save_or_locate(outingbox_imagegallery_154)
-
-    outingbox_imagegallery_155 = ImageGallery()
-    outingbox_imagegallery_155.activity = outingbox_activity_35
-    outingbox_imagegallery_155.image = 'photos/activity/26/photos/img-5.jpg'
-    outingbox_imagegallery_155 = importer.save_or_locate(outingbox_imagegallery_155)
-
-    outingbox_imagegallery_156 = ImageGallery()
-    outingbox_imagegallery_156.activity = outingbox_activity_35
-    outingbox_imagegallery_156.image = 'photos/activity/26/photos/img-4.jpg'
-    outingbox_imagegallery_156 = importer.save_or_locate(outingbox_imagegallery_156)
-
-    outingbox_imagegallery_157 = ImageGallery()
-    outingbox_imagegallery_157.activity = outingbox_activity_35
-    outingbox_imagegallery_157.image = 'photos/activity/26/photos/img-3.jpg'
-    outingbox_imagegallery_157 = importer.save_or_locate(outingbox_imagegallery_157)
-
-    outingbox_imagegallery_158 = ImageGallery()
-    outingbox_imagegallery_158.activity = outingbox_activity_35
-    outingbox_imagegallery_158.image = 'photos/activity/26/photos/img-2.jpg'
-    outingbox_imagegallery_158 = importer.save_or_locate(outingbox_imagegallery_158)
-
-    outingbox_imagegallery_159 = ImageGallery()
-    outingbox_imagegallery_159.activity = outingbox_activity_35
-    outingbox_imagegallery_159.image = 'photos/activity/26/photos/img-1.jpg'
-    outingbox_imagegallery_159 = importer.save_or_locate(outingbox_imagegallery_159)
-
-    outingbox_imagegallery_160 = ImageGallery()
-    outingbox_imagegallery_160.activity = outingbox_activity_29
-    outingbox_imagegallery_160.image = 'photos/activity/28/photos/img-4.jpg'
-    outingbox_imagegallery_160 = importer.save_or_locate(outingbox_imagegallery_160)
-
-    outingbox_imagegallery_161 = ImageGallery()
-    outingbox_imagegallery_161.activity = outingbox_activity_29
-    outingbox_imagegallery_161.image = 'photos/activity/28/photos/img-2.jpg'
-    outingbox_imagegallery_161 = importer.save_or_locate(outingbox_imagegallery_161)
-
-    outingbox_imagegallery_162 = ImageGallery()
-    outingbox_imagegallery_162.activity = outingbox_activity_29
-    outingbox_imagegallery_162.image = 'photos/activity/28/photos/img-1.jpg'
-    outingbox_imagegallery_162 = importer.save_or_locate(outingbox_imagegallery_162)
-
-    outingbox_imagegallery_163 = ImageGallery()
-    outingbox_imagegallery_163.activity = outingbox_activity_22
-    outingbox_imagegallery_163.image = 'photos/activity/32/photos/img-5.jpeg'
-    outingbox_imagegallery_163 = importer.save_or_locate(outingbox_imagegallery_163)
-
-    outingbox_imagegallery_164 = ImageGallery()
-    outingbox_imagegallery_164.activity = outingbox_activity_22
-    outingbox_imagegallery_164.image = 'photos/activity/32/photos/img-4.jpg'
-    outingbox_imagegallery_164 = importer.save_or_locate(outingbox_imagegallery_164)
-
-    outingbox_imagegallery_165 = ImageGallery()
-    outingbox_imagegallery_165.activity = outingbox_activity_22
-    outingbox_imagegallery_165.image = 'photos/activity/32/photos/img-3.jpeg'
-    outingbox_imagegallery_165 = importer.save_or_locate(outingbox_imagegallery_165)
-
-    outingbox_imagegallery_166 = ImageGallery()
-    outingbox_imagegallery_166.activity = outingbox_activity_22
-    outingbox_imagegallery_166.image = 'photos/activity/32/photos/img-1.jpeg'
-    outingbox_imagegallery_166 = importer.save_or_locate(outingbox_imagegallery_166)
-
-    outingbox_imagegallery_167 = ImageGallery()
-    outingbox_imagegallery_167.activity = outingbox_activity_25
-    outingbox_imagegallery_167.image = 'photos/activity/33/photos/img-5.jpeg'
-    outingbox_imagegallery_167 = importer.save_or_locate(outingbox_imagegallery_167)
-
-    outingbox_imagegallery_168 = ImageGallery()
-    outingbox_imagegallery_168.activity = outingbox_activity_25
-    outingbox_imagegallery_168.image = 'photos/activity/33/photos/img-4.jpeg'
-    outingbox_imagegallery_168 = importer.save_or_locate(outingbox_imagegallery_168)
-
-    outingbox_imagegallery_169 = ImageGallery()
-    outingbox_imagegallery_169.activity = outingbox_activity_25
-    outingbox_imagegallery_169.image = 'photos/activity/33/photos/img-3.jpg'
-    outingbox_imagegallery_169 = importer.save_or_locate(outingbox_imagegallery_169)
-
-    outingbox_imagegallery_170 = ImageGallery()
-    outingbox_imagegallery_170.activity = outingbox_activity_25
-    outingbox_imagegallery_170.image = 'photos/activity/33/photos/img-2.jpg'
-    outingbox_imagegallery_170 = importer.save_or_locate(outingbox_imagegallery_170)
-
-    outingbox_imagegallery_171 = ImageGallery()
-    outingbox_imagegallery_171.activity = outingbox_activity_25
-    outingbox_imagegallery_171.image = 'photos/activity/33/photos/img-1.jpg'
-    outingbox_imagegallery_171 = importer.save_or_locate(outingbox_imagegallery_171)
-
-    outingbox_imagegallery_172 = ImageGallery()
-    outingbox_imagegallery_172.activity = outingbox_activity_28
-    outingbox_imagegallery_172.image = 'photos/activity/35/photos/img-10.jpg'
-    outingbox_imagegallery_172 = importer.save_or_locate(outingbox_imagegallery_172)
-
-    outingbox_imagegallery_173 = ImageGallery()
-    outingbox_imagegallery_173.activity = outingbox_activity_28
-    outingbox_imagegallery_173.image = 'photos/activity/35/photos/img-7.jpeg'
-    outingbox_imagegallery_173 = importer.save_or_locate(outingbox_imagegallery_173)
-
-    outingbox_imagegallery_174 = ImageGallery()
-    outingbox_imagegallery_174.activity = outingbox_activity_28
-    outingbox_imagegallery_174.image = 'photos/activity/35/photos/img-6.jpg'
-    outingbox_imagegallery_174 = importer.save_or_locate(outingbox_imagegallery_174)
-
-    outingbox_imagegallery_175 = ImageGallery()
-    outingbox_imagegallery_175.activity = outingbox_activity_28
-    outingbox_imagegallery_175.image = 'photos/activity/35/photos/img-4.jpg'
-    outingbox_imagegallery_175 = importer.save_or_locate(outingbox_imagegallery_175)
-
-    outingbox_imagegallery_176 = ImageGallery()
-    outingbox_imagegallery_176.activity = outingbox_activity_28
-    outingbox_imagegallery_176.image = 'photos/activity/35/photos/img-2.jpg'
-    outingbox_imagegallery_176 = importer.save_or_locate(outingbox_imagegallery_176)
-
-    outingbox_imagegallery_177 = ImageGallery()
-    outingbox_imagegallery_177.activity = outingbox_activity_28
-    outingbox_imagegallery_177.image = 'photos/activity/35/photos/img-1.jpg'
-    outingbox_imagegallery_177 = importer.save_or_locate(outingbox_imagegallery_177)
-
-    outingbox_imagegallery_178 = ImageGallery()
-    outingbox_imagegallery_178.activity = outingbox_activity_42
-    outingbox_imagegallery_178.image = 'photos/activity/42/photos/img-5.jpg'
-    outingbox_imagegallery_178 = importer.save_or_locate(outingbox_imagegallery_178)
-
-    outingbox_imagegallery_179 = ImageGallery()
-    outingbox_imagegallery_179.activity = outingbox_activity_42
-    outingbox_imagegallery_179.image = 'photos/activity/42/photos/img-4.jpg'
-    outingbox_imagegallery_179 = importer.save_or_locate(outingbox_imagegallery_179)
-
-    outingbox_imagegallery_180 = ImageGallery()
-    outingbox_imagegallery_180.activity = outingbox_activity_42
-    outingbox_imagegallery_180.image = 'photos/activity/42/photos/img-3.jpg'
-    outingbox_imagegallery_180 = importer.save_or_locate(outingbox_imagegallery_180)
-
-    outingbox_imagegallery_181 = ImageGallery()
-    outingbox_imagegallery_181.activity = outingbox_activity_42
-    outingbox_imagegallery_181.image = 'photos/activity/42/photos/img-2.jpg'
-    outingbox_imagegallery_181 = importer.save_or_locate(outingbox_imagegallery_181)
-
-    outingbox_imagegallery_182 = ImageGallery()
-    outingbox_imagegallery_182.activity = outingbox_activity_42
-    outingbox_imagegallery_182.image = 'photos/activity/42/photos/img-1.png'
-    outingbox_imagegallery_182 = importer.save_or_locate(outingbox_imagegallery_182)
-
-    outingbox_imagegallery_183 = ImageGallery()
-    outingbox_imagegallery_183.activity = outingbox_activity_53
-    outingbox_imagegallery_183.image = 'photos/activity/54/photos/2.jpg'
-    outingbox_imagegallery_183 = importer.save_or_locate(outingbox_imagegallery_183)
-
-    outingbox_imagegallery_184 = ImageGallery()
-    outingbox_imagegallery_184.activity = outingbox_activity_53
-    outingbox_imagegallery_184.image = 'photos/activity/54/photos/10483078_1551036528445386_8895362198752781288_o.jpg'
-    outingbox_imagegallery_184 = importer.save_or_locate(outingbox_imagegallery_184)
-
-    outingbox_imagegallery_185 = ImageGallery()
-    outingbox_imagegallery_185.activity = outingbox_activity_53
-    outingbox_imagegallery_185.image = 'photos/activity/54/photos/10644162_1546684928880546_1422317045478812475_o.jpg'
-    outingbox_imagegallery_185 = importer.save_or_locate(outingbox_imagegallery_185)
-
-    outingbox_imagegallery_186 = ImageGallery()
-    outingbox_imagegallery_186.activity = outingbox_activity_53
-    outingbox_imagegallery_186.image = 'photos/activity/54/photos/141001062631.img_5956.jpg'
-    outingbox_imagegallery_186 = importer.save_or_locate(outingbox_imagegallery_186)
-
-    outingbox_imagegallery_187 = ImageGallery()
-    outingbox_imagegallery_187.activity = outingbox_activity_53
-    outingbox_imagegallery_187.image = 'photos/activity/54/photos/Howard Tran.jpg'
-    outingbox_imagegallery_187 = importer.save_or_locate(outingbox_imagegallery_187)
-
-    outingbox_imagegallery_188 = ImageGallery()
-    outingbox_imagegallery_188.activity = outingbox_activity_53
-    outingbox_imagegallery_188.image = 'photos/activity/54/photos/image4.jpg'
-    outingbox_imagegallery_188 = importer.save_or_locate(outingbox_imagegallery_188)
-
-    outingbox_imagegallery_189 = ImageGallery()
-    outingbox_imagegallery_189.activity = outingbox_activity_34
-    outingbox_imagegallery_189.image = 'photos/activity/31/photos/12645122_1077037515663088_5774352332271917510_n.jpg'
-    outingbox_imagegallery_189 = importer.save_or_locate(outingbox_imagegallery_189)
-
-    outingbox_imagegallery_190 = ImageGallery()
-    outingbox_imagegallery_190.activity = outingbox_activity_34
-    outingbox_imagegallery_190.image = 'photos/activity/31/photos/12745612_1088529951180511_8876250178634572749_n.jpg'
-    outingbox_imagegallery_190 = importer.save_or_locate(outingbox_imagegallery_190)
-
-    outingbox_imagegallery_191 = ImageGallery()
-    outingbox_imagegallery_191.activity = outingbox_activity_34
-    outingbox_imagegallery_191.image = 'photos/activity/31/photos/Screen Shot 2016-02-20 at 6.31.02 PM.png'
-    outingbox_imagegallery_191 = importer.save_or_locate(outingbox_imagegallery_191)
-
-    outingbox_imagegallery_192 = ImageGallery()
-    outingbox_imagegallery_192.activity = outingbox_activity_34
-    outingbox_imagegallery_192.image = 'photos/activity/31/photos/Screen Shot 2016-02-20 at 6.31.30 PM.png'
-    outingbox_imagegallery_192 = importer.save_or_locate(outingbox_imagegallery_192)
-
-    outingbox_imagegallery_193 = ImageGallery()
-    outingbox_imagegallery_193.activity = outingbox_activity_34
-    outingbox_imagegallery_193.image = 'photos/activity/31/photos/Screen Shot 2016-02-20 at 6.31.49 PM.png'
-    outingbox_imagegallery_193 = importer.save_or_locate(outingbox_imagegallery_193)
-
-    outingbox_imagegallery_194 = ImageGallery()
-    outingbox_imagegallery_194.activity = outingbox_activity_34
-    outingbox_imagegallery_194.image = 'photos/activity/31/photos/Screen Shot 2016-02-20 at 6.32.30 PM.png'
-    outingbox_imagegallery_194 = importer.save_or_locate(outingbox_imagegallery_194)
-
-    outingbox_imagegallery_195 = ImageGallery()
-    outingbox_imagegallery_195.activity = outingbox_activity_30
-    outingbox_imagegallery_195.image = 'photos/activity/27/photos/545323-bikram-hot-yoga-in-delhi.jpg'
-    outingbox_imagegallery_195 = importer.save_or_locate(outingbox_imagegallery_195)
-
-    outingbox_imagegallery_196 = ImageGallery()
-    outingbox_imagegallery_196.activity = outingbox_activity_30
-    outingbox_imagegallery_196.image = 'photos/activity/27/photos/bikramyoga2.jpg'
-    outingbox_imagegallery_196 = importer.save_or_locate(outingbox_imagegallery_196)
-
-    outingbox_imagegallery_197 = ImageGallery()
-    outingbox_imagegallery_197.activity = outingbox_activity_30
-    outingbox_imagegallery_197.image = 'photos/activity/27/photos/bikram-yoga-jakarta-senayan-photos-306415.jpg'
-    outingbox_imagegallery_197 = importer.save_or_locate(outingbox_imagegallery_197)
-
-    outingbox_imagegallery_198 = ImageGallery()
-    outingbox_imagegallery_198.activity = outingbox_activity_30
-    outingbox_imagegallery_198.image = 'photos/activity/27/photos/Class3b.jpg'
-    outingbox_imagegallery_198 = importer.save_or_locate(outingbox_imagegallery_198)
-
-    outingbox_imagegallery_199 = ImageGallery()
-    outingbox_imagegallery_199.activity = outingbox_activity_30
-    outingbox_imagegallery_199.image = 'photos/activity/27/photos/Hot-Yoga.jpg'
-    outingbox_imagegallery_199 = importer.save_or_locate(outingbox_imagegallery_199)
-
-    outingbox_imagegallery_200 = ImageGallery()
-    outingbox_imagegallery_200.activity = outingbox_activity_56
-    outingbox_imagegallery_200.image = 'photos/activity/30/photos/149090_631954993486227_152970174_n.jpg'
-    outingbox_imagegallery_200 = importer.save_or_locate(outingbox_imagegallery_200)
-
-    outingbox_imagegallery_201 = ImageGallery()
-    outingbox_imagegallery_201.activity = outingbox_activity_56
-    outingbox_imagegallery_201.image = 'photos/activity/30/photos/775178_590843834264010_1818728992_o.jpg'
-    outingbox_imagegallery_201 = importer.save_or_locate(outingbox_imagegallery_201)
-
-    outingbox_imagegallery_202 = ImageGallery()
-    outingbox_imagegallery_202.activity = outingbox_activity_56
-    outingbox_imagegallery_202.image = 'photos/activity/30/photos/792234_590843720930688_434166316_o.jpg'
-    outingbox_imagegallery_202 = importer.save_or_locate(outingbox_imagegallery_202)
-
-    outingbox_imagegallery_203 = ImageGallery()
-    outingbox_imagegallery_203.activity = outingbox_activity_56
-    outingbox_imagegallery_203.image = 'photos/activity/30/photos/793908_590843794264014_1393347949_o.jpg'
-    outingbox_imagegallery_203 = importer.save_or_locate(outingbox_imagegallery_203)
-
-    outingbox_imagegallery_204 = ImageGallery()
-    outingbox_imagegallery_204.activity = outingbox_activity_56
-    outingbox_imagegallery_204.image = 'photos/activity/30/photos/892193_631954663486260_1921130964_o.jpg'
-    outingbox_imagegallery_204 = importer.save_or_locate(outingbox_imagegallery_204)
-
-    outingbox_imagegallery_205 = ImageGallery()
-    outingbox_imagegallery_205.activity = outingbox_activity_56
-    outingbox_imagegallery_205.image = 'photos/activity/30/photos/delhi dance academy interior-7907.jpg'
-    outingbox_imagegallery_205 = importer.save_or_locate(outingbox_imagegallery_205)
-
-    outingbox_imagegallery_206 = ImageGallery()
-    outingbox_imagegallery_206.activity = outingbox_activity_56
-    outingbox_imagegallery_206.image = 'photos/activity/30/photos/hqdefault.jpg'
-    outingbox_imagegallery_206 = importer.save_or_locate(outingbox_imagegallery_206)
-
-    outingbox_imagegallery_207 = ImageGallery()
-    outingbox_imagegallery_207.activity = outingbox_activity_39
-    outingbox_imagegallery_207.image = 'photos/activity/53/photos/480422_332480576869495_1672767771_n.jpg'
-    outingbox_imagegallery_207 = importer.save_or_locate(outingbox_imagegallery_207)
-
-    outingbox_imagegallery_208 = ImageGallery()
-    outingbox_imagegallery_208.activity = outingbox_activity_39
-    outingbox_imagegallery_208.image = 'photos/activity/53/photos/487611_332480673536152_687346554_n.jpg'
-    outingbox_imagegallery_208 = importer.save_or_locate(outingbox_imagegallery_208)
-
-    outingbox_imagegallery_209 = ImageGallery()
-    outingbox_imagegallery_209.activity = outingbox_activity_39
-    outingbox_imagegallery_209.image = 'photos/activity/53/photos/598467_472858576165027_127754881_n.jpg'
-    outingbox_imagegallery_209 = importer.save_or_locate(outingbox_imagegallery_209)
-
-    outingbox_imagegallery_210 = ImageGallery()
-    outingbox_imagegallery_210.activity = outingbox_activity_39
-    outingbox_imagegallery_210.image = 'photos/activity/53/photos/1452027_472858636165021_1921944178_n.jpg'
-    outingbox_imagegallery_210 = importer.save_or_locate(outingbox_imagegallery_210)
-
-    outingbox_imagegallery_211 = ImageGallery()
-    outingbox_imagegallery_211.activity = outingbox_activity_39
-    outingbox_imagegallery_211.image = 'photos/activity/53/photos/Dhoomimal-Art-Gallery-cp-Google-Search-Google-Chrome-2014-06-1_dAXxHHb.jpg'
-    outingbox_imagegallery_211 = importer.save_or_locate(outingbox_imagegallery_211)
-
-    outingbox_imagegallery_212 = ImageGallery()
-    outingbox_imagegallery_212.activity = outingbox_activity_39
-    outingbox_imagegallery_212.image = 'photos/activity/53/photos/Dhoomimal-Gallery.jpg'
-    outingbox_imagegallery_212 = importer.save_or_locate(outingbox_imagegallery_212)
-
-    outingbox_imagegallery_213 = ImageGallery()
-    outingbox_imagegallery_213.activity = outingbox_activity_36
-    outingbox_imagegallery_213.image = 'photos/activity/36/photos/dscn4087.jpg'
-    outingbox_imagegallery_213 = importer.save_or_locate(outingbox_imagegallery_213)
-
-    outingbox_imagegallery_214 = ImageGallery()
-    outingbox_imagegallery_214.activity = outingbox_activity_36
-    outingbox_imagegallery_214.image = 'photos/activity/36/photos/flyboy-aviation.jpg'
-    outingbox_imagegallery_214 = importer.save_or_locate(outingbox_imagegallery_214)
-
-    outingbox_imagegallery_215 = ImageGallery()
-    outingbox_imagegallery_215.activity = outingbox_activity_36
-    outingbox_imagegallery_215.image = 'photos/activity/36/photos/flying2.jpg'
-    outingbox_imagegallery_215 = importer.save_or_locate(outingbox_imagegallery_215)
-
-    outingbox_imagegallery_216 = ImageGallery()
-    outingbox_imagegallery_216.activity = outingbox_activity_36
-    outingbox_imagegallery_216.image = 'photos/activity/36/photos/img_5351.jpg'
-    outingbox_imagegallery_216 = importer.save_or_locate(outingbox_imagegallery_216)
-
-    outingbox_imagegallery_217 = ImageGallery()
-    outingbox_imagegallery_217.activity = outingbox_activity_36
-    outingbox_imagegallery_217.image = 'photos/activity/36/photos/main-qimg-4f598de5b1e1f2c56718e045a9efa1b8.png'
-    outingbox_imagegallery_217 = importer.save_or_locate(outingbox_imagegallery_217)
-
-    outingbox_imagegallery_218 = ImageGallery()
-    outingbox_imagegallery_218.activity = outingbox_activity_36
-    outingbox_imagegallery_218.image = 'photos/activity/36/photos/video1.jpg'
-    outingbox_imagegallery_218 = importer.save_or_locate(outingbox_imagegallery_218)
-
-    outingbox_imagegallery_219 = ImageGallery()
-    outingbox_imagegallery_219.activity = outingbox_activity_48
-    outingbox_imagegallery_219.image = 'photos/activity/55/photos/12122822_1051154901583772_7561717686872414913_n.jpg'
-    outingbox_imagegallery_219 = importer.save_or_locate(outingbox_imagegallery_219)
-
-    outingbox_imagegallery_220 = ImageGallery()
-    outingbox_imagegallery_220.activity = outingbox_activity_48
-    outingbox_imagegallery_220.image = 'photos/activity/55/photos/12144664_1051154981583764_4315019191892638997_n.jpg'
-    outingbox_imagegallery_220 = importer.save_or_locate(outingbox_imagegallery_220)
-
-    outingbox_imagegallery_221 = ImageGallery()
-    outingbox_imagegallery_221.activity = outingbox_activity_48
-    outingbox_imagegallery_221.image = 'photos/activity/55/photos/12347991_1082552898443972_6651608468561907266_n.jpg'
-    outingbox_imagegallery_221 = importer.save_or_locate(outingbox_imagegallery_221)
-
-    outingbox_imagegallery_222 = ImageGallery()
-    outingbox_imagegallery_222.activity = outingbox_activity_48
-    outingbox_imagegallery_222.image = 'photos/activity/55/photos/12615539_1107224225976839_7221355961854161230_o.jpg'
-    outingbox_imagegallery_222 = importer.save_or_locate(outingbox_imagegallery_222)
-
-    outingbox_imagegallery_223 = ImageGallery()
-    outingbox_imagegallery_223.activity = outingbox_activity_48
-    outingbox_imagegallery_223.image = 'photos/activity/55/photos/12615575_1107224215976840_352449209164835883_o.jpg'
-    outingbox_imagegallery_223 = importer.save_or_locate(outingbox_imagegallery_223)
-
-    outingbox_imagegallery_224 = ImageGallery()
-    outingbox_imagegallery_224.activity = outingbox_activity_48
-    outingbox_imagegallery_224.image = 'photos/activity/55/photos/12697206_1123095957722999_5641718132513615381_o.jpg'
-    outingbox_imagegallery_224 = importer.save_or_locate(outingbox_imagegallery_224)
-
-    outingbox_imagegallery_225 = ImageGallery()
-    outingbox_imagegallery_225.activity = outingbox_activity_55
-    outingbox_imagegallery_225.image = 'photos/activity/50/photos/886840_1036652119724523_4464497933227596361_o.jpg'
-    outingbox_imagegallery_225 = importer.save_or_locate(outingbox_imagegallery_225)
-
-    outingbox_imagegallery_226 = ImageGallery()
-    outingbox_imagegallery_226.activity = outingbox_activity_55
-    outingbox_imagegallery_226.image = 'photos/activity/50/photos/10441368_1015267788529623_1229931772484600864_n.jpg'
-    outingbox_imagegallery_226 = importer.save_or_locate(outingbox_imagegallery_226)
-
-    outingbox_imagegallery_227 = ImageGallery()
-    outingbox_imagegallery_227.activity = outingbox_activity_55
-    outingbox_imagegallery_227.image = 'photos/activity/50/photos/iskate.jpg'
-    outingbox_imagegallery_227 = importer.save_or_locate(outingbox_imagegallery_227)
-
-    outingbox_imagegallery_228 = ImageGallery()
-    outingbox_imagegallery_228.activity = outingbox_activity_55
-    outingbox_imagegallery_228.image = 'photos/activity/50/photos/iskate (1).jpg'
-    outingbox_imagegallery_228 = importer.save_or_locate(outingbox_imagegallery_228)
-
-    outingbox_imagegallery_229 = ImageGallery()
-    outingbox_imagegallery_229.activity = outingbox_activity_55
-    outingbox_imagegallery_229.image = 'photos/activity/50/photos/iSkate (2).jpg'
-    outingbox_imagegallery_229 = importer.save_or_locate(outingbox_imagegallery_229)
-
-    outingbox_imagegallery_230 = ImageGallery()
-    outingbox_imagegallery_230.activity = outingbox_activity_55
-    outingbox_imagegallery_230.image = 'photos/activity/50/photos/iskate-AmbienceMall-Gurgaon-EkPaheliLeela-SunnyLeone-4-7Apr2015.jpg'
-    outingbox_imagegallery_230 = importer.save_or_locate(outingbox_imagegallery_230)
-
-    outingbox_imagegallery_231 = ImageGallery()
-    outingbox_imagegallery_231.activity = outingbox_activity_58
-    outingbox_imagegallery_231.image = 'photos/activity/40/photos/1.63XOn_landscape.jpg'
-    outingbox_imagegallery_231 = importer.save_or_locate(outingbox_imagegallery_231)
-
-    outingbox_imagegallery_232 = ImageGallery()
-    outingbox_imagegallery_232.activity = outingbox_activity_58
-    outingbox_imagegallery_232.image = 'photos/activity/40/photos/e6177434-b0b8-4b92-918b-ffa08946abba.jpg'
-    outingbox_imagegallery_232 = importer.save_or_locate(outingbox_imagegallery_232)
-
-    outingbox_imagegallery_233 = ImageGallery()
-    outingbox_imagegallery_233.activity = outingbox_activity_58
-    outingbox_imagegallery_233.image = 'photos/activity/40/photos/themindcafe.jpg'
-    outingbox_imagegallery_233 = importer.save_or_locate(outingbox_imagegallery_233)
-
-    outingbox_imagegallery_234 = ImageGallery()
-    outingbox_imagegallery_234.activity = outingbox_activity_37
-    outingbox_imagegallery_234.image = 'photos/activity/39/photos/252677_3.jpg'
-    outingbox_imagegallery_234 = importer.save_or_locate(outingbox_imagegallery_234)
-
-    outingbox_imagegallery_235 = ImageGallery()
-    outingbox_imagegallery_235.activity = outingbox_activity_37
-    outingbox_imagegallery_235.image = 'photos/activity/39/photos/1320203769092.jpg'
-    outingbox_imagegallery_235 = importer.save_or_locate(outingbox_imagegallery_235)
-
-    outingbox_imagegallery_236 = ImageGallery()
-    outingbox_imagegallery_236.activity = outingbox_activity_37
-    outingbox_imagegallery_236.image = 'photos/activity/39/photos/glued-pool.jpg'
-    outingbox_imagegallery_236 = importer.save_or_locate(outingbox_imagegallery_236)
-
-    outingbox_imagegallery_237 = ImageGallery()
-    outingbox_imagegallery_237.activity = outingbox_activity_41
-    outingbox_imagegallery_237.image = 'photos/activity/48/photos/10645310_980910568640124_8347948851935456579_n.jpg'
-    outingbox_imagegallery_237 = importer.save_or_locate(outingbox_imagegallery_237)
-
-    outingbox_imagegallery_238 = ImageGallery()
-    outingbox_imagegallery_238.activity = outingbox_activity_41
-    outingbox_imagegallery_238.image = 'photos/activity/48/photos/12027726_994794973918350_427728084132276351_n.jpg'
-    outingbox_imagegallery_238 = importer.save_or_locate(outingbox_imagegallery_238)
-
-    outingbox_imagegallery_239 = ImageGallery()
-    outingbox_imagegallery_239.activity = outingbox_activity_41
-    outingbox_imagegallery_239.image = 'photos/activity/48/photos/panna-pilates-1.jpg'
-    outingbox_imagegallery_239 = importer.save_or_locate(outingbox_imagegallery_239)
-
-    outingbox_imagegallery_240 = ImageGallery()
-    outingbox_imagegallery_240.activity = outingbox_activity_41
-    outingbox_imagegallery_240.image = 'photos/activity/48/photos/pilates.jpg'
-    outingbox_imagegallery_240 = importer.save_or_locate(outingbox_imagegallery_240)
-
-    outingbox_imagegallery_241 = ImageGallery()
-    outingbox_imagegallery_241.activity = outingbox_activity_40
-    outingbox_imagegallery_241.image = 'photos/activity/44/photos/261943_233331766693544_3778921_n.jpg'
-    outingbox_imagegallery_241 = importer.save_or_locate(outingbox_imagegallery_241)
-
-    outingbox_imagegallery_242 = ImageGallery()
-    outingbox_imagegallery_242.activity = outingbox_activity_40
-    outingbox_imagegallery_242.image = 'photos/activity/44/photos/263484_233332513360136_5892283_n.jpg'
-    outingbox_imagegallery_242 = importer.save_or_locate(outingbox_imagegallery_242)
-
-    outingbox_imagegallery_243 = ImageGallery()
-    outingbox_imagegallery_243.activity = outingbox_activity_40
-    outingbox_imagegallery_243.image = 'photos/activity/44/photos/263633_233331663360221_3812313_n.jpg'
-    outingbox_imagegallery_243 = importer.save_or_locate(outingbox_imagegallery_243)
-
-    outingbox_imagegallery_244 = ImageGallery()
-    outingbox_imagegallery_244.activity = outingbox_activity_40
-    outingbox_imagegallery_244.image = 'photos/activity/44/photos/264658_233334223359965_4383943_n.jpg'
-    outingbox_imagegallery_244 = importer.save_or_locate(outingbox_imagegallery_244)
-
-    outingbox_imagegallery_245 = ImageGallery()
-    outingbox_imagegallery_245.activity = outingbox_activity_40
-    outingbox_imagegallery_245.image = 'photos/activity/44/photos/283048_256487204378000_4704371_n.jpg'
-    outingbox_imagegallery_245 = importer.save_or_locate(outingbox_imagegallery_245)
-
-    outingbox_imagegallery_246 = ImageGallery()
-    outingbox_imagegallery_246.activity = outingbox_activity_40
-    outingbox_imagegallery_246.image = 'photos/activity/44/photos/283323_256487407711313_698323_n.jpg'
-    outingbox_imagegallery_246 = importer.save_or_locate(outingbox_imagegallery_246)
-
-    outingbox_imagegallery_247 = ImageGallery()
-    outingbox_imagegallery_247.activity = outingbox_activity_54
-    outingbox_imagegallery_247.image = 'photos/activity/57/photos/11732039_902955433076788_8600876712982794871_o.jpg'
-    outingbox_imagegallery_247 = importer.save_or_locate(outingbox_imagegallery_247)
-
-    outingbox_imagegallery_248 = ImageGallery()
-    outingbox_imagegallery_248.activity = outingbox_activity_54
-    outingbox_imagegallery_248.image = 'photos/activity/57/photos/11779997_902953806410284_5172248480495013734_o.jpg'
-    outingbox_imagegallery_248 = importer.save_or_locate(outingbox_imagegallery_248)
-
-    outingbox_imagegallery_249 = ImageGallery()
-    outingbox_imagegallery_249.activity = outingbox_activity_54
-    outingbox_imagegallery_249.image = 'photos/activity/57/photos/12487118_978479895524341_4086525235715447920_o.jpg'
-    outingbox_imagegallery_249 = importer.save_or_locate(outingbox_imagegallery_249)
-
-    outingbox_imagegallery_250 = ImageGallery()
-    outingbox_imagegallery_250.activity = outingbox_activity_54
-    outingbox_imagegallery_250.image = 'photos/activity/57/photos/1452682756.gif'
-    outingbox_imagegallery_250 = importer.save_or_locate(outingbox_imagegallery_250)
-
-    outingbox_imagegallery_251 = ImageGallery()
-    outingbox_imagegallery_251.activity = outingbox_activity_54
-    outingbox_imagegallery_251.image = 'photos/activity/57/photos/1452683184.gif'
-    outingbox_imagegallery_251 = importer.save_or_locate(outingbox_imagegallery_251)
-
-    outingbox_imagegallery_252 = ImageGallery()
-    outingbox_imagegallery_252.activity = outingbox_activity_54
-    outingbox_imagegallery_252.image = 'photos/activity/57/photos/11246851_902962936409371_105330793298592421_o.jpg'
-    outingbox_imagegallery_252 = importer.save_or_locate(outingbox_imagegallery_252)
-
-    outingbox_imagegallery_253 = ImageGallery()
-    outingbox_imagegallery_253.activity = outingbox_activity_44
-    outingbox_imagegallery_253.image = 'photos/activity/58/photos/100_3352.jpg'
-    outingbox_imagegallery_253 = importer.save_or_locate(outingbox_imagegallery_253)
-
-    outingbox_imagegallery_254 = ImageGallery()
-    outingbox_imagegallery_254.activity = outingbox_activity_44
-    outingbox_imagegallery_254.image = 'photos/activity/58/photos/4263457_orig.jpg'
-    outingbox_imagegallery_254 = importer.save_or_locate(outingbox_imagegallery_254)
-
-    outingbox_imagegallery_255 = ImageGallery()
-    outingbox_imagegallery_255.activity = outingbox_activity_44
-    outingbox_imagegallery_255.image = 'photos/activity/58/photos/art-gallery.jpg'
-    outingbox_imagegallery_255 = importer.save_or_locate(outingbox_imagegallery_255)
-
-    outingbox_imagegallery_256 = ImageGallery()
-    outingbox_imagegallery_256.activity = outingbox_activity_44
-    outingbox_imagegallery_256.image = 'photos/activity/58/photos/galleryone_chanting_icons_exhibition.jpg'
-    outingbox_imagegallery_256 = importer.save_or_locate(outingbox_imagegallery_256)
-
-    outingbox_imagegallery_257 = ImageGallery()
-    outingbox_imagegallery_257.activity = outingbox_activity_44
-    outingbox_imagegallery_257.image = 'photos/activity/58/photos/mec_art_exhibition.jpg'
-    outingbox_imagegallery_257 = importer.save_or_locate(outingbox_imagegallery_257)
-
-    outingbox_imagegallery_258 = ImageGallery()
-    outingbox_imagegallery_258.activity = outingbox_activity_46
-    outingbox_imagegallery_258.image = 'photos/activity/41/photos/10629792_777200015674531_2778543277972560182_n.jpg'
-    outingbox_imagegallery_258 = importer.save_or_locate(outingbox_imagegallery_258)
-
-    outingbox_imagegallery_259 = ImageGallery()
-    outingbox_imagegallery_259.activity = outingbox_activity_46
-    outingbox_imagegallery_259.image = 'photos/activity/41/photos/10733797_928762400518291_3656194764249358557_o.jpg'
-    outingbox_imagegallery_259 = importer.save_or_locate(outingbox_imagegallery_259)
-
-    outingbox_imagegallery_260 = ImageGallery()
-    outingbox_imagegallery_260.activity = outingbox_activity_46
-    outingbox_imagegallery_260.image = 'photos/activity/41/photos/11425473_928762393851625_5197200800944042826_o.jpg'
-    outingbox_imagegallery_260 = importer.save_or_locate(outingbox_imagegallery_260)
-
-    outingbox_imagegallery_261 = ImageGallery()
-    outingbox_imagegallery_261.activity = outingbox_activity_46
-    outingbox_imagegallery_261.image = 'photos/activity/41/photos/11425485_928762613851603_329992414559590099_o.jpg'
-    outingbox_imagegallery_261 = importer.save_or_locate(outingbox_imagegallery_261)
-
-    outingbox_imagegallery_262 = ImageGallery()
-    outingbox_imagegallery_262.activity = outingbox_activity_46
-    outingbox_imagegallery_262.image = 'photos/activity/41/photos/our-center-gallery2.jpg'
-    outingbox_imagegallery_262 = importer.save_or_locate(outingbox_imagegallery_262)
-
-    outingbox_imagegallery_263 = ImageGallery()
-    outingbox_imagegallery_263.activity = outingbox_activity_46
-    outingbox_imagegallery_263.image = 'photos/activity/41/photos/our-center-gallery4.jpg'
-    outingbox_imagegallery_263 = importer.save_or_locate(outingbox_imagegallery_263)
-
-    outingbox_imagegallery_264 = ImageGallery()
-    outingbox_imagegallery_264.activity = outingbox_activity_46
-    outingbox_imagegallery_264.image = 'photos/activity/41/photos/P1010816.jpg'
-    outingbox_imagegallery_264 = importer.save_or_locate(outingbox_imagegallery_264)
-
-    outingbox_imagegallery_265 = ImageGallery()
-    outingbox_imagegallery_265.activity = outingbox_activity_66
-    outingbox_imagegallery_265.image = 'photos/activity/66/photos/11753727_947026372006657_3335207795418256292_n.jpg'
-    outingbox_imagegallery_265 = importer.save_or_locate(outingbox_imagegallery_265)
-
-    outingbox_imagegallery_266 = ImageGallery()
-    outingbox_imagegallery_266.activity = outingbox_activity_66
-    outingbox_imagegallery_266.image = 'photos/activity/66/photos/11755923_947026368673324_1325598729584458140_n.jpg'
-    outingbox_imagegallery_266 = importer.save_or_locate(outingbox_imagegallery_266)
-
-    outingbox_imagegallery_267 = ImageGallery()
-    outingbox_imagegallery_267.activity = outingbox_activity_66
-    outingbox_imagegallery_267.image = 'photos/activity/66/photos/12095133_1006564476052846_8273762250509060721_o.jpg'
-    outingbox_imagegallery_267 = importer.save_or_locate(outingbox_imagegallery_267)
-
-    outingbox_imagegallery_268 = ImageGallery()
-    outingbox_imagegallery_268.activity = outingbox_activity_66
-    outingbox_imagegallery_268.image = 'photos/activity/66/photos/11745482_947026338673327_8473836414331798034_n.jpg'
-    outingbox_imagegallery_268 = importer.save_or_locate(outingbox_imagegallery_268)
-
-    outingbox_imagegallery_269 = ImageGallery()
-    outingbox_imagegallery_269.activity = outingbox_activity_66
-    outingbox_imagegallery_269.image = 'photos/activity/66/photos/12274750_1006564662719494_2739778781302363422_n.jpg'
-    outingbox_imagegallery_269 = importer.save_or_locate(outingbox_imagegallery_269)
-
-    outingbox_imagegallery_270 = ImageGallery()
-    outingbox_imagegallery_270.activity = outingbox_activity_59
-    outingbox_imagegallery_270.image = 'photos/activity/69/photos/421736_3566404129903_396932093_n.jpg'
-    outingbox_imagegallery_270 = importer.save_or_locate(outingbox_imagegallery_270)
-
-    outingbox_imagegallery_271 = ImageGallery()
-    outingbox_imagegallery_271.activity = outingbox_activity_59
-    outingbox_imagegallery_271.image = 'photos/activity/69/photos/9273_10202207079889574_3860860977081849360_n.jpg'
-    outingbox_imagegallery_271 = importer.save_or_locate(outingbox_imagegallery_271)
-
-    outingbox_imagegallery_272 = ImageGallery()
-    outingbox_imagegallery_272.activity = outingbox_activity_59
-    outingbox_imagegallery_272.image = 'photos/activity/69/photos/426863_2735012625635_1638029781_n.jpg'
-    outingbox_imagegallery_272 = importer.save_or_locate(outingbox_imagegallery_272)
-
-    outingbox_imagegallery_273 = ImageGallery()
-    outingbox_imagegallery_273.activity = outingbox_activity_59
-    outingbox_imagegallery_273.image = 'photos/activity/69/photos/1482754_576733235814617_1846632817978841747_n.jpg'
-    outingbox_imagegallery_273 = importer.save_or_locate(outingbox_imagegallery_273)
-
-    outingbox_imagegallery_274 = ImageGallery()
-    outingbox_imagegallery_274.activity = outingbox_activity_59
-    outingbox_imagegallery_274.image = 'photos/activity/69/photos/1915701_566989253455682_7111477962293687534_n.jpg'
-    outingbox_imagegallery_274 = importer.save_or_locate(outingbox_imagegallery_274)
-
-    outingbox_imagegallery_275 = ImageGallery()
-    outingbox_imagegallery_275.activity = outingbox_activity_64
-    outingbox_imagegallery_275.image = 'photos/activity/64/photos/1397073_924557334254392_5623349224050834316_o.jpg'
-    outingbox_imagegallery_275 = importer.save_or_locate(outingbox_imagegallery_275)
-
-    outingbox_imagegallery_276 = ImageGallery()
-    outingbox_imagegallery_276.activity = outingbox_activity_64
-    outingbox_imagegallery_276.image = 'photos/activity/64/photos/1669647_1015957348447723_4103688654345520640_o.jpg'
-    outingbox_imagegallery_276 = importer.save_or_locate(outingbox_imagegallery_276)
-
-    outingbox_imagegallery_277 = ImageGallery()
-    outingbox_imagegallery_277.activity = outingbox_activity_64
-    outingbox_imagegallery_277.image = 'photos/activity/64/photos/12095007_990264904350301_3822739568790131035_o.jpg'
-    outingbox_imagegallery_277 = importer.save_or_locate(outingbox_imagegallery_277)
-
-    outingbox_imagegallery_278 = ImageGallery()
-    outingbox_imagegallery_278.activity = outingbox_activity_64
-    outingbox_imagegallery_278.image = 'photos/activity/64/photos/12493563_1034433043266820_2069660221292370907_o.jpg'
-    outingbox_imagegallery_278 = importer.save_or_locate(outingbox_imagegallery_278)
-
-    outingbox_imagegallery_279 = ImageGallery()
-    outingbox_imagegallery_279.activity = outingbox_activity_64
-    outingbox_imagegallery_279.image = 'photos/activity/64/photos/download.jpeg'
-    outingbox_imagegallery_279 = importer.save_or_locate(outingbox_imagegallery_279)
-
-    outingbox_imagegallery_280 = ImageGallery()
-    outingbox_imagegallery_280.activity = outingbox_activity_61
-    outingbox_imagegallery_280.image = 'photos/activity/65/photos/551649_411411975564239_1567849126_n.jpg'
-    outingbox_imagegallery_280 = importer.save_or_locate(outingbox_imagegallery_280)
-
-    outingbox_imagegallery_281 = ImageGallery()
-    outingbox_imagegallery_281.activity = outingbox_activity_61
-    outingbox_imagegallery_281.image = 'photos/activity/65/photos/558725_441202612585175_745869784_n.jpg'
-    outingbox_imagegallery_281 = importer.save_or_locate(outingbox_imagegallery_281)
-
-    outingbox_imagegallery_282 = ImageGallery()
-    outingbox_imagegallery_282.activity = outingbox_activity_57
-    outingbox_imagegallery_282.image = 'photos/activity/67/photos/The-Artifacts-Inside-Picture.jpg'
-    outingbox_imagegallery_282 = importer.save_or_locate(outingbox_imagegallery_282)
-
-    outingbox_imagegallery_283 = ImageGallery()
-    outingbox_imagegallery_283.activity = outingbox_activity_57
-    outingbox_imagegallery_283.image = 'photos/activity/67/photos/The-Garden-City-Inside-Picture.jpg'
-    outingbox_imagegallery_283 = importer.save_or_locate(outingbox_imagegallery_283)
-
-    outingbox_imagegallery_284 = ImageGallery()
-    outingbox_imagegallery_284.activity = outingbox_activity_57
-    outingbox_imagegallery_284.image = 'photos/activity/67/photos/The-Urban-Heritage-Inside-Picture.jpg'
-    outingbox_imagegallery_284 = importer.save_or_locate(outingbox_imagegallery_284)
-
-    outingbox_imagegallery_285 = ImageGallery()
-    outingbox_imagegallery_285.activity = outingbox_activity_62
-    outingbox_imagegallery_285.image = 'photos/activity/70/photos/12698560_982659185155208_6264880025744770749_o.jpg'
-    outingbox_imagegallery_285 = importer.save_or_locate(outingbox_imagegallery_285)
-
-    outingbox_imagegallery_286 = ImageGallery()
-    outingbox_imagegallery_286.activity = outingbox_activity_62
-    outingbox_imagegallery_286.image = 'photos/activity/70/photos/12747404_989896084431518_3280690760966555149_o.jpg'
-    outingbox_imagegallery_286 = importer.save_or_locate(outingbox_imagegallery_286)
-
-    outingbox_imagegallery_287 = ImageGallery()
-    outingbox_imagegallery_287.activity = outingbox_activity_62
-    outingbox_imagegallery_287.image = 'photos/activity/70/photos/12764492_989232991164494_3838826699618947660_o.jpg'
-    outingbox_imagegallery_287 = importer.save_or_locate(outingbox_imagegallery_287)
-
-    outingbox_imagegallery_288 = ImageGallery()
-    outingbox_imagegallery_288.activity = outingbox_activity_62
-    outingbox_imagegallery_288.image = 'photos/activity/70/photos/12764632_989896474431479_7876176953971963422_o.jpg'
-    outingbox_imagegallery_288 = importer.save_or_locate(outingbox_imagegallery_288)
-
-    outingbox_imagegallery_289 = ImageGallery()
-    outingbox_imagegallery_289.activity = outingbox_activity_67
-    outingbox_imagegallery_289.image = 'photos/activity/62/photos/10631055_985545498157841_4696116599464878589_o.jpg'
-    outingbox_imagegallery_289 = importer.save_or_locate(outingbox_imagegallery_289)
-
-    outingbox_imagegallery_290 = ImageGallery()
-    outingbox_imagegallery_290.activity = outingbox_activity_67
-    outingbox_imagegallery_290.image = 'photos/activity/62/photos/10837995_864333446920829_5634487294437616095_o.jpg'
-    outingbox_imagegallery_290 = importer.save_or_locate(outingbox_imagegallery_290)
-
-    outingbox_imagegallery_291 = ImageGallery()
-    outingbox_imagegallery_291.activity = outingbox_activity_67
-    outingbox_imagegallery_291.image = 'photos/activity/62/photos/10863888_864333583587482_2717773249853916123_o.jpg'
-    outingbox_imagegallery_291 = importer.save_or_locate(outingbox_imagegallery_291)
-
-    outingbox_imagegallery_292 = ImageGallery()
-    outingbox_imagegallery_292.activity = outingbox_activity_67
-    outingbox_imagegallery_292.image = 'photos/activity/62/photos/12670150_421508008038867_3037968358701680015_n.jpg'
-    outingbox_imagegallery_292 = importer.save_or_locate(outingbox_imagegallery_292)
-
-    outingbox_imagegallery_293 = ImageGallery()
-    outingbox_imagegallery_293.activity = outingbox_activity_67
-    outingbox_imagegallery_293.image = 'photos/activity/62/photos/12646626_421507991372202_1686876068104937358_o.jpg'
-    outingbox_imagegallery_293 = importer.save_or_locate(outingbox_imagegallery_293)
-
-    outingbox_imagegallery_294 = ImageGallery()
-    outingbox_imagegallery_294.activity = outingbox_activity_67
-    outingbox_imagegallery_294.image = 'photos/activity/62/photos/11401167_976703229047589_3137378823572560928_n.jpg'
-    outingbox_imagegallery_294 = importer.save_or_locate(outingbox_imagegallery_294)
-
-    outingbox_imagegallery_295 = ImageGallery()
-    outingbox_imagegallery_295.activity = outingbox_activity_63
-    outingbox_imagegallery_295.image = 'photos/activity/63/photos/12696933_1532031223761916_8493318428814226362_o.jpg'
-    outingbox_imagegallery_295 = importer.save_or_locate(outingbox_imagegallery_295)
-
-    outingbox_imagegallery_296 = ImageGallery()
-    outingbox_imagegallery_296.activity = outingbox_activity_63
-    outingbox_imagegallery_296.image = 'photos/activity/63/photos/12697135_1532031310428574_38995676162760027_o.jpg'
-    outingbox_imagegallery_296 = importer.save_or_locate(outingbox_imagegallery_296)
-
-    outingbox_imagegallery_297 = ImageGallery()
-    outingbox_imagegallery_297.activity = outingbox_activity_63
-    outingbox_imagegallery_297.image = 'photos/activity/63/photos/12705593_1197593613592039_323608080639762366_n.jpg'
-    outingbox_imagegallery_297 = importer.save_or_locate(outingbox_imagegallery_297)
-
-    # Processing model: Feedback
-
-    from outingbox.models import Feedback
-
-    outingbox_feedback_1 = Feedback()
-    outingbox_feedback_1.name = 'K mobile '
-    outingbox_feedback_1.message = 'Testing from phone '
-    outingbox_feedback_1.email = 'kartikanand1992@gmail.com'
-    outingbox_feedback_1 = importer.save_or_locate(outingbox_feedback_1)
-
-    outingbox_feedback_2 = Feedback()
-    outingbox_feedback_2.name = 'K mobile '
-    outingbox_feedback_2.message = 'Testing from phone '
-    outingbox_feedback_2.email = 'kartikanand1992@gmail.com'
-    outingbox_feedback_2 = importer.save_or_locate(outingbox_feedback_2)
-
-    outingbox_feedback_3 = Feedback()
-    outingbox_feedback_3.name = 'Rohan Anand'
-    outingbox_feedback_3.message = 'Hi!!'
-    outingbox_feedback_3.email = 'rohananand1995@gmail.com'
-    outingbox_feedback_3 = importer.save_or_locate(outingbox_feedback_3)
-
-    outingbox_feedback_4 = Feedback()
-    outingbox_feedback_4.name = 'Rohan Anand'
-    outingbox_feedback_4.message = 'Hi!'
-    outingbox_feedback_4.email = 'rohananand1995@gmail.com'
-    outingbox_feedback_4 = importer.save_or_locate(outingbox_feedback_4)
-
+import_data()

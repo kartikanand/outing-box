@@ -2,6 +2,14 @@
 
 {% load staticfiles %}
 
+{% block custommeta %}
+<meta property="og:image" content="https://{{ request.get_host }}{{ MEDIA_URL }}{{ activity.featured_image }}">
+<meta property="og:title" content="{{ activity.title }}">
+<meta property="og:url" content="https://{{ request.get_host }}{{ activity.get_absolute_url }}">
+<meta property="og:site_name" content="Outing Box">
+{% endblock %}
+
+
 {% block customjs %}
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript">

@@ -3,6 +3,14 @@
 {% block navbar %}{% include 'components/nav-main.html' %}{% endblock navbar %}
 {% block hero %}{% include 'outingbox/hero.html' %}{% endblock hero %}
 
+{% block custommeta %}
+<meta property="og:description" content="A search engine for finding things to do around you">
+<meta property="og:image" content="">
+<meta property="og:title" content="Outing Box">
+<meta property="og:url" content="https://www.outingbox.com">
+<meta property="og:site_name" content="Outing Box">
+{% endblock %}
+
 {% block content %}
 {% include 'outingbox/collections.html' with boxes=boxes %}
 {% include 'outingbox/featured.html' %}

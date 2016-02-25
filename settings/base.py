@@ -111,3 +111,35 @@ CAPTCHA_LETTER_ROTATION = (-10, 10)
 CAPTCHA_FONT_SIZE = 32
 CAPTCHA_FOREGROUND_COLOR = "#333"
 CAPTCHA_NOISE_FUNCTIONS = ['captcha.helpers.noise_dots']
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'INFO.log')
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'outingbox': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    },
+}

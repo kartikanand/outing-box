@@ -13,6 +13,9 @@ from .forms import FeedbackForm
 from .decorators import require_user_authenticated, require_activity
 from .utils import get_paginated_list
 
+import logging
+logger = logging.getLogger(__name__)
+
 def handler404(request):
     return render(request, 'outingbox/404.html', {})
 
@@ -337,6 +340,8 @@ def search_view(request):
     if order_by:
         activities = activities.order_by(order_dict[order_by])
 
+    logger.error("####\nBefore Pagination\n####\n{0}".format(activities))
+
     results_paginator = Paginator(activities, 10)
     try:
         results_page = results_paginator.page(page)
@@ -346,6 +351,8 @@ def search_view(request):
         results_page = results_paginator.page(results_paginator.num_pages)
 
     activities = results_page
+
+    logger.error("####\nAfter Pagination\n####\n{0}".format(activities))
 
     order_by_relevance_url = get_search_filter_urls(request, '')
     order_by_rating_url = get_search_filter_urls(request, 'rad')

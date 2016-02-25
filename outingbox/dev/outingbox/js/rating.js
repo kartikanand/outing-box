@@ -24,7 +24,6 @@ editRatingData.onSelect = function(value, text, event) {
     var data = form.serializeArray();
 
     var old_rating = self.parent().prev().data('old-rating');
-    console.log(old_rating);
 
     var url = form.attr('action');
     var delete_rating = false;
@@ -53,8 +52,11 @@ editRatingData.onSelect = function(value, text, event) {
         }
     })
     .catch(function (err) {
-        console.log(err);
-        notify('Oops! We messed up. Please try again!');
+        if (err.responseJSON.status == -1) {
+            notify("Please login to rate!");
+        } else {
+            notify('Oops! We messed up. Please try again!');
+        }
     });
 };
 

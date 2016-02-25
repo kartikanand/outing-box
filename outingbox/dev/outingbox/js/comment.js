@@ -93,13 +93,15 @@ module.exports.commentFormHandler = function (ev) {
             }
         }
         else {
-            console.log(data);
-            throw new Error(data);
+            throw new Error();
         }
     })
     .catch(function (err) {
-        console.log(err);
-        notify("Oops! we messed up. Please try again later.");
+        if (err.responseJSON.status == -1) {
+            notify("Please login to add a review!");
+        } else {
+            notify("Oops! we messed up. Please try again later.");
+        }
     })
     .finally(function () {
         $('#edit-review-modal').modal('hide');

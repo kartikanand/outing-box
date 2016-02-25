@@ -70,16 +70,16 @@
             <ul class="small list-unstyled">
                 <li><span class="fa fa-phone fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;{{ activity.contact_numbers|slice:":2"|join:", " }}</li>
                 {% if activity.website %}
-                <li><span class="fa fa-desktop fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="">{{ activity.website }}</a></li>
+                <li><span class="fa fa-desktop fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="{{ activity.website }}">{{ activity.website }}</a></li>
                 {% endif %}
                 {% if activity.email %}
-                <li><span class="fa fa-envelope fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="">{{ activity.email }}</a></li>
+                <li><span class="fa fa-envelope fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="{{ activity.email }}">{{ activity.email }}</a></li>
                 {% endif %}
                 {% if activity.facebook %}
-                <li><span class="fa fa-facebook fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="">{{ activity.facebook }}</a></li>
+                <li><span class="fa fa-facebook fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="{{ activity.facebook }}">{{ activity.facebook }}</a></li>
                 {% endif %}
                 {% if activity.twitter %}
-                <li><span class="fa fa-twitter fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="">{{ activity.twitter }}</a></li>
+                <li><span class="fa fa-twitter fa-fw" aria-hidden="true"></span>&nbsp;&nbsp;<a href="{{ activity.twitter }}">{{ activity.twitter }}</a></li>
                 {% endif %}
             </ul>
         </div>

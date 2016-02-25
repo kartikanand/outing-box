@@ -54,6 +54,10 @@ class SubZone(BaseTitleMixin, AbstractBaseModel):
     zone = models.ForeignKey(Zone)
     objects = SubZoneManager()
 
+    def get_activities(self):
+        return ', '.join([address.activity.title for address in self.address_set.all()])
+    get_activities.short_description = 'Activities'
+
     class Meta:
         verbose_name = "Sub-Zone"
         verbose_name_plural = "Sub-Zones"
@@ -153,6 +157,10 @@ class Category(BaseTitleMixin, AbstractBaseModel):
         return "{}?{}".format(reverse('search'), q.urlencode())
 
     objects = CategoryManager()
+
+    def get_activities(self):
+        return ', '.join([activity.title for activity in self.activity_set.all()])
+    get_activities.short_description = 'Activities'
 
     class Meta:
         verbose_name = "Category"

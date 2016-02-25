@@ -14,6 +14,14 @@ class ActivityAdmin(admin.ModelAdmin):
 
     filter_horizontal = ['category']
 
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'get_activities')
+
+@admin.register(SubZone)
+class SubZoneAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'get_activities')
+
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'activity')
@@ -26,9 +34,7 @@ class UserReviewAdmin(admin.ModelAdmin):
     readonly_fields = ('user', 'activity', 'pub_date', 'review')
 
 admin.site.register(Zone)
-admin.site.register(SubZone)
 admin.site.register(MetroStation)
-admin.site.register(Category)
 admin.site.register(Box)
 admin.site.register(UserRating)
 admin.site.register(Feedback)

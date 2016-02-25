@@ -8,4 +8,5 @@ migrations/
 staticfiles/
 media/
 venv/
-gun.logdjango_error.log
+gun.log
+django_error.log

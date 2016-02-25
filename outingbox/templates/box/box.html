@@ -2,9 +2,9 @@
 {% load staticfiles %}
 
 {% block custommeta %}
-<meta property="og:image" content="{{ MEDIA_URL }}{{ box.cover_image }}">
+<meta property="og:image" content="{{ request.build_absolute_uri }}{{ MEDIA_URL }}{{ box.cover_image }}">
 <meta property="og:title" content="{{ box.title }}">
-<meta property="og:url" content="{{ box.get_absolute_url }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}{{ box.get_absolute_url }}">
 <meta property="og:site_name" content="Outing Box">
 {% endblock %}
 

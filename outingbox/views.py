@@ -331,6 +331,8 @@ def search_view(request):
     if query:
         activities = search.filter(activities, query)
 
+    activities = activities.distinct()
+
     order_dict = {
         'raa': 'rating',   # Rating ascending
         'rad': '-rating',  # Rating descending

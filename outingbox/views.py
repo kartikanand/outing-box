@@ -7,20 +7,36 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from watson import search
 from .models import Box, Activity, Category, SubZone, UserBookmark, UserRating, FeaturedActivity, UserReview
 from .forms import FeedbackForm
 from .decorators import require_user_authenticated, require_activity
-from .utils import get_paginated_list
 
 import logging
 logger = logging.getLogger(__name__)
 
+def get_paginated_list(lst, num_objects_on_page, page):
+    paginator = Paginator(lst, num_objects_on_page)
+
+    try:
+        paginated_list = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_list = paginator.page(1)
+    except EmptyPage:
+        paginated_list = paginator.page(paginator.num_pages)
+
+    return paginated_list
+
 def handler404(request):
-    return render(request, 'outingbox/404.html', {})
+    response = render(request, 'outingbox/404.html', {})
+    response.status_code = 404
+    return response
 
 def handler500(request):
-    return render(request, 'outingbox/500.html', {})
+    response = render(request, 'outingbox/500.html', {})
+    response.status_code = 500
+    return response
 
 def index_view(request):
     boxes = Box.objects.all()
@@ -51,23 +67,15 @@ def about_us_view(request):
     return render(request, 'outingbox/about-us.html')
 
 def box_view(request, id=None, title=None):
-    try:
-        id = int(id)
-    except ValueError:
-        raise Http404("Box doesn't exist")
-
     box = get_object_or_404(Box, pk=id)
+
     categories = box.category_set.all()
 
-    # Create a set in order to have only distinct activities
-    # This is required because multiple boxes can have the same activity
-    activity_set = set()
-    for category in categories:
-        activity_set.update(category.activity_set.all())
+    activities = Activity.objects.filter(category__in=categories).distinct()
 
     # Default to page 1
     page = request.GET.get('page', 1)
-    activities = get_paginated_list(list(activity_set), 12, page)
+    activities = get_paginated_list(activities, 12, page)
 
     url_prev_page_number = None
     if activities.has_previous():
@@ -78,7 +86,7 @@ def box_view(request, id=None, title=None):
         url_next_page_number = add_page_to_request_url(request, 'box', {'page': activities.next_page_number()}, kwargs={'id':id, 'title':box.title})
 
     return render(request, 'box/box.html', {
-        'box': box, 
+        'box': box,
         'activities': activities,
         'url_next_page_number': url_next_page_number,
         'url_prev_page_number': url_prev_page_number
@@ -110,16 +118,11 @@ def profile_bookmarks_view(request):
     })
 
 def activity_view(request, id=None, title=None):
-    try:
-        id = int(id)
-    except ValueError:
-        raise Http404("Activity doesn't exist")
-
     activity = get_object_or_404(Activity, pk=id)
 
     user_bookmarks = None
     user_rating = 0
-    user_review_inst = None
+    user_review = None
     if request.user.is_authenticated():
         try:
             user_bookmark_inst = UserBookmark.objects.get(user=request.user)
@@ -134,12 +137,11 @@ def activity_view(request, id=None, title=None):
             pass
 
         try:
-            user_review_inst = UserReview.objects.get(user=request.user, activity=activity)
-            user_review = user_review_inst.review
+            user_review = UserReview.objects.get(user=request.user, activity=activity)
         except UserReview.DoesNotExist:
             pass
 
-    reviews = [review_inst for review_inst in UserReview.objects.filter(activity=activity)]
+    reviews = UserReview.objects.filter(activity=activity)
 
     context = {
         'activity': activity, 
@@ -147,7 +149,7 @@ def activity_view(request, id=None, title=None):
         'photos': activity.photos.all(),
         'reviews': reviews,
         'user_rating': user_rating,
-        'user_review': user_review_inst
+        'user_review': user_review
     }
 
     return render(request, 'activity/activity.html', context)
@@ -185,10 +187,23 @@ def rate_activity(request, activity):
             user_rating_inst.delete()
         except UserRating.DoesNotExist:
             pass
-        
+
         return JsonResponse({'msg': 'ok', 'status': '0'})
 
-    rating = int(request.POST.get('new_rating', 0))
+    rating_str = request.POST.get('new_rating', None)
+    if not rating_str:
+        res = JsonResponse({'msg': 'invalid rating', 'status': '1'})
+        res.status_code = 400
+        return res
+
+    # query string params are always string; coerce to int
+    try:
+        rating = int(rating_str)
+    except ValueError:
+        res = JsonResponse({'msg': 'invalid rating', 'status': '1'})
+        res.status_code = 400
+        return res
+
     if (rating > 5) or (rating <= 0):
         res = JsonResponse({'msg': 'invalid rating', 'status': '1'})
         res.status_code = 400

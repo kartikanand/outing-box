@@ -19,8 +19,8 @@ urlpatterns = [
     url(r'^accounts/bookmark/$', views.bookmark_activity, name='bookmark'),
     url(r'^accounts/rate/$', views.rate_activity, name='rate'),
     url(r'^accounts/comment/$', views.comment_activity, name='comment'),
-    url(r'^activity/(?P<id>[\w, -]+)/(?P<title>[\w, -]+)/$', views.activity_view, name='activity'),
-    url(r'^box/(?P<id>[\w, -]+)/(?P<title>[\w, -]+)/$', views.box_view, name='box'),
+    url(r'^activity/(?P<id>\d+)/(?P<title>[\w, -]+)/$', views.activity_view, name='activity'),
+    url(r'^box/(?P<id>\d+)/(?P<title>[\w, -]+)/$', views.box_view, name='box'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'outingbox.views.handler404'

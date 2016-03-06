@@ -6,7 +6,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.http import QueryDict
 from location_field.models.plain import PlainLocationField
-from utils.metro_stations import metro_stations_list
 from .managers import SubZoneManager, CategoryManager
 
 class BaseTitleMixin():

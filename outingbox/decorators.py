@@ -20,12 +20,14 @@ def require_activity(fn):
         activity_id = request.POST.get("id", None)
         if activity_id is None:
             res = JsonResponse({'msg': 'invalid id', 'status': '1'})
+            res.status_code = 400
             return res
 
         try:
             activity = Activity.objects.get(pk=activity_id)
         except Activity.DoesNotExist:
             res = JsonResponse({'msg': 'invalid id', 'status': '1'})
+            res.status_code = 400
             return res
 
         return fn(request, activity)

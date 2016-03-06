@@ -10,3 +10,5 @@ media/
 venv/
 gun.log
 django_error.log
+.coverage
+django_info.log

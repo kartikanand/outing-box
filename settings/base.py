@@ -125,21 +125,26 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'file_error': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'django_error.log')
         },
+        'file_info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'django_info.log')
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file_error'],
             'level': 'ERROR',
             'propagate': True,
         },
         'outingbox': {
-            'handlers': ['file'],
-            'level': 'ERROR',
+            'handlers': ['file_info'],
+            'level': 'INFO',
         },
     },
 }

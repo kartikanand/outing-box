@@ -1,14 +1,9 @@
-# -*- coding: utf-8 -*-
-
-"""
-base.py
-=======
-
-django settings for outingbox project
-this module describes settings common for all environments
-
-"""
-
+import dj_database_url
 from .base import *
 
-DEBUG = True
+DEBUG = False
+
+# Database
+DATABASES = {
+    'default': dj_database_url.config()
+}

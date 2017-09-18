@@ -6,7 +6,6 @@ migrations/
 *.pyc
 .env
 staticfiles/
-media/
 venv/
 gun.log
 django_error.log

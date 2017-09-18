@@ -46,6 +46,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'watson.middleware.SearchContextMiddleware'
 )
 
@@ -87,7 +88,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/static/outingbox/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR ,'media')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()

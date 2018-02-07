@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "jquery": "^2.2.0",
+    "jquery": "^3.0.0",
     "jquery-bar-rating": "^1.1.3",
     "selectize": "git+ssh://git@github.com/selectize/selectize.js.git",
     "sweetalert": "^1.1.3"
